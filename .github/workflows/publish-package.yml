@@ -20,7 +20,7 @@ jobs:
         uses: NuGet/setup-nuget@v1.0.5
 
       - name: Restore dependencies
-        run: nuget restore
+        run: dotnet restore
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
@@ -34,4 +34,4 @@ jobs:
         run: dotnet test /p:Configuration=$env:BUILD_CONFIG --no-restore --no-build --verbosity normal
 
       - name: Publish
-        run: nuget push **\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
+        run: dotnet nuget push **\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
