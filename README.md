@@ -34,38 +34,35 @@ From within Visual Studio:
 5. Click on the Trophy package, select the appropriate version in the
    right-tab and click _Install_.
 
-## Documentation
-
-See the [Trophy API Docs](https://trophy.docs.buildwithfern.com/overview/introduction) for more
-information.
-
 ## Usage
 
 The package needs to be configured with your account's API key, which is available in the Trophy
 web interface. Set the API key with the following:
 
 ```csharp
-using Trophy;
+using TrophyApi;
 
-var trophy = new TrophyApiClient("your-api-key");
+var trophy = new TrophyApiClient("YOUR_API_KEY");
 ```
 
 Then you can access the Trophy API through the `trophy` client. For example, you can send a metric
 event:
 
 ```csharp
-using Trophy.Models.Metrics;
-using Trophy.Models.Metrics.Requests;
-
-var request = new MetricsEventRequest
-{
-    User = new EventRequestUser
-    {
-        Id = "18",
-        Email = "jk.rowling@harrypotter.com"
-    },
-    Value = 750
+var user = new EventRequestUser {
+   Id = "18",
+   Email = "jk.rowling@harrypotter.com"
 };
 
-trophy.Metrics.Event("words-written", request);
+var request = new MetricsEventRequest {
+   User = user,
+   Value = 750
+};
+
+await trophy.Metrics.EventAsync("words-written", request);
 ```
+
+## Documentation
+
+See the [Trophy API Docs](https://trophy.docs.buildwithfern.com/overview/introduction) for more
+information on the accessible endpoints.
