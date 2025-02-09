@@ -1,4 +1,4 @@
-# Trophy.net
+# Trophy .NET Library
 
 The official [Trophy](https://trophy.so) .NET library.
 
@@ -10,19 +10,19 @@ through rewards, achievements, streaks, and personalized communication.
 Using the [.NET Core command-line interface (CLI) tools](https://docs.microsoft.com/en-us/dotnet/core/tools/):
 
 ```sh
-dotnet add package Trophy.net
+dotnet add package Trophy
 ```
 
 Using the [NuGet Command Line Interface (CLI)](https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference):
 
 ```sh
-nuget install Trophy.net
+nuget install Trophy
 ```
 
 Using the [Package Manager Console](https://docs.microsoft.com/en-us/nuget/tools/package-manager-console):
 
 ```powershell
-Install-Package Trophy.net
+Install-Package Trophy
 ```
 
 From within Visual Studio:
@@ -30,8 +30,8 @@ From within Visual Studio:
 1. Open the Solution Explorer.
 2. Right-click on a project within your solution.
 3. Click on _Manage NuGet Packages..._
-4. Click on the _Browse_ tab and search for "Trophy.net".
-5. Click on the Stripe.net package, select the appropriate version in the
+4. Click on the _Browse_ tab and search for "Trophy".
+5. Click on the Trophy package, select the appropriate version in the
    right-tab and click _Install_.
 
 ## Documentation
