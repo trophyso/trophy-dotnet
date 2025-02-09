@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrophyApi", "TrophyApi\TrophyApi.csproj", "{83B92DC5-9D47-4461-969F-98A4F3ABC208}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrophyApi.Test", "TrophyApi.Test\TrophyApi.Test.csproj", "{12A0FA52-35C6-4F2B-984C-36A2E4C9D1E0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{83B92DC5-9D47-4461-969F-98A4F3ABC208}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83B92DC5-9D47-4461-969F-98A4F3ABC208}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83B92DC5-9D47-4461-969F-98A4F3ABC208}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83B92DC5-9D47-4461-969F-98A4F3ABC208}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12A0FA52-35C6-4F2B-984C-36A2E4C9D1E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12A0FA52-35C6-4F2B-984C-36A2E4C9D1E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12A0FA52-35C6-4F2B-984C-36A2E4C9D1E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12A0FA52-35C6-4F2B-984C-36A2E4C9D1E0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
