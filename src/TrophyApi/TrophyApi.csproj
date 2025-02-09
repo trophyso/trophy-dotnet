@@ -6,7 +6,19 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <LangVersion>12</LangVersion>
         <Nullable>enable</Nullable>
+
+        <!-- 🔹 NuGet Metadata -->
+        <PackageId>Trophy</PackageId>
+        <Version>0.1.0</Version>
+        <Authors>Trophy Labs, Inc</Authors>
+        <Description>.NET SDK for the Trophy API</Description>
+        <PackageTags>trophy; api; gamification; sdk</PackageTags>
+        <PackageProjectUrl>https://github.com/trophyso/trophy-dotnet</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/trophyso/trophy-dotnet</RepositoryUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+
         <PolySharpIncludeRuntimeSupportedAttributes>true</PolySharpIncludeRuntimeSupportedAttributes>
     </PropertyGroup>
 
