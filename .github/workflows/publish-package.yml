@@ -7,14 +7,10 @@ on:
 
 jobs:
   build:
-
-    env:
-      BUILD_CONFIG: 'Release'
-
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v2
@@ -27,18 +23,17 @@ jobs:
         with:
           dotnet-version: 8.x
 
-      - name: Install OpenSSL 1.1
+      - name: Install tools
         run: |
-          wget http://security.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.23_amd64.deb
-          sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2.23_amd64.deb
+          dotnet tool restore
 
-      - name: Build
+      - name: Build Release
         run: |
           export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
-          dotnet build src/TrophyApi.sln --configuration $BUILD_CONFIG --no-restore
+          dotnet build src/TrophyApi.sln --configuration Release --no-restore
 
       - name: Run tests
-        run: dotnet test /p:Configuration=$env:BUILD_CONFIG --no-restore --no-build --verbosity normal
+        run: dotnet test src
 
       - name: Publish
         run: dotnet nuget push **\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
