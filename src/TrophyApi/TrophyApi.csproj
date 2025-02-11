@@ -9,7 +9,7 @@
 
         <!-- 🔹 NuGet Metadata -->
         <PackageId>Trophy</PackageId>
-        <Version>0.1.10</Version>
+        <Version>0.1.11</Version>
         <Authors>Trophy Labs, Inc</Authors>
         <Description>.NET SDK for the Trophy API</Description>
         <PackageTags>trophy; api; gamification; sdk</PackageTags>
