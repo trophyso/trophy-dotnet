@@ -57,8 +57,8 @@ public record MetricResponse
     /// <summary>
     /// The user's current streak for the metric, if the metric has streaks enabled.
     /// </summary>
-    [JsonPropertyName("streak")]
-    public StreakResponse? Streak { get; set; }
+    [JsonPropertyName("currentStreak")]
+    public StreakResponse? CurrentStreak { get; set; }
 
     public override string ToString()
     {

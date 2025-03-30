@@ -22,15 +22,7 @@ public partial class AchievementsClient
     /// <code>
     /// await client.Achievements.CompleteAsync(
     ///     "finish-onboarding",
-    ///     new AchievementsCompleteRequest
-    ///     {
-    ///         User = new EventRequestUser
-    ///         {
-    ///             Id = "18",
-    ///             Email = "jk.rowling@harrypotter.com",
-    ///             Tz = "Europe/London",
-    ///         },
-    ///     }
+    ///     new AchievementsCompleteRequest { User = new UpsertedUser { Id = "user-id" } }
     /// );
     /// </code>
     /// </example>

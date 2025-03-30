@@ -29,6 +29,12 @@ public record EventResponse
     [JsonPropertyName("achievements")]
     public IEnumerable<EventResponseMetricsItem>? Achievements { get; set; }
 
+    /// <summary>
+    /// The user's current streak for the metric, if the metric has streaks enabled.
+    /// </summary>
+    [JsonPropertyName("currentStreak")]
+    public StreakResponse? CurrentStreak { get; set; }
+
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

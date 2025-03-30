@@ -3,7 +3,7 @@ using TrophyApi.Core;
 
 namespace TrophyApi;
 
-public record EventRequestUser
+public record UpsertedUser
 {
     /// <summary>
     /// The ID of the user in your database. Must be a string.
@@ -12,7 +12,7 @@ public record EventRequestUser
     public required string Id { get; set; }
 
     /// <summary>
-    /// The user's email address.
+    /// The user's email address. Required if subscribeToEmails is true.
     /// </summary>
     [JsonPropertyName("email")]
     public string? Email { get; set; }
@@ -28,6 +28,12 @@ public record EventRequestUser
     /// </summary>
     [JsonPropertyName("tz")]
     public string? Tz { get; set; }
+
+    /// <summary>
+    /// Whether the user should receive Trophy-powered emails. Cannot be false if an email is provided.
+    /// </summary>
+    [JsonPropertyName("subscribeToEmails")]
+    public bool? SubscribeToEmails { get; set; }
 
     public override string ToString()
     {

@@ -16,15 +16,81 @@ public partial class UsersClient
     }
 
     /// <summary>
-    /// Get a single user's progress against all active metrics.
+    /// Create a new user.
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.Users.AllmetricsAsync("userId");
+    /// await client.Users.CreateAsync(new UpsertedUser { Id = "user-id" });
     /// </code>
     /// </example>
-    public async Task<IEnumerable<MetricResponse>> AllmetricsAsync(
-        string userId,
+    public async Task<User> CreateAsync(
+        UpsertedUser request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "users",
+                    Body = request,
+                    ContentType = "application/json",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
+            {
+                return JsonUtils.Deserialize<User>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new TrophyApiException("Failed to deserialize response", e);
+            }
+        }
+
+        try
+        {
+            switch (response.StatusCode)
+            {
+                case 400:
+                    throw new BadRequestError(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                case 401:
+                    throw new UnauthorizedError(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                case 422:
+                    throw new UnprocessableEntityError(
+                        JsonUtils.Deserialize<ErrorBody>(responseBody)
+                    );
+            }
+        }
+        catch (JsonException)
+        {
+            // unable to map error response, throwing generic error
+        }
+        throw new TrophyApiApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
+
+    /// <summary>
+    /// Get a single user.
+    /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Users.GetAsync("userId");
+    /// </code>
+    /// </example>
+    public async Task<User> GetAsync(
+        string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -35,7 +101,141 @@ public partial class UsersClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"users/{userId}/metrics",
+                    Path = $"users/{id}",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
+            {
+                return JsonUtils.Deserialize<User>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new TrophyApiException("Failed to deserialize response", e);
+            }
+        }
+
+        try
+        {
+            switch (response.StatusCode)
+            {
+                case 400:
+                    throw new BadRequestError(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                case 401:
+                    throw new UnauthorizedError(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                case 422:
+                    throw new UnprocessableEntityError(
+                        JsonUtils.Deserialize<ErrorBody>(responseBody)
+                    );
+            }
+        }
+        catch (JsonException)
+        {
+            // unable to map error response, throwing generic error
+        }
+        throw new TrophyApiApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
+
+    /// <summary>
+    /// Update a user.
+    /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Users.UpdateAsync(
+    ///     "id",
+    ///     new UpdatedUser { Email = "user@example.com", Tz = "Europe/London" }
+    /// );
+    /// </code>
+    /// </example>
+    public async Task<User> UpdateAsync(
+        string id,
+        UpdatedUser request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethodExtensions.Patch,
+                    Path = $"users/{id}",
+                    Body = request,
+                    ContentType = "application/json",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
+            {
+                return JsonUtils.Deserialize<User>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new TrophyApiException("Failed to deserialize response", e);
+            }
+        }
+
+        try
+        {
+            switch (response.StatusCode)
+            {
+                case 400:
+                    throw new BadRequestError(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                case 401:
+                    throw new UnauthorizedError(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                case 422:
+                    throw new UnprocessableEntityError(
+                        JsonUtils.Deserialize<ErrorBody>(responseBody)
+                    );
+            }
+        }
+        catch (JsonException)
+        {
+            // unable to map error response, throwing generic error
+        }
+        throw new TrophyApiApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
+
+    /// <summary>
+    /// Get a single user's progress against all active metrics.
+    /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Users.AllmetricsAsync("userId");
+    /// </code>
+    /// </example>
+    public async Task<IEnumerable<MetricResponse>> AllmetricsAsync(
+        string id,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = $"users/{id}/metrics",
                     Options = options,
                 },
                 cancellationToken
@@ -88,7 +288,7 @@ public partial class UsersClient
     /// </code>
     /// </example>
     public async Task<MetricResponse> SinglemetricAsync(
-        string userId,
+        string id,
         string key,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -100,7 +300,7 @@ public partial class UsersClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"users/{userId}/metrics/{key}",
+                    Path = $"users/{id}/metrics/{key}",
                     Options = options,
                 },
                 cancellationToken
@@ -153,7 +353,7 @@ public partial class UsersClient
     /// </code>
     /// </example>
     public async Task<IEnumerable<AchievementResponse>> AllachievementsAsync(
-        string userId,
+        string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -164,7 +364,7 @@ public partial class UsersClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"users/{userId}/achievements",
+                    Path = $"users/{id}/achievements",
                     Options = options,
                 },
                 cancellationToken

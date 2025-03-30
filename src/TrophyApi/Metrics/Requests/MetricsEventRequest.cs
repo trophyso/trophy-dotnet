@@ -9,7 +9,7 @@ public record MetricsEventRequest
     /// The user that triggered the event.
     /// </summary>
     [JsonPropertyName("user")]
-    public required EventRequestUser User { get; set; }
+    public required UpsertedUser User { get; set; }
 
     /// <summary>
     /// The value to add to the user's current total for the given metric.

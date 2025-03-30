@@ -24,11 +24,11 @@ public partial class MetricsClient
     ///     "words-written",
     ///     new MetricsEventRequest
     ///     {
-    ///         User = new EventRequestUser
+    ///         User = new UpsertedUser
     ///         {
-    ///             Id = "18",
-    ///             Email = "jk.rowling@harrypotter.com",
+    ///             Email = "user@example.com",
     ///             Tz = "Europe/London",
+    ///             Id = "18",
     ///         },
     ///         Value = 750,
     ///     }
