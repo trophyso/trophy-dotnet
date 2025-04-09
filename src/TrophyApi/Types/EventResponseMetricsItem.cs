@@ -15,7 +15,7 @@ public record EventResponseMetricsItem
     /// A list of any new achievements that the user has now completed as a result of this event being submitted.
     /// </summary>
     [JsonPropertyName("completed")]
-    public IEnumerable<AchievementResponse>? Completed { get; set; }
+    public IEnumerable<MultiStageAchievementResponse>? Completed { get; set; }
 
     public override string ToString()
     {

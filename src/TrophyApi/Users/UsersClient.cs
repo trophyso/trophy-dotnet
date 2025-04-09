@@ -16,7 +16,7 @@ public partial class UsersClient
     }
 
     /// <summary>
-    /// Create a new user.
+    /// Identify a new user.
     /// </summary>
     /// <example>
     /// <code>
@@ -352,7 +352,7 @@ public partial class UsersClient
     /// await client.Users.AllachievementsAsync("userId");
     /// </code>
     /// </example>
-    public async Task<IEnumerable<AchievementResponse>> AllachievementsAsync(
+    public async Task<IEnumerable<MultiStageAchievementResponse>> AllachievementsAsync(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -375,7 +375,9 @@ public partial class UsersClient
         {
             try
             {
-                return JsonUtils.Deserialize<IEnumerable<AchievementResponse>>(responseBody)!;
+                return JsonUtils.Deserialize<IEnumerable<MultiStageAchievementResponse>>(
+                    responseBody
+                )!;
             }
             catch (JsonException e)
             {

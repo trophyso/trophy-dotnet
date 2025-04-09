@@ -3,7 +3,7 @@ using TrophyApi.Core;
 
 namespace TrophyApi;
 
-public record AchievementResponse
+public record OneOffAchievementResponse
 {
     /// <summary>
     /// The unique ID of the achievement.
@@ -22,24 +22,6 @@ public record AchievementResponse
     /// </summary>
     [JsonPropertyName("badgeUrl")]
     public string? BadgeUrl { get; set; }
-
-    /// <summary>
-    /// The ID of the metric associated with this achievement, if any.
-    /// </summary>
-    [JsonPropertyName("metricId")]
-    public string? MetricId { get; set; }
-
-    /// <summary>
-    /// The value of the metric required to complete the achievement, if this achievement is associated with a metric.
-    /// </summary>
-    [JsonPropertyName("metricValue")]
-    public double? MetricValue { get; set; }
-
-    /// <summary>
-    /// The name of the metric associated with this achievement, if any.
-    /// </summary>
-    [JsonPropertyName("metricName")]
-    public string? MetricName { get; set; }
 
     /// <summary>
     /// The key used to reference this achievement in the API.

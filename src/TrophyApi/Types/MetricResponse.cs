@@ -51,8 +51,8 @@ public record MetricResponse
     /// A list of the metric's achievements and the user's progress towards each.
     /// </summary>
     [JsonPropertyName("achievements")]
-    public IEnumerable<AchievementResponse> Achievements { get; set; } =
-        new List<AchievementResponse>();
+    public IEnumerable<MultiStageAchievementResponse> Achievements { get; set; } =
+        new List<MultiStageAchievementResponse>();
 
     /// <summary>
     /// The user's current streak for the metric, if the metric has streaks enabled.
