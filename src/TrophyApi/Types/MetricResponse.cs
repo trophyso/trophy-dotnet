@@ -30,12 +30,6 @@ public record MetricResponse
     public required string Emoji { get; set; }
 
     /// <summary>
-    /// The frequency of the streak.
-    /// </summary>
-    [JsonPropertyName("streakFrequency")]
-    public required StreakFrequency StreakFrequency { get; set; }
-
-    /// <summary>
     /// The status of the metric.
     /// </summary>
     [JsonPropertyName("status")]
@@ -53,12 +47,6 @@ public record MetricResponse
     [JsonPropertyName("achievements")]
     public IEnumerable<MultiStageAchievementResponse> Achievements { get; set; } =
         new List<MultiStageAchievementResponse>();
-
-    /// <summary>
-    /// The user's current streak for the metric, if the metric has streaks enabled.
-    /// </summary>
-    [JsonPropertyName("currentStreak")]
-    public StreakResponse? CurrentStreak { get; set; }
 
     public override string ToString()
     {

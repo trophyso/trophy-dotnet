@@ -3,13 +3,13 @@ using TrophyApi.Core;
 
 namespace TrophyApi;
 
-public record StreakResponse
+public record IncrementMetricStreakResponse
 {
     /// <summary>
-    /// A list of the user's past streak periods up through the current period. Each period includes the start and end dates and the length of the streak.
+    /// Whether this metric event increased the user's streak length.
     /// </summary>
-    [JsonPropertyName("streakHistory")]
-    public IEnumerable<StreakResponseStreakHistoryItem>? StreakHistory { get; set; }
+    [JsonPropertyName("extended")]
+    public bool? Extended { get; set; }
 
     /// <summary>
     /// The length of the user's current streak.
