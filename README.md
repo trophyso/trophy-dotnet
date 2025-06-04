@@ -64,5 +64,5 @@ await trophy.Metrics.EventAsync("words-written", request);
 
 ## Documentation
 
-See the [Trophy API Docs](https://trophy.docs.buildwithfern.com/overview/introduction) for more
+See the [Trophy API Docs](https://docs.trophy.so) for more
 information on the accessible endpoints.

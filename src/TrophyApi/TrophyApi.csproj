@@ -9,7 +9,7 @@
 
         <!-- 🔹 NuGet Metadata -->
         <PackageId>Trophy</PackageId>
-        <Version>1.0.4</Version>
+        <Version>1.0.5</Version>
         <Authors>Trophy Labs, Inc</Authors>
         <Description>.NET SDK for the Trophy API</Description>
         <PackageTags>trophy; api; gamification; sdk</PackageTags>
@@ -22,7 +22,7 @@
         <PolySharpIncludeRuntimeSupportedAttributes>true</PolySharpIncludeRuntimeSupportedAttributes>
     </PropertyGroup>
 
-    <ItemGroup Condition="'$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
+    <ItemGroup ConditionValue="'$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
         <PackageReference Include="Portable.System.DateTimeOnly" Version="8.0.2" />
     </ItemGroup>
 
@@ -48,5 +48,5 @@
         </AssemblyAttribute>
     </ItemGroup>
 
-    <Import Project="TrophyApi.Custom.props" Condition="Exists('TrophyApi.Custom.props')" />
+    <Import Project="TrophyApi.Custom.props" ConditionValue="Exists('TrophyApi.Custom.props')" />
 </Project>
