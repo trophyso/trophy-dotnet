@@ -24,12 +24,6 @@ public record MetricResponse
     public required string Name { get; set; }
 
     /// <summary>
-    /// The emoji to represent the metric.
-    /// </summary>
-    [JsonPropertyName("emoji")]
-    public required string Emoji { get; set; }
-
-    /// <summary>
     /// The status of the metric.
     /// </summary>
     [JsonPropertyName("status")]
@@ -45,8 +39,8 @@ public record MetricResponse
     /// A list of the metric's achievements and the user's progress towards each.
     /// </summary>
     [JsonPropertyName("achievements")]
-    public IEnumerable<MultiStageAchievementResponse> Achievements { get; set; } =
-        new List<MultiStageAchievementResponse>();
+    public IEnumerable<MetricAchievementResponse> Achievements { get; set; } =
+        new List<MetricAchievementResponse>();
 
     public override string ToString()
     {

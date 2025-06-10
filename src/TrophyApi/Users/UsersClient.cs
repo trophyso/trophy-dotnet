@@ -2,6 +2,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using OneOf;
 using TrophyApi.Core;
 
 namespace TrophyApi;
@@ -352,7 +353,11 @@ public partial class UsersClient
     /// await client.Users.AllachievementsAsync("userId");
     /// </code>
     /// </example>
-    public async Task<IEnumerable<MultiStageAchievementResponse>> AllachievementsAsync(
+    public async Task<
+        IEnumerable<
+            OneOf<MetricAchievementResponse, StreakAchievementResponse, ApiAchievementResponse>
+        >
+    > AllachievementsAsync(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -375,9 +380,15 @@ public partial class UsersClient
         {
             try
             {
-                return JsonUtils.Deserialize<IEnumerable<MultiStageAchievementResponse>>(
-                    responseBody
-                )!;
+                return JsonUtils.Deserialize<
+                    IEnumerable<
+                        OneOf<
+                            MetricAchievementResponse,
+                            StreakAchievementResponse,
+                            ApiAchievementResponse
+                        >
+                    >
+                >(responseBody)!;
             }
             catch (JsonException e)
             {

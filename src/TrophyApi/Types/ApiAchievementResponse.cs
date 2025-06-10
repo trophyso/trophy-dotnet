@@ -3,8 +3,14 @@ using TrophyApi.Core;
 
 namespace TrophyApi;
 
-public record OneOffAchievementResponse
+public record ApiAchievementResponse
 {
+    /// <summary>
+    /// The trigger of the achievement, in this case always 'api'.
+    /// </summary>
+    [JsonPropertyName("trigger")]
+    public required string Trigger { get; set; }
+
     /// <summary>
     /// The unique ID of the achievement.
     /// </summary>
@@ -15,7 +21,7 @@ public record OneOffAchievementResponse
     /// The name of this achievement.
     /// </summary>
     [JsonPropertyName("name")]
-    public string? Name { get; set; }
+    public required string Name { get; set; }
 
     /// <summary>
     /// The URL of the badge image for the achievement, if one has been uploaded.

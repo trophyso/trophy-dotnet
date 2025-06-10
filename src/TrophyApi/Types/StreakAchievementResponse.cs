@@ -3,8 +3,20 @@ using TrophyApi.Core;
 
 namespace TrophyApi;
 
-public record MultiStageAchievementResponse
+public record StreakAchievementResponse
 {
+    /// <summary>
+    /// The trigger of the achievement, in this case always 'streak'.
+    /// </summary>
+    [JsonPropertyName("trigger")]
+    public required string Trigger { get; set; }
+
+    /// <summary>
+    /// The length of the streak required to complete the achievement.
+    /// </summary>
+    [JsonPropertyName("streakLength")]
+    public required int StreakLength { get; set; }
+
     /// <summary>
     /// The unique ID of the achievement.
     /// </summary>
@@ -15,31 +27,13 @@ public record MultiStageAchievementResponse
     /// The name of this achievement.
     /// </summary>
     [JsonPropertyName("name")]
-    public string? Name { get; set; }
+    public required string Name { get; set; }
 
     /// <summary>
     /// The URL of the badge image for the achievement, if one has been uploaded.
     /// </summary>
     [JsonPropertyName("badgeUrl")]
     public string? BadgeUrl { get; set; }
-
-    /// <summary>
-    /// The ID of the metric associated with this achievement, if any.
-    /// </summary>
-    [JsonPropertyName("metricId")]
-    public string? MetricId { get; set; }
-
-    /// <summary>
-    /// The value of the metric required to complete the achievement, if this achievement is associated with a metric.
-    /// </summary>
-    [JsonPropertyName("metricValue")]
-    public double? MetricValue { get; set; }
-
-    /// <summary>
-    /// The name of the metric associated with this achievement, if any.
-    /// </summary>
-    [JsonPropertyName("metricName")]
-    public string? MetricName { get; set; }
 
     /// <summary>
     /// The key used to reference this achievement in the API.
