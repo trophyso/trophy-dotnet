@@ -221,10 +221,10 @@ public partial class UsersClient
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.Users.AllmetricsAsync("userId");
+    /// await client.Users.AllMetricsAsync("userId");
     /// </code>
     /// </example>
-    public async Task<IEnumerable<MetricResponse>> AllmetricsAsync(
+    public async Task<IEnumerable<MetricResponse>> AllMetricsAsync(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -285,10 +285,10 @@ public partial class UsersClient
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.Users.SinglemetricAsync("userId", "key");
+    /// await client.Users.SingleMetricAsync("userId", "key");
     /// </code>
     /// </example>
-    public async Task<MetricResponse> SinglemetricAsync(
+    public async Task<MetricResponse> SingleMetricAsync(
         string id,
         string key,
         RequestOptions? options = null,
@@ -350,14 +350,14 @@ public partial class UsersClient
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.Users.AllachievementsAsync("userId");
+    /// await client.Users.AllAchievementsAsync("userId");
     /// </code>
     /// </example>
     public async Task<
         IEnumerable<
             OneOf<MetricAchievementResponse, StreakAchievementResponse, ApiAchievementResponse>
         >
-    > AllachievementsAsync(
+    > AllAchievementsAsync(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
