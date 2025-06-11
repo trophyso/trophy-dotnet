@@ -39,8 +39,8 @@ public record MetricResponse
     /// A list of the metric's achievements and the user's progress towards each.
     /// </summary>
     [JsonPropertyName("achievements")]
-    public IEnumerable<MetricAchievementResponse> Achievements { get; set; } =
-        new List<MetricAchievementResponse>();
+    public IEnumerable<AchievementResponse> Achievements { get; set; } =
+        new List<AchievementResponse>();
 
     public override string ToString()
     {

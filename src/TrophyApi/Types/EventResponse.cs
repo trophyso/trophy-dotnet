@@ -24,10 +24,10 @@ public record EventResponse
     public required double Total { get; set; }
 
     /// <summary>
-    /// Changes to achievements as a result of this event.
+    /// Achievements completed as a result of this event.
     /// </summary>
     [JsonPropertyName("achievements")]
-    public IEnumerable<EventResponseMetricsItem>? Achievements { get; set; }
+    public IEnumerable<AchievementResponse>? Achievements { get; set; }
 
     /// <summary>
     /// The user's current streak for the metric, if the metric has streaks enabled.
