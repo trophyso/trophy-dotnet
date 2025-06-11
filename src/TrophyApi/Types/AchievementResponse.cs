@@ -18,6 +18,12 @@ public record AchievementResponse
     public required string Name { get; set; }
 
     /// <summary>
+    /// The trigger of the achievement, either 'metric', 'streak', or 'api'.
+    /// </summary>
+    [JsonPropertyName("trigger")]
+    public required string Trigger { get; set; }
+
+    /// <summary>
     /// The URL of the badge image for the achievement, if one has been uploaded.
     /// </summary>
     [JsonPropertyName("badgeUrl")]
