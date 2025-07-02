@@ -12,7 +12,7 @@ public record AchievementCompletionResponse
     public required string CompletionId { get; set; }
 
     [JsonPropertyName("achievement")]
-    public required AchievementResponse Achievement { get; set; }
+    public required CompletedAchievementResponse Achievement { get; set; }
 
     public override string ToString()
     {

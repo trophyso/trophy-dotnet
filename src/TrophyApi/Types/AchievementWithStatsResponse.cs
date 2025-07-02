@@ -3,8 +3,20 @@ using TrophyApi.Core;
 
 namespace TrophyApi;
 
-public record AchievementResponse
+public record AchievementWithStatsResponse
 {
+    /// <summary>
+    /// The number of users who have completed this achievement.
+    /// </summary>
+    [JsonPropertyName("completions")]
+    public int? Completions { get; set; }
+
+    /// <summary>
+    /// The percentage of all users who have completed this achievement.
+    /// </summary>
+    [JsonPropertyName("completedPercentage")]
+    public double? CompletedPercentage { get; set; }
+
     /// <summary>
     /// The unique ID of the achievement.
     /// </summary>

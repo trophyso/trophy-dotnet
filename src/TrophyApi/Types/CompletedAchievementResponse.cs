@@ -3,8 +3,14 @@ using TrophyApi.Core;
 
 namespace TrophyApi;
 
-public record AchievementResponse
+public record CompletedAchievementResponse
 {
+    /// <summary>
+    /// The date and time the achievement was completed, in ISO 8601 format.
+    /// </summary>
+    [JsonPropertyName("achievedAt")]
+    public DateTime? AchievedAt { get; set; }
+
     /// <summary>
     /// The unique ID of the achievement.
     /// </summary>
