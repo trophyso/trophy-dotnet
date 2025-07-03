@@ -3,7 +3,7 @@ using TrophyApi.Core;
 
 namespace TrophyApi;
 
-public record IncrementMetricStreakResponse
+public record MetricEventStreakResponse
 {
     /// <summary>
     /// Whether this metric event increased the user's streak length.

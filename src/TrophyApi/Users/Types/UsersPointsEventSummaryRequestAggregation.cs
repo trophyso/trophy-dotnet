@@ -1,0 +1,18 @@
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
+using TrophyApi.Core;
+
+namespace TrophyApi;
+
+[JsonConverter(typeof(EnumSerializer<UsersPointsEventSummaryRequestAggregation>))]
+public enum UsersPointsEventSummaryRequestAggregation
+{
+    [EnumMember(Value = "daily")]
+    Daily,
+
+    [EnumMember(Value = "weekly")]
+    Weekly,
+
+    [EnumMember(Value = "monthly")]
+    Monthly,
+}

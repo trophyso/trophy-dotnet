@@ -33,7 +33,13 @@ public record EventResponse
     /// The user's current streak for the metric, if the metric has streaks enabled.
     /// </summary>
     [JsonPropertyName("currentStreak")]
-    public IncrementMetricStreakResponse? CurrentStreak { get; set; }
+    public MetricEventStreakResponse? CurrentStreak { get; set; }
+
+    /// <summary>
+    /// The points added by this event, and a breakdown of the points awards that added points.
+    /// </summary>
+    [JsonPropertyName("points")]
+    public PointsAward? Points { get; set; }
 
     public override string ToString()
     {

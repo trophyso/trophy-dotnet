@@ -562,4 +562,155 @@ public partial class UsersClient
             responseBody
         );
     }
+
+    /// <summary>
+    /// Get a user's points.
+    /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Users.PointsAsync("userId", new UsersPointsRequest());
+    /// </code>
+    /// </example>
+    public async Task<GetUserPointsResponse> PointsAsync(
+        string id,
+        UsersPointsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        if (request.Awards != null)
+        {
+            _query["awards"] = request.Awards.Value.ToString();
+        }
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = $"users/{id}/points",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
+            {
+                return JsonUtils.Deserialize<GetUserPointsResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new TrophyApiException("Failed to deserialize response", e);
+            }
+        }
+
+        try
+        {
+            switch (response.StatusCode)
+            {
+                case 401:
+                    throw new UnauthorizedError(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                case 404:
+                    throw new NotFoundError(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                case 422:
+                    throw new UnprocessableEntityError(
+                        JsonUtils.Deserialize<ErrorBody>(responseBody)
+                    );
+            }
+        }
+        catch (JsonException)
+        {
+            // unable to map error response, throwing generic error
+        }
+        throw new TrophyApiApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
+
+    /// <summary>
+    /// Get a summary of points awards over time for a user.
+    /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Users.PointsEventSummaryAsync(
+    ///     "userId",
+    ///     new UsersPointsEventSummaryRequest
+    ///     {
+    ///         Aggregation = UsersPointsEventSummaryRequestAggregation.Daily,
+    ///         StartDate = "2024-01-01",
+    ///         EndDate = "2024-01-31",
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
+    public async Task<IEnumerable<UsersPointsEventSummaryResponseItem>> PointsEventSummaryAsync(
+        string id,
+        UsersPointsEventSummaryRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        _query["aggregation"] = request.Aggregation.Stringify();
+        _query["startDate"] = request.StartDate;
+        _query["endDate"] = request.EndDate;
+        var response = await _client
+            .MakeRequestAsync(
+                new RawClient.JsonApiRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = $"users/{id}/points/event-summary",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
+            {
+                return JsonUtils.Deserialize<IEnumerable<UsersPointsEventSummaryResponseItem>>(
+                    responseBody
+                )!;
+            }
+            catch (JsonException e)
+            {
+                throw new TrophyApiException("Failed to deserialize response", e);
+            }
+        }
+
+        try
+        {
+            switch (response.StatusCode)
+            {
+                case 401:
+                    throw new UnauthorizedError(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                case 404:
+                    throw new NotFoundError(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                case 422:
+                    throw new UnprocessableEntityError(
+                        JsonUtils.Deserialize<ErrorBody>(responseBody)
+                    );
+            }
+        }
+        catch (JsonException)
+        {
+            // unable to map error response, throwing generic error
+        }
+        throw new TrophyApiApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
 }

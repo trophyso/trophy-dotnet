@@ -30,10 +30,10 @@ public record AchievementWithStatsResponse
     public required string Name { get; set; }
 
     /// <summary>
-    /// The trigger of the achievement, either 'metric', 'streak', or 'api'.
+    /// The trigger of the achievement.
     /// </summary>
     [JsonPropertyName("trigger")]
-    public required string Trigger { get; set; }
+    public required AchievementResponseTrigger Trigger { get; set; }
 
     /// <summary>
     /// The description of this achievement.
@@ -76,6 +76,12 @@ public record AchievementWithStatsResponse
     /// </summary>
     [JsonPropertyName("metricName")]
     public string? MetricName { get; set; }
+
+    /// <summary>
+    /// The user's current streak for the metric, if the metric has streaks enabled.
+    /// </summary>
+    [JsonPropertyName("currentStreak")]
+    public MetricEventStreakResponse? CurrentStreak { get; set; }
 
     public override string ToString()
     {
