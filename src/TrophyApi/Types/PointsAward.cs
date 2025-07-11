@@ -17,6 +17,18 @@ public record PointsAward
     [JsonPropertyName("awarded")]
     public double? Awarded { get; set; }
 
+    /// <summary>
+    /// The date these points were awarded, in ISO 8601 format.
+    /// </summary>
+    [JsonPropertyName("date")]
+    public string? Date { get; set; }
+
+    /// <summary>
+    /// The user's total points after this award occurred.
+    /// </summary>
+    [JsonPropertyName("total")]
+    public double? Total { get; set; }
+
     [JsonPropertyName("trigger")]
     public PointsTrigger? Trigger { get; set; }
 

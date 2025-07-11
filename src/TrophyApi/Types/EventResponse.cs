@@ -39,7 +39,7 @@ public record EventResponse
     /// The points added by this event, and a breakdown of the points awards that added points.
     /// </summary>
     [JsonPropertyName("points")]
-    public PointsAward? Points { get; set; }
+    public MetricEventPointsResponse? Points { get; set; }
 
     public override string ToString()
     {

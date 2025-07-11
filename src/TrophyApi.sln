@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrophyApi", "TrophyApi\TrophyApi.csproj", "{AFFECCFA-961B-4FE6-830D-E6DD62CD1346}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrophyApi", "TrophyApi\TrophyApi.csproj", "{3FECFBCA-6C2A-424D-BA6C-9EB7FF4060A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrophyApi.Test", "TrophyApi.Test\TrophyApi.Test.csproj", "{D6172FE6-2398-47B4-9C9E-93883C689740}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrophyApi.Test", "TrophyApi.Test\TrophyApi.Test.csproj", "{28480B87-0C4A-4B59-A8A0-44585C25E637}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,13 +16,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AFFECCFA-961B-4FE6-830D-E6DD62CD1346}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AFFECCFA-961B-4FE6-830D-E6DD62CD1346}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AFFECCFA-961B-4FE6-830D-E6DD62CD1346}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AFFECCFA-961B-4FE6-830D-E6DD62CD1346}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D6172FE6-2398-47B4-9C9E-93883C689740}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D6172FE6-2398-47B4-9C9E-93883C689740}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D6172FE6-2398-47B4-9C9E-93883C689740}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D6172FE6-2398-47B4-9C9E-93883C689740}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FECFBCA-6C2A-424D-BA6C-9EB7FF4060A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FECFBCA-6C2A-424D-BA6C-9EB7FF4060A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FECFBCA-6C2A-424D-BA6C-9EB7FF4060A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FECFBCA-6C2A-424D-BA6C-9EB7FF4060A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28480B87-0C4A-4B59-A8A0-44585C25E637}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28480B87-0C4A-4B59-A8A0-44585C25E637}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28480B87-0C4A-4B59-A8A0-44585C25E637}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28480B87-0C4A-4B59-A8A0-44585C25E637}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
