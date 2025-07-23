@@ -16,7 +16,7 @@ public partial class UsersClient
     }
 
     /// <summary>
-    /// Identify a new user.
+    /// Create a new user.
     /// </summary>
     /// <example>
     /// <code>
@@ -146,17 +146,17 @@ public partial class UsersClient
     }
 
     /// <summary>
-    /// Upsert a user (create or update).
+    /// Identify a user.
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.Users.UpsertAsync(
+    /// await client.Users.IdentifyAsync(
     ///     "id",
     ///     new UpdatedUser { Email = "user@example.com", Tz = "Europe/London" }
     /// );
     /// </code>
     /// </example>
-    public async Task<User> UpsertAsync(
+    public async Task<User> IdentifyAsync(
         string id,
         UpdatedUser request,
         RequestOptions? options = null,
