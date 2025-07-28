@@ -30,6 +30,12 @@ public record UpsertedUser
     public string? Tz { get; set; }
 
     /// <summary>
+    /// The user's device tokens, used for push notifications.
+    /// </summary>
+    [JsonPropertyName("deviceTokens")]
+    public IEnumerable<string>? DeviceTokens { get; set; }
+
+    /// <summary>
     /// Whether the user should receive Trophy-powered emails. Cannot be false if an email is provided.
     /// </summary>
     [JsonPropertyName("subscribeToEmails")]
