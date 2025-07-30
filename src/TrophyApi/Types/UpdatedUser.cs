@@ -30,7 +30,7 @@ public record UpdatedUser
     public IEnumerable<string>? DeviceTokens { get; set; }
 
     /// <summary>
-    /// Whether the user should receive Trophy-powered emails. Cannot be false if an email is provided.
+    /// Whether the user should receive Trophy-powered emails. If false, Trophy will not store the user's email address.
     /// </summary>
     [JsonPropertyName("subscribeToEmails")]
     public bool? SubscribeToEmails { get; set; }
