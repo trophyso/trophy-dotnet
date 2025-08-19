@@ -66,6 +66,18 @@ public record PointsTriggerResponse
     public string? AchievementName { get; set; }
 
     /// <summary>
+    /// User attribute filters that must be met for this trigger to activate. Only present if the trigger has user attribute filters configured.
+    /// </summary>
+    [JsonPropertyName("userAttributes")]
+    public IEnumerable<PointsTriggerResponseUserAttributesItem>? UserAttributes { get; set; }
+
+    /// <summary>
+    /// Event attribute filter that must be met for this trigger to activate. Only present if the trigger has an event filter configured.
+    /// </summary>
+    [JsonPropertyName("eventAttribute")]
+    public PointsTriggerResponseEventAttribute? EventAttribute { get; set; }
+
+    /// <summary>
     /// The date and time the trigger was created, in ISO 8601 format.
     /// </summary>
     [JsonPropertyName("created")]

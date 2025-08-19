@@ -9,7 +9,7 @@ public record AchievementsCompleteRequest
     /// The user that completed the achievement.
     /// </summary>
     [JsonPropertyName("user")]
-    public required UpdatedUser User { get; set; }
+    public required UpsertedUser User { get; set; }
 
     public override string ToString()
     {

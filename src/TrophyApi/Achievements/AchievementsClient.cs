@@ -61,8 +61,6 @@ public partial class AchievementsClient
             {
                 case 401:
                     throw new UnauthorizedError(JsonUtils.Deserialize<ErrorBody>(responseBody));
-                case 404:
-                    throw new NotFoundError(JsonUtils.Deserialize<ErrorBody>(responseBody));
                 case 422:
                     throw new UnprocessableEntityError(
                         JsonUtils.Deserialize<ErrorBody>(responseBody)
@@ -89,7 +87,12 @@ public partial class AchievementsClient
     ///     "finish-onboarding",
     ///     new AchievementsCompleteRequest
     ///     {
-    ///         User = new UpdatedUser { Email = "user@example.com", Tz = "Europe/London" },
+    ///         User = new UpsertedUser
+    ///         {
+    ///             Email = "user@example.com",
+    ///             Tz = "Europe/London",
+    ///             Id = "user-id",
+    ///         },
     ///     }
     /// );
     /// </code>

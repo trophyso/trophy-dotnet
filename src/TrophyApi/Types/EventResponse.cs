@@ -36,10 +36,10 @@ public record EventResponse
     public MetricEventStreakResponse? CurrentStreak { get; set; }
 
     /// <summary>
-    /// The points added by this event, and a breakdown of the points awards that added points.
+    /// A map of points systems by key that were affected by this event.
     /// </summary>
     [JsonPropertyName("points")]
-    public MetricEventPointsResponse? Points { get; set; }
+    public Dictionary<string, MetricEventPointsResponse>? Points { get; set; }
 
     public override string ToString()
     {

@@ -20,21 +20,32 @@ public partial class PointsClient
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.Points.SummaryAsync();
+    /// await client.Points.SummaryAsync(
+    ///     "points-system-key",
+    ///     new PointsSummaryRequest { UserAttributes = "plan-type:premium,region:us-east" }
+    /// );
     /// </code>
     /// </example>
     public async Task<IEnumerable<PointsRange>> SummaryAsync(
+        string key,
+        PointsSummaryRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _query = new Dictionary<string, object>();
+        if (request.UserAttributes != null)
+        {
+            _query["userAttributes"] = request.UserAttributes;
+        }
         var response = await _client
             .MakeRequestAsync(
                 new RawClient.JsonApiRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = "points/summary",
+                    Path = $"points/{key}/summary",
+                    Query = _query,
                     Options = options,
                 },
                 cancellationToken
@@ -61,6 +72,10 @@ public partial class PointsClient
                     throw new UnauthorizedError(JsonUtils.Deserialize<ErrorBody>(responseBody));
                 case 404:
                     throw new NotFoundError(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                case 422:
+                    throw new UnprocessableEntityError(
+                        JsonUtils.Deserialize<ErrorBody>(responseBody)
+                    );
             }
         }
         catch (JsonException)
@@ -75,14 +90,15 @@ public partial class PointsClient
     }
 
     /// <summary>
-    /// Get all points triggers.
+    /// Get a points system with all its triggers.
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.Points.TriggersAsync();
+    /// await client.Points.SystemAsync("points-system-key");
     /// </code>
     /// </example>
-    public async Task<IEnumerable<PointsTriggerResponse>> TriggersAsync(
+    public async Task<PointsSystemResponse> SystemAsync(
+        string key,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -93,7 +109,7 @@ public partial class PointsClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = "points/triggers",
+                    Path = $"points/{key}",
                     Options = options,
                 },
                 cancellationToken
@@ -104,7 +120,7 @@ public partial class PointsClient
         {
             try
             {
-                return JsonUtils.Deserialize<IEnumerable<PointsTriggerResponse>>(responseBody)!;
+                return JsonUtils.Deserialize<PointsSystemResponse>(responseBody)!;
             }
             catch (JsonException e)
             {
@@ -118,6 +134,8 @@ public partial class PointsClient
             {
                 case 401:
                     throw new UnauthorizedError(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                case 404:
+                    throw new NotFoundError(JsonUtils.Deserialize<ErrorBody>(responseBody));
             }
         }
         catch (JsonException)

@@ -35,6 +35,12 @@ public record UpdatedUser
     [JsonPropertyName("subscribeToEmails")]
     public bool? SubscribeToEmails { get; set; }
 
+    /// <summary>
+    /// User attributes as key-value pairs. Keys must match existing user attributes set up in the Trophy dashboard.
+    /// </summary>
+    [JsonPropertyName("attributes")]
+    public Dictionary<string, string>? Attributes { get; set; }
+
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

@@ -14,6 +14,12 @@ public record AchievementCompletionResponse
     [JsonPropertyName("achievement")]
     public required CompletedAchievementResponse Achievement { get; set; }
 
+    /// <summary>
+    /// A map of points systems by key that were affected by this achievement completion.
+    /// </summary>
+    [JsonPropertyName("points")]
+    public Dictionary<string, MetricEventPointsResponse>? Points { get; set; }
+
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

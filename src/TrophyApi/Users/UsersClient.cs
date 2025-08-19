@@ -152,7 +152,16 @@ public partial class UsersClient
     /// <code>
     /// await client.Users.IdentifyAsync(
     ///     "id",
-    ///     new UpdatedUser { Email = "user@example.com", Tz = "Europe/London" }
+    ///     new UpdatedUser
+    ///     {
+    ///         Email = "user@example.com",
+    ///         Tz = "Europe/London",
+    ///         Attributes = new Dictionary&lt;string, string&gt;()
+    ///         {
+    ///             { "department", "engineering" },
+    ///             { "role", "developer" },
+    ///         },
+    ///     }
     /// );
     /// </code>
     /// </example>
@@ -222,7 +231,16 @@ public partial class UsersClient
     /// <code>
     /// await client.Users.UpdateAsync(
     ///     "id",
-    ///     new UpdatedUser { Email = "user@example.com", Tz = "Europe/London" }
+    ///     new UpdatedUser
+    ///     {
+    ///         Email = "user@example.com",
+    ///         Tz = "Europe/London",
+    ///         Attributes = new Dictionary&lt;string, string&gt;()
+    ///         {
+    ///             { "department", "engineering" },
+    ///             { "role", "developer" },
+    ///         },
+    ///     }
     /// );
     /// </code>
     /// </example>
@@ -499,19 +517,25 @@ public partial class UsersClient
     }
 
     /// <summary>
-    /// Get all of a user's completed achievements.
+    /// Get a user's achievements.
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.Users.AllAchievementsAsync("userId");
+    /// await client.Users.AchievementsAsync("userId", new UsersAchievementsRequest());
     /// </code>
     /// </example>
-    public async Task<IEnumerable<CompletedAchievementResponse>> AllAchievementsAsync(
+    public async Task<IEnumerable<CompletedAchievementResponse>> AchievementsAsync(
         string id,
+        UsersAchievementsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _query = new Dictionary<string, object>();
+        if (request.IncludeIncomplete != null)
+        {
+            _query["includeIncomplete"] = request.IncludeIncomplete.ToString();
+        }
         var response = await _client
             .MakeRequestAsync(
                 new RawClient.JsonApiRequest
@@ -519,6 +543,7 @@ public partial class UsersClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = $"users/{id}/achievements",
+                    Query = _query,
                     Options = options,
                 },
                 cancellationToken
@@ -636,15 +661,16 @@ public partial class UsersClient
     }
 
     /// <summary>
-    /// Get a user's points.
+    /// Get a user's points for a specific points system.
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.Users.PointsAsync("userId", new UsersPointsRequest());
+    /// await client.Users.PointsAsync("userId", "points-system-key", new UsersPointsRequest());
     /// </code>
     /// </example>
     public async Task<GetUserPointsResponse> PointsAsync(
         string id,
+        string key,
         UsersPointsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -661,7 +687,7 @@ public partial class UsersClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"users/{id}/points",
+                    Path = $"users/{id}/points/{key}",
                     Query = _query,
                     Options = options,
                 },
@@ -707,12 +733,13 @@ public partial class UsersClient
     }
 
     /// <summary>
-    /// Get a summary of points awards over time for a user.
+    /// Get a summary of points awards over time for a user for a specific points system.
     /// </summary>
     /// <example>
     /// <code>
     /// await client.Users.PointsEventSummaryAsync(
     ///     "userId",
+    ///     "points-system-key",
     ///     new UsersPointsEventSummaryRequest
     ///     {
     ///         Aggregation = UsersPointsEventSummaryRequestAggregation.Daily,
@@ -724,6 +751,7 @@ public partial class UsersClient
     /// </example>
     public async Task<IEnumerable<UsersPointsEventSummaryResponseItem>> PointsEventSummaryAsync(
         string id,
+        string key,
         UsersPointsEventSummaryRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -739,7 +767,7 @@ public partial class UsersClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"users/{id}/points/event-summary",
+                    Path = $"users/{id}/points/{key}/event-summary",
                     Query = _query,
                     Options = options,
                 },

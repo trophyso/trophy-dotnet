@@ -14,8 +14,20 @@ public record AchievementWithStatsResponse
     /// <summary>
     /// The percentage of all users who have completed this achievement.
     /// </summary>
-    [JsonPropertyName("completedPercentage")]
-    public double? CompletedPercentage { get; set; }
+    [JsonPropertyName("rarity")]
+    public double? Rarity { get; set; }
+
+    /// <summary>
+    /// User attribute filters that must be met for this achievement to be completed. Only present if the achievement has user attribute filters configured.
+    /// </summary>
+    [JsonPropertyName("userAttributes")]
+    public IEnumerable<AchievementWithStatsResponseUserAttributesItem>? UserAttributes { get; set; }
+
+    /// <summary>
+    /// Event attribute filter that must be met for this achievement to be completed. Only present if the achievement has an event filter configured.
+    /// </summary>
+    [JsonPropertyName("eventAttribute")]
+    public AchievementWithStatsResponseEventAttribute? EventAttribute { get; set; }
 
     /// <summary>
     /// The unique ID of the achievement.

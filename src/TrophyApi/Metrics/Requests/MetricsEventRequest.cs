@@ -17,6 +17,12 @@ public record MetricsEventRequest
     [JsonPropertyName("value")]
     public required double Value { get; set; }
 
+    /// <summary>
+    /// Event attributes as key-value pairs. Keys must match existing event attributes set up in the Trophy dashboard.
+    /// </summary>
+    [JsonPropertyName("attributes")]
+    public Dictionary<string, string>? Attributes { get; set; }
+
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

@@ -28,9 +28,19 @@ public partial class MetricsClient
     ///         {
     ///             Email = "user@example.com",
     ///             Tz = "Europe/London",
+    ///             Attributes = new Dictionary&lt;string, string&gt;()
+    ///             {
+    ///                 { "department", "engineering" },
+    ///                 { "role", "developer" },
+    ///             },
     ///             Id = "18",
     ///         },
     ///         Value = 750,
+    ///         Attributes = new Dictionary&lt;string, string&gt;()
+    ///         {
+    ///             { "category", "writing" },
+    ///             { "source", "mobile-app" },
+    ///         },
     ///     }
     /// );
     /// </code>
