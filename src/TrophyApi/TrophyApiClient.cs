@@ -29,6 +29,7 @@ public partial class TrophyApiClient
         Achievements = new AchievementsClient(_client);
         Metrics = new MetricsClient(_client);
         Users = new UsersClient(_client);
+        Streaks = new StreaksClient(_client);
         Points = new PointsClient(_client);
     }
 
@@ -37,6 +38,8 @@ public partial class TrophyApiClient
     public MetricsClient Metrics { get; init; }
 
     public UsersClient Users { get; init; }
+
+    public StreaksClient Streaks { get; init; }
 
     public PointsClient Points { get; init; }
 }
