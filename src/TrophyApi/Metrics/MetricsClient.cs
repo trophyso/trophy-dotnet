@@ -24,6 +24,7 @@ public partial class MetricsClient
     ///     "words-written",
     ///     new MetricsEventRequest
     ///     {
+    ///         IdempotencyKey = "e4296e4b-8493-4bd1-9c30-5a1a9ac4d78f",
     ///         User = new UpsertedUser
     ///         {
     ///             Email = "user@example.com",
@@ -52,6 +53,17 @@ public partial class MetricsClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = new Headers(new Dictionary<string, string>() { });
+        if (request.IdempotencyKey != null)
+        {
+            _headers["Idempotency-Key"] = request.IdempotencyKey;
+        }
+        var requestBody = new Dictionary<string, object>()
+        {
+            { "user", request.User },
+            { "value", request.Value },
+            { "attributes", request.Attributes },
+        };
         var response = await _client
             .MakeRequestAsync(
                 new RawClient.JsonApiRequest
@@ -59,7 +71,8 @@ public partial class MetricsClient
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = $"metrics/{key}/event",
-                    Body = request,
+                    Body = requestBody,
+                    Headers = _headers,
                     ContentType = "application/json",
                     Options = options,
                 },
