@@ -41,6 +41,18 @@ public record EventResponse
     [JsonPropertyName("points")]
     public Dictionary<string, MetricEventPointsResponse>? Points { get; set; }
 
+    /// <summary>
+    /// The idempotency key used for the event, if one was provided.
+    /// </summary>
+    [JsonPropertyName("idempotencyKey")]
+    public string? IdempotencyKey { get; set; }
+
+    /// <summary>
+    /// Whether the event was replayed due to idempotency.
+    /// </summary>
+    [JsonPropertyName("idempotentReplayed")]
+    public bool? IdempotentReplayed { get; set; }
+
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
