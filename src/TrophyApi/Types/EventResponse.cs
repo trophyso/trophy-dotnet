@@ -30,16 +30,22 @@ public record EventResponse
     public IEnumerable<CompletedAchievementResponse>? Achievements { get; set; }
 
     /// <summary>
-    /// The user's current streak for the metric, if the metric has streaks enabled.
+    /// The user's current streak.
     /// </summary>
     [JsonPropertyName("currentStreak")]
     public MetricEventStreakResponse? CurrentStreak { get; set; }
 
     /// <summary>
-    /// A map of points systems by key that were affected by this event.
+    /// A map of points systems by key.
     /// </summary>
     [JsonPropertyName("points")]
     public Dictionary<string, MetricEventPointsResponse>? Points { get; set; }
+
+    /// <summary>
+    /// A map of leaderboards by key.
+    /// </summary>
+    [JsonPropertyName("leaderboards")]
+    public Dictionary<string, MetricEventLeaderboardResponse>? Leaderboards { get; set; }
 
     /// <summary>
     /// The idempotency key used for the event, if one was provided.
