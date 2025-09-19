@@ -2,7 +2,7 @@ using TrophyApi.Core;
 
 namespace TrophyApi;
 
-public record UsersLeaderboardsRequest
+public record UsersLeaderboardRequest
 {
     /// <summary>
     /// Specific run date in YYYY-MM-DD format. If not provided, returns the current run.

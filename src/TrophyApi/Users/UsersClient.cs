@@ -819,17 +819,17 @@ public partial class UsersClient
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.Users.LeaderboardsAsync(
+    /// await client.Users.LeaderboardAsync(
     ///     "user-123",
     ///     "weekly-words",
-    ///     new UsersLeaderboardsRequest { Run = "2025-01-15" }
+    ///     new UsersLeaderboardRequest { Run = "2025-01-15" }
     /// );
     /// </code>
     /// </example>
-    public async Task<UserLeaderboardResponse> LeaderboardsAsync(
+    public async Task<UserLeaderboardResponse> LeaderboardAsync(
         string id,
         string key,
-        UsersLeaderboardsRequest request,
+        UsersLeaderboardRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
