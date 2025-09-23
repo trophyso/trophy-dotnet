@@ -8,8 +8,8 @@ public record LeaderboardEvent
     /// <summary>
     /// The timestamp when the event occurred.
     /// </summary>
-    [JsonPropertyName("time")]
-    public required DateTime Time { get; set; }
+    [JsonPropertyName("timestamp")]
+    public DateTime? Timestamp { get; set; }
 
     /// <summary>
     /// The user's rank before this event, or null if they were not on the leaderboard.
