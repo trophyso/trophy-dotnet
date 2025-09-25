@@ -2,77 +2,52 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using TrophyApi;
 using TrophyApi.Core;
 
-namespace TrophyApi;
+namespace TrophyApi.Admin.Streaks;
 
-public partial class MetricsClient
+public partial class FreezesClient
 {
     private RawClient _client;
 
-    internal MetricsClient(RawClient client)
+    internal FreezesClient(RawClient client)
     {
         _client = client;
     }
 
     /// <summary>
-    /// Increment or decrement the value of a metric for a user.
+    /// Create streak freezes for multiple users.
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.Metrics.EventAsync(
-    ///     "words-written",
-    ///     new MetricsEventRequest
+    /// await client.Admin.Streaks.Freezes.CreateAsync(
+    ///     new CreateStreakFreezesRequest
     ///     {
-    ///         IdempotencyKey = "e4296e4b-8493-4bd1-9c30-5a1a9ac4d78f",
-    ///         User = new UpsertedUser
+    ///         Freezes = new List&lt;CreateStreakFreezesRequestFreezesItem&gt;()
     ///         {
-    ///             Email = "user@example.com",
-    ///             Tz = "Europe/London",
-    ///             Attributes = new Dictionary&lt;string, string&gt;()
-    ///             {
-    ///                 { "department", "engineering" },
-    ///                 { "role", "developer" },
-    ///             },
-    ///             Id = "18",
-    ///         },
-    ///         Value = 750,
-    ///         Attributes = new Dictionary&lt;string, string&gt;()
-    ///         {
-    ///             { "category", "writing" },
-    ///             { "source", "mobile-app" },
+    ///             new CreateStreakFreezesRequestFreezesItem { UserId = "user-123" },
+    ///             new CreateStreakFreezesRequestFreezesItem { UserId = "user-456" },
+    ///             new CreateStreakFreezesRequestFreezesItem { UserId = "user-123" },
     ///         },
     ///     }
     /// );
     /// </code>
     /// </example>
-    public async Task<EventResponse> EventAsync(
-        string key,
-        MetricsEventRequest request,
+    public async Task<CreateStreakFreezesResponse> CreateAsync(
+        CreateStreakFreezesRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = new Headers(new Dictionary<string, string>() { });
-        if (request.IdempotencyKey != null)
-        {
-            _headers["Idempotency-Key"] = request.IdempotencyKey;
-        }
-        var requestBody = new Dictionary<string, object>()
-        {
-            { "user", request.User },
-            { "value", request.Value },
-            { "attributes", request.Attributes },
-        };
         var response = await _client
             .MakeRequestAsync(
                 new RawClient.JsonApiRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
+                    BaseUrl = _client.Options.Environment.Admin,
                     Method = HttpMethod.Post,
-                    Path = $"metrics/{key}/event",
-                    Body = requestBody,
-                    Headers = _headers,
+                    Path = "streaks/freezes",
+                    Body = request,
                     ContentType = "application/json",
                     Options = options,
                 },
@@ -84,7 +59,7 @@ public partial class MetricsClient
         {
             try
             {
-                return JsonUtils.Deserialize<EventResponse>(responseBody)!;
+                return JsonUtils.Deserialize<CreateStreakFreezesResponse>(responseBody)!;
             }
             catch (JsonException e)
             {

@@ -1,3 +1,4 @@
+using TrophyApi.Admin;
 using TrophyApi.Core;
 
 namespace TrophyApi;
@@ -32,6 +33,7 @@ public partial class TrophyApiClient
         Streaks = new StreaksClient(_client);
         Points = new PointsClient(_client);
         Leaderboards = new LeaderboardsClient(_client);
+        Admin = new AdminClient(_client);
     }
 
     public AchievementsClient Achievements { get; init; }
@@ -45,4 +47,6 @@ public partial class TrophyApiClient
     public PointsClient Points { get; init; }
 
     public LeaderboardsClient Leaderboards { get; init; }
+
+    public AdminClient Admin { get; init; }
 }

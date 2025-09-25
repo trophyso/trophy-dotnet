@@ -33,7 +33,7 @@ public partial class UsersClient
             .MakeRequestAsync(
                 new RawClient.JsonApiRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Post,
                     Path = "users",
                     Body = request,
@@ -99,7 +99,7 @@ public partial class UsersClient
             .MakeRequestAsync(
                 new RawClient.JsonApiRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = $"users/{id}",
                     Options = options,
@@ -176,7 +176,7 @@ public partial class UsersClient
             .MakeRequestAsync(
                 new RawClient.JsonApiRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Put,
                     Path = $"users/{id}",
                     Body = request,
@@ -255,7 +255,7 @@ public partial class UsersClient
             .MakeRequestAsync(
                 new RawClient.JsonApiRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethodExtensions.Patch,
                     Path = $"users/{id}",
                     Body = request,
@@ -323,7 +323,7 @@ public partial class UsersClient
             .MakeRequestAsync(
                 new RawClient.JsonApiRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = $"users/{id}/metrics",
                     Options = options,
@@ -388,7 +388,7 @@ public partial class UsersClient
             .MakeRequestAsync(
                 new RawClient.JsonApiRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = $"users/{id}/metrics/{key}",
                     Options = options,
@@ -467,7 +467,7 @@ public partial class UsersClient
             .MakeRequestAsync(
                 new RawClient.JsonApiRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = $"users/{id}/metrics/{key}/event-summary",
                     Query = _query,
@@ -540,7 +540,7 @@ public partial class UsersClient
             .MakeRequestAsync(
                 new RawClient.JsonApiRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = $"users/{id}/achievements",
                     Query = _query,
@@ -613,7 +613,7 @@ public partial class UsersClient
             .MakeRequestAsync(
                 new RawClient.JsonApiRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = $"users/{id}/streak",
                     Query = _query,
@@ -685,7 +685,7 @@ public partial class UsersClient
             .MakeRequestAsync(
                 new RawClient.JsonApiRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = $"users/{id}/points/{key}",
                     Query = _query,
@@ -765,7 +765,7 @@ public partial class UsersClient
             .MakeRequestAsync(
                 new RawClient.JsonApiRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = $"users/{id}/points/{key}/event-summary",
                     Query = _query,
@@ -843,7 +843,7 @@ public partial class UsersClient
             .MakeRequestAsync(
                 new RawClient.JsonApiRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
+                    BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = $"users/{id}/leaderboards/{key}",
                     Query = _query,

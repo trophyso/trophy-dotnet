@@ -7,9 +7,9 @@ namespace TrophyApi;
 public partial class ClientOptions
 {
     /// <summary>
-    /// The Base URL for the API.
+    /// The Environment for the API.
     /// </summary>
-    public string BaseUrl { get; init; } = TrophyApiEnvironment.Default;
+    public TrophyApiEnvironment Environment { get; init; } = TrophyApiEnvironment.Production;
 
     /// <summary>
     /// The http client used to make requests.
@@ -38,7 +38,7 @@ public partial class ClientOptions
     {
         return new ClientOptions
         {
-            BaseUrl = BaseUrl,
+            Environment = Environment,
             HttpClient = HttpClient,
             MaxRetries = MaxRetries,
             Timeout = Timeout,

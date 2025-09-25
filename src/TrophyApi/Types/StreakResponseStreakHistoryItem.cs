@@ -23,6 +23,12 @@ public record StreakResponseStreakHistoryItem
     [JsonPropertyName("length")]
     public required int Length { get; set; }
 
+    /// <summary>
+    /// Whether the user used a streak freeze during this period. Only present if the organization has enabled streak freezes.
+    /// </summary>
+    [JsonPropertyName("usedFreeze")]
+    public bool? UsedFreeze { get; set; }
+
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
