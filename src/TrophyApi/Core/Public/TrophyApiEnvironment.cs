@@ -4,8 +4,8 @@ public class TrophyApiEnvironment
 {
     public static readonly TrophyApiEnvironment Production = new TrophyApiEnvironment
     {
-        Api = "api.trophy.so",
-        Admin = "admin.trophy.so",
+        Api = "https://api.trophy.so/v1",
+        Admin = "https://admin.trophy.so/v1",
     };
 
     /// <summary>
