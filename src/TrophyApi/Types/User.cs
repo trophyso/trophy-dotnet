@@ -1,27 +1,32 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using TrophyApi.Core;
 
 namespace TrophyApi;
 
+/// <summary>
+/// A user of your application.
+/// </summary>
+[Serializable]
 public record User
 {
     /// <summary>
     /// Whether the user is in the control group, meaning they do not receive emails or other communications from Trophy.
     /// </summary>
     [JsonPropertyName("control")]
-    public bool? Control { get; set; }
+    public required bool Control { get; set; }
 
     /// <summary>
     /// The date and time the user was created, in ISO 8601 format.
     /// </summary>
     [JsonPropertyName("created")]
-    public DateTime? Created { get; set; }
+    public required DateTime Created { get; set; }
 
     /// <summary>
     /// The date and time the user was last updated, in ISO 8601 format.
     /// </summary>
     [JsonPropertyName("updated")]
-    public DateTime? Updated { get; set; }
+    public required DateTime Updated { get; set; }
 
     /// <summary>
     /// The ID of the user in your database. Must be a string.
@@ -33,13 +38,13 @@ public record User
     /// The user's email address. Required if subscribeToEmails is true.
     /// </summary>
     [JsonPropertyName("email")]
-    public string? Email { get; set; }
+    public required string Email { get; set; }
 
     /// <summary>
     /// The name to refer to the user by in emails.
     /// </summary>
     [JsonPropertyName("name")]
-    public string? Name { get; set; }
+    public required string Name { get; set; }
 
     /// <summary>
     /// The user's timezone (used for email scheduling).
@@ -51,20 +56,31 @@ public record User
     /// The user's device tokens, used for push notifications.
     /// </summary>
     [JsonPropertyName("deviceTokens")]
-    public IEnumerable<string>? DeviceTokens { get; set; }
+    public IEnumerable<string> DeviceTokens { get; set; } = new List<string>();
 
     /// <summary>
     /// Whether the user should receive Trophy-powered emails. If false, Trophy will not store the user's email address.
     /// </summary>
     [JsonPropertyName("subscribeToEmails")]
-    public bool? SubscribeToEmails { get; set; }
+    public required bool SubscribeToEmails { get; set; }
 
     /// <summary>
     /// User attributes as key-value pairs. Keys must match existing user attributes set up in the Trophy dashboard.
     /// </summary>
     [JsonPropertyName("attributes")]
-    public Dictionary<string, string>? Attributes { get; set; }
+    public Dictionary<string, string> Attributes { get; set; } = new Dictionary<string, string>();
 
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

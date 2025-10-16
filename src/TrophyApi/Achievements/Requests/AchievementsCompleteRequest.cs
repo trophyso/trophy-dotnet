@@ -3,6 +3,7 @@ using TrophyApi.Core;
 
 namespace TrophyApi;
 
+[Serializable]
 public record AchievementsCompleteRequest
 {
     /// <summary>
@@ -11,6 +12,7 @@ public record AchievementsCompleteRequest
     [JsonPropertyName("user")]
     public required UpsertedUser User { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
 using TrophyApi;
 using TrophyApi.Core;
 
@@ -19,8 +18,7 @@ public partial class FreezesClient
     /// <summary>
     /// Create streak freezes for multiple users.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Admin.Streaks.Freezes.CreateAsync(
     ///     new CreateStreakFreezesRequest
     ///     {
@@ -32,8 +30,7 @@ public partial class FreezesClient
     ///         },
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<CreateStreakFreezesResponse> CreateAsync(
         CreateStreakFreezesRequest request,
         RequestOptions? options = null,
@@ -41,8 +38,8 @@ public partial class FreezesClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.Environment.Admin,
                     Method = HttpMethod.Post,
@@ -54,9 +51,9 @@ public partial class FreezesClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<CreateStreakFreezesResponse>(responseBody)!;
@@ -67,28 +64,31 @@ public partial class FreezesClient
             }
         }
 
-        try
         {
-            switch (response.StatusCode)
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
             {
-                case 400:
-                    throw new BadRequestError(JsonUtils.Deserialize<ErrorBody>(responseBody));
-                case 401:
-                    throw new UnauthorizedError(JsonUtils.Deserialize<ErrorBody>(responseBody));
-                case 422:
-                    throw new UnprocessableEntityError(
-                        JsonUtils.Deserialize<ErrorBody>(responseBody)
-                    );
+                switch (response.StatusCode)
+                {
+                    case 400:
+                        throw new BadRequestError(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                    case 401:
+                        throw new UnauthorizedError(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                    case 422:
+                        throw new UnprocessableEntityError(
+                            JsonUtils.Deserialize<ErrorBody>(responseBody)
+                        );
+                }
             }
+            catch (JsonException)
+            {
+                // unable to map error response, throwing generic error
+            }
+            throw new TrophyApiApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
-        catch (JsonException)
-        {
-            // unable to map error response, throwing generic error
-        }
-        throw new TrophyApiApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
     }
 }

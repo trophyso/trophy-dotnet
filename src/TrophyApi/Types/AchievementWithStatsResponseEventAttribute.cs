@@ -1,8 +1,13 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using TrophyApi.Core;
 
 namespace TrophyApi;
 
+/// <summary>
+/// Event attribute filter that must be met for this achievement to be completed. Only present if the achievement has an event filter configured.
+/// </summary>
+[Serializable]
 public record AchievementWithStatsResponseEventAttribute
 {
     /// <summary>
@@ -17,6 +22,17 @@ public record AchievementWithStatsResponseEventAttribute
     [JsonPropertyName("value")]
     public required string Value { get; set; }
 
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

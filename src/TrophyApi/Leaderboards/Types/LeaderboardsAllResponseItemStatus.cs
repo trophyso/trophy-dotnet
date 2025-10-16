@@ -4,8 +4,8 @@ using TrophyApi.Core;
 
 namespace TrophyApi;
 
-[JsonConverter(typeof(EnumSerializer<LeaderboardResponseStatus>))]
-public enum LeaderboardResponseStatus
+[JsonConverter(typeof(EnumSerializer<LeaderboardsAllResponseItemStatus>))]
+public enum LeaderboardsAllResponseItemStatus
 {
     [EnumMember(Value = "active")]
     Active,

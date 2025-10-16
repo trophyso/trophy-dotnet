@@ -1,0 +1,43 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using TrophyApi.Core;
+
+namespace TrophyApi;
+
+[Serializable]
+public record WebhooksStreakLostPayload
+{
+    /// <summary>
+    /// The webhook event type.
+    /// </summary>
+    [JsonPropertyName("type")]
+    public string Type { get; set; } = "streak.lost";
+
+    /// <summary>
+    /// The user who lost the streak.
+    /// </summary>
+    [JsonPropertyName("user")]
+    public required User User { get; set; }
+
+    /// <summary>
+    /// The length of the streak that was lost.
+    /// </summary>
+    [JsonPropertyName("length")]
+    public required int Length { get; set; }
+
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}

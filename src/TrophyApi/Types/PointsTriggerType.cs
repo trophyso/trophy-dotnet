@@ -15,4 +15,10 @@ public enum PointsTriggerType
 
     [EnumMember(Value = "streak")]
     Streak,
+
+    [EnumMember(Value = "time")]
+    Time,
+
+    [EnumMember(Value = "user_creation")]
+    UserCreation,
 }

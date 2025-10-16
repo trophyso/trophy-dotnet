@@ -1,15 +1,20 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using TrophyApi.Core;
 
 namespace TrophyApi;
 
+/// <summary>
+/// An object representing the user's streak after sending a metric event.
+/// </summary>
+[Serializable]
 public record MetricEventStreakResponse
 {
     /// <summary>
     /// Whether this metric event increased the user's streak length.
     /// </summary>
     [JsonPropertyName("extended")]
-    public bool? Extended { get; set; }
+    public required bool Extended { get; set; }
 
     /// <summary>
     /// The length of the user's current streak.
@@ -71,6 +76,17 @@ public record MetricEventStreakResponse
     [JsonPropertyName("freezeAutoEarnAmount")]
     public int? FreezeAutoEarnAmount { get; set; }
 
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

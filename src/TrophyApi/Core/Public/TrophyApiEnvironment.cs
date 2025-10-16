@@ -1,5 +1,6 @@
 namespace TrophyApi;
 
+[Serializable]
 public class TrophyApiEnvironment
 {
     public static readonly TrophyApiEnvironment Production = new TrophyApiEnvironment
@@ -11,10 +12,22 @@ public class TrophyApiEnvironment
     /// <summary>
     /// URL for the api service
     /// </summary>
-    public string Api { get; init; }
+    public string Api { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 
     /// <summary>
     /// URL for the admin service
     /// </summary>
-    public string Admin { get; init; }
+    public string Admin { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
 }

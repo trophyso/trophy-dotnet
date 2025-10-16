@@ -1,8 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using TrophyApi.Core;
 
 namespace TrophyApi;
 
+[Serializable]
 public record PointsSystemResponse
 {
     /// <summary>
@@ -30,12 +32,29 @@ public record PointsSystemResponse
     public string? BadgeUrl { get; set; }
 
     /// <summary>
+    /// The maximum number of points a user can be awarded in this points system
+    /// </summary>
+    [JsonPropertyName("maxPoints")]
+    public double? MaxPoints { get; set; }
+
+    /// <summary>
     /// Array of active triggers for this points system.
     /// </summary>
     [JsonPropertyName("triggers")]
     public IEnumerable<PointsTriggerResponse> Triggers { get; set; } =
         new List<PointsTriggerResponse>();
 
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

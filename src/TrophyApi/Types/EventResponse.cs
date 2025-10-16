@@ -1,8 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using TrophyApi.Core;
 
 namespace TrophyApi;
 
+[Serializable]
 public record EventResponse
 {
     /// <summary>
@@ -27,25 +29,28 @@ public record EventResponse
     /// Achievements completed as a result of this event.
     /// </summary>
     [JsonPropertyName("achievements")]
-    public IEnumerable<CompletedAchievementResponse>? Achievements { get; set; }
+    public IEnumerable<CompletedAchievementResponse> Achievements { get; set; } =
+        new List<CompletedAchievementResponse>();
 
     /// <summary>
     /// The user's current streak.
     /// </summary>
     [JsonPropertyName("currentStreak")]
-    public MetricEventStreakResponse? CurrentStreak { get; set; }
+    public required MetricEventStreakResponse CurrentStreak { get; set; }
 
     /// <summary>
     /// A map of points systems by key.
     /// </summary>
     [JsonPropertyName("points")]
-    public Dictionary<string, MetricEventPointsResponse>? Points { get; set; }
+    public Dictionary<string, MetricEventPointsResponse> Points { get; set; } =
+        new Dictionary<string, MetricEventPointsResponse>();
 
     /// <summary>
     /// A map of leaderboards by key.
     /// </summary>
     [JsonPropertyName("leaderboards")]
-    public Dictionary<string, MetricEventLeaderboardResponse>? Leaderboards { get; set; }
+    public Dictionary<string, MetricEventLeaderboardResponse> Leaderboards { get; set; } =
+        new Dictionary<string, MetricEventLeaderboardResponse>();
 
     /// <summary>
     /// The idempotency key used for the event, if one was provided.
@@ -59,6 +64,17 @@ public record EventResponse
     [JsonPropertyName("idempotentReplayed")]
     public bool? IdempotentReplayed { get; set; }
 
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

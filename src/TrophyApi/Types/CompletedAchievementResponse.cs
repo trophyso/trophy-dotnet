@@ -1,15 +1,17 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using TrophyApi.Core;
 
 namespace TrophyApi;
 
+[Serializable]
 public record CompletedAchievementResponse
 {
     /// <summary>
     /// The date and time the achievement was completed, in ISO 8601 format.
     /// </summary>
     [JsonPropertyName("achievedAt")]
-    public DateTime? AchievedAt { get; set; }
+    public required DateTime AchievedAt { get; set; }
 
     /// <summary>
     /// The unique ID of the achievement.
@@ -45,7 +47,7 @@ public record CompletedAchievementResponse
     /// The key used to reference this achievement in the API (only applicable if trigger = 'api')
     /// </summary>
     [JsonPropertyName("key")]
-    public string? Key { get; set; }
+    public required string Key { get; set; }
 
     /// <summary>
     /// The length of the streak required to complete the achievement (only applicable if trigger = 'streak')
@@ -72,11 +74,16 @@ public record CompletedAchievementResponse
     public string? MetricName { get; set; }
 
     /// <summary>
-    /// The user's current streak for the metric, if the metric has streaks enabled.
+    /// Additional properties received from the response, if any.
     /// </summary>
-    [JsonPropertyName("currentStreak")]
-    public MetricEventStreakResponse? CurrentStreak { get; set; }
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

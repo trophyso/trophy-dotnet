@@ -1,21 +1,29 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using TrophyApi.Core;
 
 namespace TrophyApi;
 
+[Serializable]
 public record MetricEventPointsResponse
 {
     /// <summary>
     /// The points added by this event.
     /// </summary>
     [JsonPropertyName("added")]
-    public double? Added { get; set; }
+    public required int Added { get; set; }
 
     /// <summary>
     /// The ID of the points system
     /// </summary>
     [JsonPropertyName("id")]
     public required string Id { get; set; }
+
+    /// <summary>
+    /// The key of the points system
+    /// </summary>
+    [JsonPropertyName("key")]
+    public required string Key { get; set; }
 
     /// <summary>
     /// The name of the points system
@@ -36,10 +44,16 @@ public record MetricEventPointsResponse
     public string? BadgeUrl { get; set; }
 
     /// <summary>
+    /// The maximum number of points a user can be awarded in this points system
+    /// </summary>
+    [JsonPropertyName("maxPoints")]
+    public double? MaxPoints { get; set; }
+
+    /// <summary>
     /// The user's total points
     /// </summary>
     [JsonPropertyName("total")]
-    public required double Total { get; set; }
+    public required int Total { get; set; }
 
     /// <summary>
     /// Array of trigger awards that added points.
@@ -47,6 +61,17 @@ public record MetricEventPointsResponse
     [JsonPropertyName("awards")]
     public IEnumerable<PointsAward> Awards { get; set; } = new List<PointsAward>();
 
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

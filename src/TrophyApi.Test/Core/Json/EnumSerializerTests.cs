@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 using NUnit.Framework;
 using TrophyApi.Core;
 
-namespace TrophyApi.Test.Core;
+namespace TrophyApi.Test.Core.Json;
 
 [TestFixture]
 [Parallelizable(ParallelScope.All)]

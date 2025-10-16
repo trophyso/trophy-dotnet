@@ -1,8 +1,13 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using TrophyApi.Core;
 
 namespace TrophyApi;
 
+/// <summary>
+/// A user's data for a specific leaderboard including rank, value, and history.
+/// </summary>
+[Serializable]
 public record UserLeaderboardResponse
 {
     /// <summary>
@@ -16,12 +21,6 @@ public record UserLeaderboardResponse
     /// </summary>
     [JsonPropertyName("value")]
     public int? Value { get; set; }
-
-    /// <summary>
-    /// An array of events showing the user's rank and value changes over time.
-    /// </summary>
-    [JsonPropertyName("history")]
-    public IEnumerable<LeaderboardEvent> History { get; set; } = new List<LeaderboardEvent>();
 
     /// <summary>
     /// The unique ID of the leaderboard.
@@ -40,12 +39,6 @@ public record UserLeaderboardResponse
     /// </summary>
     [JsonPropertyName("key")]
     public required string Key { get; set; }
-
-    /// <summary>
-    /// The status of the leaderboard.
-    /// </summary>
-    [JsonPropertyName("status")]
-    public LeaderboardResponseStatus? Status { get; set; }
 
     /// <summary>
     /// What the leaderboard ranks by.
@@ -81,7 +74,7 @@ public record UserLeaderboardResponse
     /// The user-facing description of the leaderboard.
     /// </summary>
     [JsonPropertyName("description")]
-    public string? Description { get; set; }
+    public required string Description { get; set; }
 
     /// <summary>
     /// The start date of the leaderboard in YYYY-MM-DD format.
@@ -105,7 +98,7 @@ public record UserLeaderboardResponse
     /// The repetition type for recurring leaderboards, or null for one-time leaderboards.
     /// </summary>
     [JsonPropertyName("runUnit")]
-    public string? RunUnit { get; set; }
+    public LeaderboardResponseRunUnit? RunUnit { get; set; }
 
     /// <summary>
     /// The interval between repetitions, relative to the start date and repetition type.
@@ -113,6 +106,17 @@ public record UserLeaderboardResponse
     [JsonPropertyName("runInterval")]
     public required int RunInterval { get; set; }
 
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

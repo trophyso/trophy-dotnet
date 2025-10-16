@@ -3,6 +3,7 @@ namespace TrophyApi;
 /// <summary>
 /// This exception type will be thrown for any non-2XX API responses.
 /// </summary>
+[Serializable]
 public class NotFoundError(ErrorBody body) : TrophyApiApiException("NotFoundError", 404, body)
 {
     /// <summary>

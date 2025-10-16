@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
 using TrophyApi.Core;
 
 namespace TrophyApi;
@@ -18,11 +17,9 @@ public partial class StreaksClient
     /// <summary>
     /// Get the streak lengths of a list of users, ranked by streak length from longest to shortest.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Streaks.ListAsync(new StreaksListRequest());
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<IEnumerable<BulkStreakResponseItem>> ListAsync(
         StreaksListRequest request,
         RequestOptions? options = null,
@@ -32,8 +29,8 @@ public partial class StreaksClient
         var _query = new Dictionary<string, object>();
         _query["userIds"] = request.UserIds;
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
@@ -44,9 +41,9 @@ public partial class StreaksClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<IEnumerable<BulkStreakResponseItem>>(responseBody)!;
@@ -57,37 +54,40 @@ public partial class StreaksClient
             }
         }
 
-        try
         {
-            switch (response.StatusCode)
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
             {
-                case 401:
-                    throw new UnauthorizedError(JsonUtils.Deserialize<ErrorBody>(responseBody));
-                case 422:
-                    throw new UnprocessableEntityError(
-                        JsonUtils.Deserialize<ErrorBody>(responseBody)
-                    );
+                switch (response.StatusCode)
+                {
+                    case 401:
+                        throw new UnauthorizedError(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                    case 422:
+                        throw new UnprocessableEntityError(
+                            JsonUtils.Deserialize<ErrorBody>(responseBody)
+                        );
+                }
             }
+            catch (JsonException)
+            {
+                // unable to map error response, throwing generic error
+            }
+            throw new TrophyApiApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
-        catch (JsonException)
-        {
-            // unable to map error response, throwing generic error
-        }
-        throw new TrophyApiApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
     }
 
     /// <summary>
     /// Get the top users by streak length (active or longest).
     /// </summary>
-    /// <example>
-    /// <code>
-    /// await client.Streaks.RankingsAsync(new StreaksRankingsRequest());
-    /// </code>
-    /// </example>
+    /// <example><code>
+    /// await client.Streaks.RankingsAsync(
+    ///     new StreaksRankingsRequest { Limit = 1, Type = StreaksRankingsRequestType.Active }
+    /// );
+    /// </code></example>
     public async Task<IEnumerable<StreakRankingUser>> RankingsAsync(
         StreaksRankingsRequest request,
         RequestOptions? options = null,
@@ -104,8 +104,8 @@ public partial class StreaksClient
             _query["type"] = request.Type.Value.Stringify();
         }
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
@@ -116,9 +116,9 @@ public partial class StreaksClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<IEnumerable<StreakRankingUser>>(responseBody)!;
@@ -129,26 +129,29 @@ public partial class StreaksClient
             }
         }
 
-        try
         {
-            switch (response.StatusCode)
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
             {
-                case 401:
-                    throw new UnauthorizedError(JsonUtils.Deserialize<ErrorBody>(responseBody));
-                case 422:
-                    throw new UnprocessableEntityError(
-                        JsonUtils.Deserialize<ErrorBody>(responseBody)
-                    );
+                switch (response.StatusCode)
+                {
+                    case 401:
+                        throw new UnauthorizedError(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                    case 422:
+                        throw new UnprocessableEntityError(
+                            JsonUtils.Deserialize<ErrorBody>(responseBody)
+                        );
+                }
             }
+            catch (JsonException)
+            {
+                // unable to map error response, throwing generic error
+            }
+            throw new TrophyApiApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
-        catch (JsonException)
-        {
-            // unable to map error response, throwing generic error
-        }
-        throw new TrophyApiApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
     }
 }

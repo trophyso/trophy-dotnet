@@ -7,3 +7,5 @@ src/TrophyApi/obj/
 /node_modules
 /wwwroot/node_modules
 
+# OSX
+.DS_Store

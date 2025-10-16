@@ -36,17 +36,17 @@ public partial class TrophyApiClient
         Admin = new AdminClient(_client);
     }
 
-    public AchievementsClient Achievements { get; init; }
+    public AchievementsClient Achievements { get; }
 
-    public MetricsClient Metrics { get; init; }
+    public MetricsClient Metrics { get; }
 
-    public UsersClient Users { get; init; }
+    public UsersClient Users { get; }
 
-    public StreaksClient Streaks { get; init; }
+    public StreaksClient Streaks { get; }
 
-    public PointsClient Points { get; init; }
+    public PointsClient Points { get; }
 
-    public LeaderboardsClient Leaderboards { get; init; }
+    public LeaderboardsClient Leaderboards { get; }
 
-    public AdminClient Admin { get; init; }
+    public AdminClient Admin { get; }
 }

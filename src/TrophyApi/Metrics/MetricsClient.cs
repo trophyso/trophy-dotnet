@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
 using TrophyApi.Core;
 
 namespace TrophyApi;
@@ -18,8 +17,7 @@ public partial class MetricsClient
     /// <summary>
     /// Increment or decrement the value of a metric for a user.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Metrics.EventAsync(
     ///     "words-written",
     ///     new MetricsEventRequest
@@ -28,7 +26,10 @@ public partial class MetricsClient
     ///         User = new UpsertedUser
     ///         {
     ///             Email = "user@example.com",
+    ///             Name = "User",
     ///             Tz = "Europe/London",
+    ///             DeviceTokens = new List&lt;string&gt;() { "token1", "token2" },
+    ///             SubscribeToEmails = true,
     ///             Attributes = new Dictionary&lt;string, string&gt;()
     ///             {
     ///                 { "department", "engineering" },
@@ -44,8 +45,7 @@ public partial class MetricsClient
     ///         },
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<EventResponse> EventAsync(
         string key,
         MetricsEventRequest request,
@@ -58,20 +58,17 @@ public partial class MetricsClient
         {
             _headers["Idempotency-Key"] = request.IdempotencyKey;
         }
-        var requestBody = new Dictionary<string, object>()
-        {
-            { "user", request.User },
-            { "value", request.Value },
-            { "attributes", request.Attributes },
-        };
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Post,
-                    Path = $"metrics/{key}/event",
-                    Body = requestBody,
+                    Path = string.Format(
+                        "metrics/{0}/event",
+                        ValueConvert.ToPathParameterString(key)
+                    ),
+                    Body = request,
                     Headers = _headers,
                     ContentType = "application/json",
                     Options = options,
@@ -79,9 +76,9 @@ public partial class MetricsClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<EventResponse>(responseBody)!;
@@ -92,28 +89,31 @@ public partial class MetricsClient
             }
         }
 
-        try
         {
-            switch (response.StatusCode)
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
             {
-                case 400:
-                    throw new BadRequestError(JsonUtils.Deserialize<ErrorBody>(responseBody));
-                case 401:
-                    throw new UnauthorizedError(JsonUtils.Deserialize<ErrorBody>(responseBody));
-                case 422:
-                    throw new UnprocessableEntityError(
-                        JsonUtils.Deserialize<ErrorBody>(responseBody)
-                    );
+                switch (response.StatusCode)
+                {
+                    case 400:
+                        throw new BadRequestError(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                    case 401:
+                        throw new UnauthorizedError(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                    case 422:
+                        throw new UnprocessableEntityError(
+                            JsonUtils.Deserialize<ErrorBody>(responseBody)
+                        );
+                }
             }
+            catch (JsonException)
+            {
+                // unable to map error response, throwing generic error
+            }
+            throw new TrophyApiApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
-        catch (JsonException)
-        {
-            // unable to map error response, throwing generic error
-        }
-        throw new TrophyApiApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
     }
 }

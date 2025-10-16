@@ -1,33 +1,35 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using TrophyApi.Core;
 
 namespace TrophyApi;
 
+[Serializable]
 public record PointsTriggerResponse
 {
     /// <summary>
     /// The unique ID of the trigger.
     /// </summary>
     [JsonPropertyName("id")]
-    public string? Id { get; set; }
+    public required string Id { get; set; }
 
     /// <summary>
     /// The type of trigger.
     /// </summary>
     [JsonPropertyName("type")]
-    public PointsTriggerResponseType? Type { get; set; }
+    public required PointsTriggerResponseType Type { get; set; }
 
     /// <summary>
     /// The points awarded by this trigger.
     /// </summary>
     [JsonPropertyName("points")]
-    public double? Points { get; set; }
+    public required int Points { get; set; }
 
     /// <summary>
     /// The status of the trigger.
     /// </summary>
     [JsonPropertyName("status")]
-    public PointsTriggerResponseStatus? Status { get; set; }
+    public required PointsTriggerResponseStatus Status { get; set; }
 
     /// <summary>
     /// The unique ID of the achievement associated with this trigger, if the trigger is an achievement.
@@ -45,13 +47,13 @@ public record PointsTriggerResponse
     /// The amount that a user must increase the metric to earn the points, if the trigger is a metric.
     /// </summary>
     [JsonPropertyName("metricThreshold")]
-    public double? MetricThreshold { get; set; }
+    public int? MetricThreshold { get; set; }
 
     /// <summary>
     /// The number of consecutive streak periods that a user must complete to earn the points, if the trigger is a streak.
     /// </summary>
     [JsonPropertyName("streakLengthThreshold")]
-    public double? StreakLengthThreshold { get; set; }
+    public int? StreakLengthThreshold { get; set; }
 
     /// <summary>
     /// The name of the metric associated with this trigger, if the trigger is a metric.
@@ -64,6 +66,18 @@ public record PointsTriggerResponse
     /// </summary>
     [JsonPropertyName("achievementName")]
     public string? AchievementName { get; set; }
+
+    /// <summary>
+    /// The time unit of the trigger, if the trigger is a time interval.
+    /// </summary>
+    [JsonPropertyName("timeUnit")]
+    public PointsTriggerResponseTimeUnit? TimeUnit { get; set; }
+
+    /// <summary>
+    /// The interval of the trigger in the time unit, if the trigger is a time interval.
+    /// </summary>
+    [JsonPropertyName("timeInterval")]
+    public int? TimeInterval { get; set; }
 
     /// <summary>
     /// User attribute filters that must be met for this trigger to activate. Only present if the trigger has user attribute filters configured.
@@ -81,14 +95,25 @@ public record PointsTriggerResponse
     /// The date and time the trigger was created, in ISO 8601 format.
     /// </summary>
     [JsonPropertyName("created")]
-    public DateTime? Created { get; set; }
+    public required DateTime Created { get; set; }
 
     /// <summary>
     /// The date and time the trigger was last updated, in ISO 8601 format.
     /// </summary>
     [JsonPropertyName("updated")]
-    public DateTime? Updated { get; set; }
+    public required DateTime Updated { get; set; }
 
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

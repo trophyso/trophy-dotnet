@@ -1,10 +1,18 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using TrophyApi.Core;
 
 namespace TrophyApi;
 
+[Serializable]
 public record LeaderboardResponseWithRankings
 {
+    /// <summary>
+    /// The status of the leaderboard.
+    /// </summary>
+    [JsonPropertyName("status")]
+    public required LeaderboardResponseWithRankingsStatus Status { get; set; }
+
     /// <summary>
     /// Array of user rankings for the leaderboard.
     /// </summary>
@@ -28,12 +36,6 @@ public record LeaderboardResponseWithRankings
     /// </summary>
     [JsonPropertyName("key")]
     public required string Key { get; set; }
-
-    /// <summary>
-    /// The status of the leaderboard.
-    /// </summary>
-    [JsonPropertyName("status")]
-    public LeaderboardResponseStatus? Status { get; set; }
 
     /// <summary>
     /// What the leaderboard ranks by.
@@ -69,7 +71,7 @@ public record LeaderboardResponseWithRankings
     /// The user-facing description of the leaderboard.
     /// </summary>
     [JsonPropertyName("description")]
-    public string? Description { get; set; }
+    public required string Description { get; set; }
 
     /// <summary>
     /// The start date of the leaderboard in YYYY-MM-DD format.
@@ -93,7 +95,7 @@ public record LeaderboardResponseWithRankings
     /// The repetition type for recurring leaderboards, or null for one-time leaderboards.
     /// </summary>
     [JsonPropertyName("runUnit")]
-    public string? RunUnit { get; set; }
+    public LeaderboardResponseRunUnit? RunUnit { get; set; }
 
     /// <summary>
     /// The interval between repetitions, relative to the start date and repetition type.
@@ -101,6 +103,17 @@ public record LeaderboardResponseWithRankings
     [JsonPropertyName("runInterval")]
     public required int RunInterval { get; set; }
 
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

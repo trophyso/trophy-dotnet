@@ -3,6 +3,7 @@ using TrophyApi.Core;
 
 namespace TrophyApi.Admin.Streaks;
 
+[Serializable]
 public record CreateStreakFreezesRequest
 {
     /// <summary>
@@ -12,6 +13,7 @@ public record CreateStreakFreezesRequest
     public IEnumerable<CreateStreakFreezesRequestFreezesItem> Freezes { get; set; } =
         new List<CreateStreakFreezesRequestFreezesItem>();
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
