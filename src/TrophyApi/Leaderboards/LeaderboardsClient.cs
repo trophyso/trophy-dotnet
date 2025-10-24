@@ -90,6 +90,7 @@ public partial class LeaderboardsClient
     ///         Limit = 1,
     ///         Run = "2025-01-15",
     ///         UserId = "user-123",
+    ///         UserAttributes = "city:London",
     ///     }
     /// );
     /// </code></example>
@@ -116,6 +117,10 @@ public partial class LeaderboardsClient
         if (request.UserId != null)
         {
             _query["userId"] = request.UserId;
+        }
+        if (request.UserAttributes != null)
+        {
+            _query["userAttributes"] = request.UserAttributes;
         }
         var response = await _client
             .SendRequestAsync(

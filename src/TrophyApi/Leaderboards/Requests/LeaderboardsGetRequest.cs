@@ -30,6 +30,12 @@ public record LeaderboardsGetRequest
     [JsonIgnore]
     public string? UserId { get; set; }
 
+    /// <summary>
+    /// Attribute key and value to filter the rankings by, separated by a colon. This parameter is required, and only valid for leaderboards with a breakdown attribute.
+    /// </summary>
+    [JsonIgnore]
+    public string? UserAttributes { get; set; }
+
     /// <inheritdoc />
     public override string ToString()
     {

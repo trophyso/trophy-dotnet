@@ -38,6 +38,12 @@ public record LeaderboardsAllResponseItem
     public required LeaderboardResponseRankBy RankBy { get; set; }
 
     /// <summary>
+    /// The key of the attribute to break down this leaderboard by.
+    /// </summary>
+    [JsonPropertyName("breakdownAttribute")]
+    public string? BreakdownAttribute { get; set; }
+
+    /// <summary>
     /// The key of the metric to rank by, if rankBy is 'metric'.
     /// </summary>
     [JsonPropertyName("metricKey")]

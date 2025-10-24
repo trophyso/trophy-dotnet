@@ -18,13 +18,21 @@ public partial class AchievementsClient
     /// Get all achievements and their completion stats.
     /// </summary>
     /// <example><code>
-    /// await client.Achievements.AllAsync();
+    /// await client.Achievements.AllAsync(
+    ///     new AchievementsAllRequest { UserAttributes = "plan-type:premium,region:us-east" }
+    /// );
     /// </code></example>
     public async Task<IEnumerable<AchievementWithStatsResponse>> AllAsync(
+        AchievementsAllRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _query = new Dictionary<string, object>();
+        if (request.UserAttributes != null)
+        {
+            _query["userAttributes"] = request.UserAttributes;
+        }
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -32,6 +40,7 @@ public partial class AchievementsClient
                     BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = "achievements",
+                    Query = _query,
                     Options = options,
                 },
                 cancellationToken
