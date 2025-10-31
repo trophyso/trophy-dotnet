@@ -18,21 +18,7 @@ public partial class UsersClient
     /// Create a new user.
     /// </summary>
     /// <example><code>
-    /// await client.Users.CreateAsync(
-    ///     new UpsertedUser
-    ///     {
-    ///         Email = "user@example.com",
-    ///         Name = "User",
-    ///         DeviceTokens = new List&lt;string&gt;() { "token1", "token2" },
-    ///         SubscribeToEmails = true,
-    ///         Attributes = new Dictionary&lt;string, string&gt;()
-    ///         {
-    ///             { "department", "engineering" },
-    ///             { "role", "developer" },
-    ///         },
-    ///         Id = "user-id",
-    ///     }
-    /// );
+    /// await client.Users.CreateAsync(new UpsertedUser { Id = "user-id" });
     /// </code></example>
     public async Task<User> CreateAsync(
         UpsertedUser request,
@@ -169,10 +155,7 @@ public partial class UsersClient
     ///     new UpdatedUser
     ///     {
     ///         Email = "user@example.com",
-    ///         Name = "User",
     ///         Tz = "Europe/London",
-    ///         DeviceTokens = new List&lt;string&gt;() { "token1", "token2" },
-    ///         SubscribeToEmails = true,
     ///         Attributes = new Dictionary&lt;string, string&gt;()
     ///         {
     ///             { "department", "engineering" },
@@ -252,10 +235,7 @@ public partial class UsersClient
     ///     new UpdatedUser
     ///     {
     ///         Email = "user@example.com",
-    ///         Name = "User",
     ///         Tz = "Europe/London",
-    ///         DeviceTokens = new List&lt;string&gt;() { "token1", "token2" },
-    ///         SubscribeToEmails = true,
     ///         Attributes = new Dictionary&lt;string, string&gt;()
     ///         {
     ///             { "department", "engineering" },

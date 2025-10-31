@@ -98,15 +98,7 @@ public partial class AchievementsClient
     ///         User = new UpsertedUser
     ///         {
     ///             Email = "user@example.com",
-    ///             Name = "User",
     ///             Tz = "Europe/London",
-    ///             DeviceTokens = new List&lt;string&gt;() { "token1", "token2" },
-    ///             SubscribeToEmails = true,
-    ///             Attributes = new Dictionary&lt;string, string&gt;()
-    ///             {
-    ///                 { "department", "engineering" },
-    ///                 { "role", "developer" },
-    ///             },
     ///             Id = "user-id",
     ///         },
     ///     }

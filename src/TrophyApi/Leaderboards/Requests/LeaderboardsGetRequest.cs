@@ -13,7 +13,7 @@ public record LeaderboardsGetRequest
     public int? Offset { get; set; }
 
     /// <summary>
-    /// Maximum number of rankings to return.
+    /// Maximum number of rankings to return. Cannot be greater than the size of the leaderboard.
     /// </summary>
     [JsonIgnore]
     public int? Limit { get; set; }
@@ -31,7 +31,7 @@ public record LeaderboardsGetRequest
     public string? UserId { get; set; }
 
     /// <summary>
-    /// Attribute key and value to filter the rankings by, separated by a colon. This parameter is required, and only valid for leaderboards with a breakdown attribute.
+    /// Attribute key and value to filter the rankings by, separated by a colon. For example, `city:London`. This parameter is required, and only valid for leaderboards with a breakdown attribute.
     /// </summary>
     [JsonIgnore]
     public string? UserAttributes { get; set; }

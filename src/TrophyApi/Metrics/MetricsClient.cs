@@ -26,10 +26,7 @@ public partial class MetricsClient
     ///         User = new UpsertedUser
     ///         {
     ///             Email = "user@example.com",
-    ///             Name = "User",
     ///             Tz = "Europe/London",
-    ///             DeviceTokens = new List&lt;string&gt;() { "token1", "token2" },
-    ///             SubscribeToEmails = true,
     ///             Attributes = new Dictionary&lt;string, string&gt;()
     ///             {
     ///                 { "department", "engineering" },
