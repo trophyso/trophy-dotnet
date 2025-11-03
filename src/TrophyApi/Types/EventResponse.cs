@@ -39,14 +39,14 @@ public record EventResponse
     public required MetricEventStreakResponse CurrentStreak { get; set; }
 
     /// <summary>
-    /// A map of points systems by key.
+    /// A map of points systems by key. Only contains points systems that were affected by the event.
     /// </summary>
     [JsonPropertyName("points")]
     public Dictionary<string, MetricEventPointsResponse> Points { get; set; } =
         new Dictionary<string, MetricEventPointsResponse>();
 
     /// <summary>
-    /// A map of leaderboards by key.
+    /// A map of leaderboards by key. Only contains leaderboards that were affected by the event.
     /// </summary>
     [JsonPropertyName("leaderboards")]
     public Dictionary<string, MetricEventLeaderboardResponse> Leaderboards { get; set; } =

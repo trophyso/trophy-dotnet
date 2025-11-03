@@ -15,7 +15,4 @@ public enum StreakFrequency
 
     [EnumMember(Value = "monthly")]
     Monthly,
-
-    [EnumMember(Value = "yearly")]
-    Yearly,
 }
