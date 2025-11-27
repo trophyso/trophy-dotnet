@@ -14,10 +14,10 @@ public record AchievementCompletionResponseAchievement
     public MetricEventStreakResponse? CurrentStreak { get; set; }
 
     /// <summary>
-    /// The date and time the achievement was completed, in ISO 8601 format.
+    /// The date and time the achievement was completed, in ISO 8601 format. Null if the achievement has not been completed.
     /// </summary>
     [JsonPropertyName("achievedAt")]
-    public required DateTime AchievedAt { get; set; }
+    public DateTime? AchievedAt { get; set; }
 
     /// <summary>
     /// The unique ID of the achievement.
