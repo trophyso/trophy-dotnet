@@ -86,7 +86,7 @@ public record UserLeaderboardResponseWithHistory
     /// The user-facing description of the leaderboard.
     /// </summary>
     [JsonPropertyName("description")]
-    public required string Description { get; set; }
+    public string? Description { get; set; }
 
     /// <summary>
     /// The start date of the leaderboard in YYYY-MM-DD format.
@@ -113,10 +113,10 @@ public record UserLeaderboardResponseWithHistory
     public LeaderboardResponseRunUnit? RunUnit { get; set; }
 
     /// <summary>
-    /// The interval between repetitions, relative to the start date and repetition type.
+    /// The interval between repetitions, relative to the start date and repetition type. Null for one-time leaderboards.
     /// </summary>
     [JsonPropertyName("runInterval")]
-    public required int RunInterval { get; set; }
+    public int? RunInterval { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.

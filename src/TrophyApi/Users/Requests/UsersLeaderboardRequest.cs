@@ -12,6 +12,12 @@ public record UsersLeaderboardRequest
     [JsonIgnore]
     public string? Run { get; set; }
 
+    /// <summary>
+    /// The number of events to return in the history array.
+    /// </summary>
+    [JsonIgnore]
+    public int? NumEvents { get; set; }
+
     /// <inheritdoc />
     public override string ToString()
     {

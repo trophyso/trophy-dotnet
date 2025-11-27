@@ -863,7 +863,7 @@ public partial class UsersClient
     /// await client.Users.LeaderboardAsync(
     ///     "user-123",
     ///     "weekly-words",
-    ///     new UsersLeaderboardRequest { Run = "2025-01-15" }
+    ///     new UsersLeaderboardRequest { Run = "2025-01-15", NumEvents = 1 }
     /// );
     /// </code></example>
     public async Task<UserLeaderboardResponseWithHistory> LeaderboardAsync(
@@ -878,6 +878,10 @@ public partial class UsersClient
         if (request.Run != null)
         {
             _query["run"] = request.Run;
+        }
+        if (request.NumEvents != null)
+        {
+            _query["numEvents"] = request.NumEvents.Value.ToString();
         }
         var response = await _client
             .SendRequestAsync(
