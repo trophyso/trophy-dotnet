@@ -1,4 +1,3 @@
-using TrophyApi.Admin.Streaks;
 using TrophyApi.Core;
 
 namespace TrophyApi.Admin;

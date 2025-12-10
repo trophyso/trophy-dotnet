@@ -940,4 +940,79 @@ public partial class UsersClient
             );
         }
     }
+
+    /// <summary>
+    /// Get a user's year-in-review wrapped data.
+    /// </summary>
+    /// <example><code>
+    /// await client.Users.WrappedAsync("user-123", new UsersWrappedRequest { Year = 1 });
+    /// </code></example>
+    public async Task<WrappedResponse> WrappedAsync(
+        string id,
+        UsersWrappedRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        if (request.Year != null)
+        {
+            _query["year"] = request.Year.Value.ToString();
+        }
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.Environment.Api,
+                    Method = HttpMethod.Get,
+                    Path = string.Format(
+                        "users/{0}/wrapped",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<WrappedResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new TrophyApiException("Failed to deserialize response", e);
+            }
+        }
+
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                switch (response.StatusCode)
+                {
+                    case 401:
+                        throw new UnauthorizedError(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                    case 404:
+                        throw new NotFoundError(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                    case 422:
+                        throw new UnprocessableEntityError(
+                            JsonUtils.Deserialize<ErrorBody>(responseBody)
+                        );
+                }
+            }
+            catch (JsonException)
+            {
+                // unable to map error response, throwing generic error
+            }
+            throw new TrophyApiApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
 }

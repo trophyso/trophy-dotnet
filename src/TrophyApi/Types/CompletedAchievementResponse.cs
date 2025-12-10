@@ -14,6 +14,30 @@ public record CompletedAchievementResponse
     public DateTime? AchievedAt { get; set; }
 
     /// <summary>
+    /// The number of users who have completed this achievement.
+    /// </summary>
+    [JsonPropertyName("completions")]
+    public required int Completions { get; set; }
+
+    /// <summary>
+    /// The percentage of all users who have completed this achievement.
+    /// </summary>
+    [JsonPropertyName("rarity")]
+    public required double Rarity { get; set; }
+
+    /// <summary>
+    /// User attribute filters that must be met for this achievement to be completed. Only present if the achievement has user attribute filters configured.
+    /// </summary>
+    [JsonPropertyName("userAttributes")]
+    public IEnumerable<AchievementWithStatsResponseUserAttributesItem>? UserAttributes { get; set; }
+
+    /// <summary>
+    /// Event attribute filter that must be met for this achievement to be completed. Only present if the achievement has an event filter configured.
+    /// </summary>
+    [JsonPropertyName("eventAttribute")]
+    public AchievementWithStatsResponseEventAttribute? EventAttribute { get; set; }
+
+    /// <summary>
     /// The unique ID of the achievement.
     /// </summary>
     [JsonPropertyName("id")]
