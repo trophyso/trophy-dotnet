@@ -2,22 +2,16 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using TrophyApi.Core;
 
-namespace TrophyApi;
+namespace TrophyApi.Admin;
 
 [Serializable]
-public record AchievementWithStatsResponseUserAttributesItem
+public record RestoreStreaksRequestUsersItem
 {
     /// <summary>
-    /// The key of the user attribute.
+    /// The ID of the user to restore streaks for.
     /// </summary>
-    [JsonPropertyName("key")]
-    public required string Key { get; set; }
-
-    /// <summary>
-    /// The value of the user attribute.
-    /// </summary>
-    [JsonPropertyName("value")]
-    public required string Value { get; set; }
+    [JsonPropertyName("id")]
+    public required string Id { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.

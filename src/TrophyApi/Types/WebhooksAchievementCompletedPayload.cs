@@ -23,7 +23,7 @@ public record WebhooksAchievementCompletedPayload
     /// The achievement completion that occurred.
     /// </summary>
     [JsonPropertyName("achievement")]
-    public required CompletedAchievementResponse Achievement { get; set; }
+    public required UserAchievementResponse Achievement { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.

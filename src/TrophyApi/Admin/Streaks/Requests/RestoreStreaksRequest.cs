@@ -7,10 +7,11 @@ namespace TrophyApi.Admin;
 public record RestoreStreaksRequest
 {
     /// <summary>
-    /// Array of user IDs to restore streaks for. Maximum 100 users per request.
+    /// Array of users to restore streaks for. Maximum 100 users per request.
     /// </summary>
-    [JsonPropertyName("userIds")]
-    public IEnumerable<string> UserIds { get; set; } = new List<string>();
+    [JsonPropertyName("users")]
+    public IEnumerable<RestoreStreaksRequestUsersItem> Users { get; set; } =
+        new List<RestoreStreaksRequestUsersItem>();
 
     /// <inheritdoc />
     public override string ToString()

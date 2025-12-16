@@ -38,7 +38,7 @@ public record User
     /// The user's device tokens.
     /// </summary>
     [JsonPropertyName("deviceTokens")]
-    public IEnumerable<string> DeviceTokens { get; set; } = new List<string>();
+    public IEnumerable<string>? DeviceTokens { get; set; }
 
     /// <summary>
     /// Whether the user is opted into receiving Trophy-powered emails.

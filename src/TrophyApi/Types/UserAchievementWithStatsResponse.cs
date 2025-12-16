@@ -5,14 +5,8 @@ using TrophyApi.Core;
 namespace TrophyApi;
 
 [Serializable]
-public record AchievementCompletionResponseAchievement
+public record UserAchievementWithStatsResponse
 {
-    /// <summary>
-    /// The user's current streak for the metric, if the metric has streaks enabled.
-    /// </summary>
-    [JsonPropertyName("currentStreak")]
-    public MetricEventStreakResponse? CurrentStreak { get; set; }
-
     /// <summary>
     /// The date and time the achievement was completed, in ISO 8601 format. Null if the achievement has not been completed.
     /// </summary>
@@ -30,18 +24,6 @@ public record AchievementCompletionResponseAchievement
     /// </summary>
     [JsonPropertyName("rarity")]
     public required double Rarity { get; set; }
-
-    /// <summary>
-    /// User attribute filters that must be met for this achievement to be completed. Only present if the achievement has user attribute filters configured.
-    /// </summary>
-    [JsonPropertyName("userAttributes")]
-    public IEnumerable<AchievementWithStatsResponseUserAttributesItem>? UserAttributes { get; set; }
-
-    /// <summary>
-    /// Event attribute filter that must be met for this achievement to be completed. Only present if the achievement has an event filter configured.
-    /// </summary>
-    [JsonPropertyName("eventAttribute")]
-    public AchievementWithStatsResponseEventAttribute? EventAttribute { get; set; }
 
     /// <summary>
     /// The unique ID of the achievement.
@@ -77,7 +59,7 @@ public record AchievementCompletionResponseAchievement
     /// The key used to reference this achievement in the API (only applicable if trigger = 'api')
     /// </summary>
     [JsonPropertyName("key")]
-    public required string Key { get; set; }
+    public string? Key { get; set; }
 
     /// <summary>
     /// The length of the streak required to complete the achievement (only applicable if trigger = 'streak')
@@ -102,6 +84,18 @@ public record AchievementCompletionResponseAchievement
     /// </summary>
     [JsonPropertyName("metricName")]
     public string? MetricName { get; set; }
+
+    /// <summary>
+    /// User attribute filters that must be met for this achievement to be completed. Only present if the achievement has user attribute filters configured.
+    /// </summary>
+    [JsonPropertyName("userAttributes")]
+    public IEnumerable<AchievementResponseUserAttributesItem>? UserAttributes { get; set; }
+
+    /// <summary>
+    /// Event attribute filter that must be met for this achievement to be completed. Only present if the achievement has an event filter configured.
+    /// </summary>
+    [JsonPropertyName("eventAttribute")]
+    public AchievementResponseEventAttribute? EventAttribute { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.

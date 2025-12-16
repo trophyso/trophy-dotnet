@@ -14,7 +14,7 @@ public record AchievementCompletionResponse
     public required string CompletionId { get; set; }
 
     [JsonPropertyName("achievement")]
-    public required AchievementCompletionResponseAchievement Achievement { get; set; }
+    public required UserAchievementResponse Achievement { get; set; }
 
     /// <summary>
     /// A map of points systems by key that were affected by this achievement completion.

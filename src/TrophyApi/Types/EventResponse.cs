@@ -29,8 +29,8 @@ public record EventResponse
     /// Achievements completed as a result of this event.
     /// </summary>
     [JsonPropertyName("achievements")]
-    public IEnumerable<CompletedAchievementResponse> Achievements { get; set; } =
-        new List<CompletedAchievementResponse>();
+    public IEnumerable<UserAchievementResponse> Achievements { get; set; } =
+        new List<UserAchievementResponse>();
 
     /// <summary>
     /// The user's current streak.

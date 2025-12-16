@@ -5,25 +5,19 @@ using TrophyApi.Core;
 namespace TrophyApi;
 
 [Serializable]
-public record BulkStreakResponseItem
+public record AchievementResponseUserAttributesItem
 {
     /// <summary>
-    /// The ID of the user.
+    /// The key of the user attribute.
     /// </summary>
-    [JsonPropertyName("userId")]
-    public required string UserId { get; set; }
+    [JsonPropertyName("key")]
+    public required string Key { get; set; }
 
     /// <summary>
-    /// The length of the user's streak.
+    /// The value of the user attribute.
     /// </summary>
-    [JsonPropertyName("streakLength")]
-    public required int StreakLength { get; set; }
-
-    /// <summary>
-    /// The timestamp the streak was extended, as a string. Null if the streak is not active.
-    /// </summary>
-    [JsonPropertyName("extended")]
-    public string? Extended { get; set; }
+    [JsonPropertyName("value")]
+    public required string Value { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.

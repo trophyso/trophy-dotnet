@@ -34,8 +34,8 @@ public record WrappedMostActiveMonth
     /// Achievements completed during this period.
     /// </summary>
     [JsonPropertyName("achievements")]
-    public IEnumerable<CompletedAchievementResponse> Achievements { get; set; } =
-        new List<CompletedAchievementResponse>();
+    public IEnumerable<UserAchievementResponse> Achievements { get; set; } =
+        new List<UserAchievementResponse>();
 
     /// <summary>
     /// The user's best leaderboard rankings during this period, keyed by leaderboard key.

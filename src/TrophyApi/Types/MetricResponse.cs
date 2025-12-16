@@ -41,8 +41,8 @@ public record MetricResponse
     /// A list of the metric's achievements and the user's progress towards each.
     /// </summary>
     [JsonPropertyName("achievements")]
-    public IEnumerable<CompletedAchievementResponse> Achievements { get; set; } =
-        new List<CompletedAchievementResponse>();
+    public IEnumerable<UserAchievementResponse> Achievements { get; set; } =
+        new List<UserAchievementResponse>();
 
     /// <summary>
     /// Additional properties received from the response, if any.

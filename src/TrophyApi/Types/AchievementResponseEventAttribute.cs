@@ -8,7 +8,7 @@ namespace TrophyApi;
 /// Event attribute filter that must be met for this achievement to be completed. Only present if the achievement has an event filter configured.
 /// </summary>
 [Serializable]
-public record AchievementWithStatsResponseEventAttribute
+public record AchievementResponseEventAttribute
 {
     /// <summary>
     /// The key of the event attribute.

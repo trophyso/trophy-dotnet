@@ -26,7 +26,11 @@ public partial class StreaksClient
     /// await client.Admin.Streaks.RestoreAsync(
     ///     new RestoreStreaksRequest
     ///     {
-    ///         UserIds = new List&lt;string&gt;() { "user-123", "user-456" },
+    ///         Users = new List&lt;RestoreStreaksRequestUsersItem&gt;()
+    ///         {
+    ///             new RestoreStreaksRequestUsersItem { Id = "user-123" },
+    ///             new RestoreStreaksRequestUsersItem { Id = "user-456" },
+    ///         },
     ///     }
     /// );
     /// </code></example>

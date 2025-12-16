@@ -542,7 +542,7 @@ public partial class UsersClient
     ///     new UsersAchievementsRequest { IncludeIncomplete = "true" }
     /// );
     /// </code></example>
-    public async Task<IEnumerable<CompletedAchievementResponse>> AchievementsAsync(
+    public async Task<IEnumerable<UserAchievementWithStatsResponse>> AchievementsAsync(
         string id,
         UsersAchievementsRequest request,
         RequestOptions? options = null,
@@ -575,7 +575,7 @@ public partial class UsersClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<IEnumerable<CompletedAchievementResponse>>(
+                return JsonUtils.Deserialize<IEnumerable<UserAchievementWithStatsResponse>>(
                     responseBody
                 )!;
             }
