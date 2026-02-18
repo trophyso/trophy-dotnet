@@ -1,51 +1,66 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
+using global::System.Threading.Tasks;
+using TrophyApi;
 using TrophyApi.Core;
 
-namespace TrophyApi;
+namespace TrophyApi.Admin.Points;
 
-public partial class PointsClient
+public partial class BoostsClient
 {
     private RawClient _client;
 
-    internal PointsClient(RawClient client)
+    internal BoostsClient(RawClient client)
     {
         _client = client;
     }
 
     /// <summary>
-    /// Get a breakdown of the number of users with points in each range.
+    /// Create points boosts for multiple users.
     /// </summary>
     /// <example><code>
-    /// await client.Points.SummaryAsync(
-    ///     "points-system-key",
-    ///     new PointsSummaryRequest { UserAttributes = "plan-type:premium,region:us-east" }
+    /// await client.Admin.Points.Boosts.CreateAsync(
+    ///     new CreatePointsBoostsRequest
+    ///     {
+    ///         SystemKey = "xp",
+    ///         Boosts = new List&lt;CreatePointsBoostsRequestBoostsItem&gt;()
+    ///         {
+    ///             new CreatePointsBoostsRequestBoostsItem
+    ///             {
+    ///                 UserId = "user-123",
+    ///                 Name = "Double XP Weekend",
+    ///                 Start = "2024-01-01",
+    ///                 End = "2024-01-03",
+    ///                 Multiplier = 2,
+    ///             },
+    ///             new CreatePointsBoostsRequestBoostsItem
+    ///             {
+    ///                 UserId = "user-456",
+    ///                 Name = "Holiday Bonus",
+    ///                 Start = "2024-12-25",
+    ///                 Multiplier = 1.5,
+    ///                 Rounding = CreatePointsBoostsRequestBoostsItemRounding.Up,
+    ///             },
+    ///         },
+    ///     }
     /// );
     /// </code></example>
-    public async Task<IEnumerable<PointsRange>> SummaryAsync(
-        string key,
-        PointsSummaryRequest request,
+    public async Task<CreatePointsBoostsResponse> CreateAsync(
+        CreatePointsBoostsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        if (request.UserAttributes != null)
-        {
-            _query["userAttributes"] = request.UserAttributes;
-        }
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
-                    Method = HttpMethod.Get,
-                    Path = string.Format(
-                        "points/{0}/summary",
-                        ValueConvert.ToPathParameterString(key)
-                    ),
-                    Query = _query,
+                    BaseUrl = _client.Options.Environment.Admin,
+                    Method = HttpMethod.Post,
+                    Path = "points/boosts",
+                    Body = request,
+                    ContentType = "application/json",
                     Options = options,
                 },
                 cancellationToken
@@ -56,7 +71,7 @@ public partial class PointsClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<IEnumerable<PointsRange>>(responseBody)!;
+                return JsonUtils.Deserialize<CreatePointsBoostsResponse>(responseBody)!;
             }
             catch (JsonException e)
             {
@@ -70,6 +85,8 @@ public partial class PointsClient
             {
                 switch (response.StatusCode)
                 {
+                    case 400:
+                        throw new BadRequestError(JsonUtils.Deserialize<ErrorBody>(responseBody));
                     case 401:
                         throw new UnauthorizedError(JsonUtils.Deserialize<ErrorBody>(responseBody));
                     case 404:
@@ -93,24 +110,27 @@ public partial class PointsClient
     }
 
     /// <summary>
-    /// Get a points system with its triggers.
+    /// Archive multiple points boosts by ID.
     /// </summary>
     /// <example><code>
-    /// await client.Points.SystemAsync("points-system-key");
+    /// await client.Admin.Points.Boosts.BatchArchiveAsync(new BoostsBatchArchiveRequest());
     /// </code></example>
-    public async Task<PointsSystemResponse> SystemAsync(
-        string key,
+    public async Task<ArchivePointsBoostsResponse> BatchArchiveAsync(
+        BoostsBatchArchiveRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _query = new Dictionary<string, object>();
+        _query["ids"] = request.Ids;
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
-                    Method = HttpMethod.Get,
-                    Path = string.Format("points/{0}", ValueConvert.ToPathParameterString(key)),
+                    BaseUrl = _client.Options.Environment.Admin,
+                    Method = HttpMethod.Delete,
+                    Path = "points/boosts",
+                    Query = _query,
                     Options = options,
                 },
                 cancellationToken
@@ -121,7 +141,7 @@ public partial class PointsClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<PointsSystemResponse>(responseBody)!;
+                return JsonUtils.Deserialize<ArchivePointsBoostsResponse>(responseBody)!;
             }
             catch (JsonException e)
             {
@@ -135,10 +155,10 @@ public partial class PointsClient
             {
                 switch (response.StatusCode)
                 {
+                    case 400:
+                        throw new BadRequestError(JsonUtils.Deserialize<ErrorBody>(responseBody));
                     case 401:
                         throw new UnauthorizedError(JsonUtils.Deserialize<ErrorBody>(responseBody));
-                    case 404:
-                        throw new NotFoundError(JsonUtils.Deserialize<ErrorBody>(responseBody));
                 }
             }
             catch (JsonException)
@@ -154,37 +174,27 @@ public partial class PointsClient
     }
 
     /// <summary>
-    /// Get all global boosts for a points system. Finished boosts are excluded by default.
+    /// Archive a points boost by ID.
     /// </summary>
     /// <example><code>
-    /// await client.Points.BoostsAsync(
-    ///     "points-system-key",
-    ///     new PointsBoostsRequest { IncludeFinished = true }
-    /// );
+    /// await client.Admin.Points.Boosts.ArchiveAsync("id");
     /// </code></example>
-    public async Task<IEnumerable<PointsBoost>> BoostsAsync(
-        string key,
-        PointsBoostsRequest request,
+    public async global::System.Threading.Tasks.Task ArchiveAsync(
+        string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        if (request.IncludeFinished != null)
-        {
-            _query["includeFinished"] = JsonUtils.Serialize(request.IncludeFinished.Value);
-        }
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Api,
-                    Method = HttpMethod.Get,
+                    BaseUrl = _client.Options.Environment.Admin,
+                    Method = HttpMethod.Delete,
                     Path = string.Format(
-                        "points/{0}/boosts",
-                        ValueConvert.ToPathParameterString(key)
+                        "points/boosts/{0}",
+                        ValueConvert.ToPathParameterString(id)
                     ),
-                    Query = _query,
                     Options = options,
                 },
                 cancellationToken
@@ -192,17 +202,8 @@ public partial class PointsClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<IEnumerable<PointsBoost>>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new TrophyApiException("Failed to deserialize response", e);
-            }
+            return;
         }
-
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try

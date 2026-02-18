@@ -4,26 +4,17 @@ using TrophyApi.Core;
 
 namespace TrophyApi;
 
+/// <summary>
+/// Response containing the count of archived points boosts.
+/// </summary>
 [Serializable]
-public record WebhooksPointsChangedPayload
+public record ArchivePointsBoostsResponse
 {
     /// <summary>
-    /// The webhook event type.
+    /// The number of boosts that were archived.
     /// </summary>
-    [JsonPropertyName("type")]
-    public string Type { get; set; } = "points.changed";
-
-    /// <summary>
-    /// The user whose points increased or decreased.
-    /// </summary>
-    [JsonPropertyName("user")]
-    public required User User { get; set; }
-
-    /// <summary>
-    /// The user's points after the event (includes added amount for this event).
-    /// </summary>
-    [JsonPropertyName("points")]
-    public required MetricEventPointsResponse Points { get; set; }
+    [JsonPropertyName("archivedCount")]
+    public required int ArchivedCount { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.

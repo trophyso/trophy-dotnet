@@ -4,26 +4,23 @@ using TrophyApi.Core;
 
 namespace TrophyApi;
 
+/// <summary>
+/// Response containing created boosts and any issues encountered while creating points boosts.
+/// </summary>
 [Serializable]
-public record WebhooksPointsChangedPayload
+public record CreatePointsBoostsResponse
 {
     /// <summary>
-    /// The webhook event type.
+    /// Array of successfully created boosts.
     /// </summary>
-    [JsonPropertyName("type")]
-    public string Type { get; set; } = "points.changed";
+    [JsonPropertyName("created")]
+    public IEnumerable<CreatedPointsBoost> Created { get; set; } = new List<CreatedPointsBoost>();
 
     /// <summary>
-    /// The user whose points increased or decreased.
+    /// Array of issues encountered during boost creation.
     /// </summary>
-    [JsonPropertyName("user")]
-    public required User User { get; set; }
-
-    /// <summary>
-    /// The user's points after the event (includes added amount for this event).
-    /// </summary>
-    [JsonPropertyName("points")]
-    public required MetricEventPointsResponse Points { get; set; }
+    [JsonPropertyName("issues")]
+    public IEnumerable<BulkInsertIssue> Issues { get; set; } = new List<BulkInsertIssue>();
 
     /// <summary>
     /// Additional properties received from the response, if any.

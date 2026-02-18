@@ -5,25 +5,25 @@ using TrophyApi.Core;
 namespace TrophyApi;
 
 [Serializable]
-public record WebhooksPointsChangedPayload
+public record WebhooksPointsBoostFinishedPayload
 {
     /// <summary>
     /// The webhook event type.
     /// </summary>
     [JsonPropertyName("type")]
-    public string Type { get; set; } = "points.changed";
+    public string Type { get; set; } = "points.boost_finished";
 
     /// <summary>
-    /// The user whose points increased or decreased.
+    /// When the event occurred (ISO 8601).
     /// </summary>
-    [JsonPropertyName("user")]
-    public required User User { get; set; }
+    [JsonPropertyName("timestamp")]
+    public required DateTime Timestamp { get; set; }
 
     /// <summary>
-    /// The user's points after the event (includes added amount for this event).
+    /// The points boost that finished.
     /// </summary>
-    [JsonPropertyName("points")]
-    public required MetricEventPointsResponse Points { get; set; }
+    [JsonPropertyName("boost")]
+    public required PointsBoostWebhookPayload Boost { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.

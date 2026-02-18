@@ -4,15 +4,12 @@ using TrophyApi.Core;
 
 namespace TrophyApi;
 
+/// <summary>
+/// Points system response for metric events.
+/// </summary>
 [Serializable]
 public record MetricEventPointsResponse
 {
-    /// <summary>
-    /// The points added by this event.
-    /// </summary>
-    [JsonPropertyName("added")]
-    public required int Added { get; set; }
-
     /// <summary>
     /// The ID of the points system
     /// </summary>
@@ -54,6 +51,12 @@ public record MetricEventPointsResponse
     /// </summary>
     [JsonPropertyName("total")]
     public required int Total { get; set; }
+
+    /// <summary>
+    /// The points added by this event.
+    /// </summary>
+    [JsonPropertyName("added")]
+    public required int Added { get; set; }
 
     /// <summary>
     /// Array of trigger awards that added points.

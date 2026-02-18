@@ -15,16 +15,22 @@ public partial class LeaderboardsClient
     }
 
     /// <summary>
-    /// Get all active leaderboards for your organization.
+    /// Get all leaderboards for your organization. Finished leaderboards are excluded by default.
     /// </summary>
     /// <example><code>
-    /// await client.Leaderboards.AllAsync();
+    /// await client.Leaderboards.AllAsync(new LeaderboardsAllRequest { IncludeFinished = true });
     /// </code></example>
     public async Task<IEnumerable<LeaderboardsAllResponseItem>> AllAsync(
+        LeaderboardsAllRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
+        var _query = new Dictionary<string, object>();
+        if (request.IncludeFinished != null)
+        {
+            _query["includeFinished"] = JsonUtils.Serialize(request.IncludeFinished.Value);
+        }
         var response = await _client
             .SendRequestAsync(
                 new JsonRequest
@@ -32,6 +38,7 @@ public partial class LeaderboardsClient
                     BaseUrl = _client.Options.Environment.Api,
                     Method = HttpMethod.Get,
                     Path = "leaderboards",
+                    Query = _query,
                     Options = options,
                 },
                 cancellationToken

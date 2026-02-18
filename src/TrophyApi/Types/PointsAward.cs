@@ -35,6 +35,12 @@ public record PointsAward
     public PointsTrigger? Trigger { get; set; }
 
     /// <summary>
+    /// Array of points boosts that applied to this award.
+    /// </summary>
+    [JsonPropertyName("boosts")]
+    public IEnumerable<PointsBoost>? Boosts { get; set; }
+
+    /// <summary>
     /// Additional properties received from the response, if any.
     /// </summary>
     /// <remarks>
