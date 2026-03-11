@@ -15,4 +15,7 @@ public enum AchievementResponseTrigger
 
     [EnumMember(Value = "api")]
     Api,
+
+    [EnumMember(Value = "achievement")]
+    Achievement,
 }

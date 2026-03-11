@@ -62,6 +62,12 @@ public record AchievementWithStatsResponse
     public int? StreakLength { get; set; }
 
     /// <summary>
+    /// The IDs of the prerequisite achievements that must be completed to earn this achievement (only applicable if trigger = 'achievement')
+    /// </summary>
+    [JsonPropertyName("achievementIds")]
+    public IEnumerable<string>? AchievementIds { get; set; }
+
+    /// <summary>
     /// The ID of the metric associated with this achievement (only applicable if trigger = 'metric')
     /// </summary>
     [JsonPropertyName("metricId")]
