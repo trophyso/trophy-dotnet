@@ -4,26 +4,17 @@ using TrophyApi.Core;
 
 namespace TrophyApi;
 
+/// <summary>
+/// The points system in which the level changed.
+/// </summary>
 [Serializable]
-public record GetUserPointsResponse
+public record WebhooksPointsLevelChangedPayloadPoints
 {
     /// <summary>
-    /// The user's total points
+    /// The user's total points in this system.
     /// </summary>
     [JsonPropertyName("total")]
     public required int Total { get; set; }
-
-    /// <summary>
-    /// The user's current level in this points system, or null if no levels are configured or the user hasn't reached any level yet.
-    /// </summary>
-    [JsonPropertyName("level")]
-    public PointsLevel? Level { get; set; }
-
-    /// <summary>
-    /// Array of trigger awards that added points.
-    /// </summary>
-    [JsonPropertyName("awards")]
-    public IEnumerable<PointsAward> Awards { get; set; } = new List<PointsAward>();
 
     /// <summary>
     /// The ID of the points system

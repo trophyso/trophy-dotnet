@@ -5,11 +5,35 @@ using TrophyApi.Core;
 namespace TrophyApi;
 
 /// <summary>
-/// Points system response for metric events.
+/// Points system response for metric events and achievement completions.
 /// </summary>
 [Serializable]
 public record MetricEventPointsResponse
 {
+    /// <summary>
+    /// The user's total points
+    /// </summary>
+    [JsonPropertyName("total")]
+    public required int Total { get; set; }
+
+    /// <summary>
+    /// The user's new level, included only when the level changed as a result of this event.
+    /// </summary>
+    [JsonPropertyName("level")]
+    public PointsLevel? Level { get; set; }
+
+    /// <summary>
+    /// The points added by this event.
+    /// </summary>
+    [JsonPropertyName("added")]
+    public required int Added { get; set; }
+
+    /// <summary>
+    /// Array of trigger awards that added points.
+    /// </summary>
+    [JsonPropertyName("awards")]
+    public IEnumerable<PointsAward> Awards { get; set; } = new List<PointsAward>();
+
     /// <summary>
     /// The ID of the points system
     /// </summary>
@@ -45,24 +69,6 @@ public record MetricEventPointsResponse
     /// </summary>
     [JsonPropertyName("maxPoints")]
     public double? MaxPoints { get; set; }
-
-    /// <summary>
-    /// The user's total points
-    /// </summary>
-    [JsonPropertyName("total")]
-    public required int Total { get; set; }
-
-    /// <summary>
-    /// The points added by this event.
-    /// </summary>
-    [JsonPropertyName("added")]
-    public required int Added { get; set; }
-
-    /// <summary>
-    /// Array of trigger awards that added points.
-    /// </summary>
-    [JsonPropertyName("awards")]
-    public IEnumerable<PointsAward> Awards { get; set; } = new List<PointsAward>();
 
     /// <summary>
     /// Additional properties received from the response, if any.

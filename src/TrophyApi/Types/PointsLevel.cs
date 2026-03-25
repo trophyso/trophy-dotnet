@@ -4,62 +4,47 @@ using TrophyApi.Core;
 
 namespace TrophyApi;
 
+/// <summary>
+/// A level within a points system.
+/// </summary>
 [Serializable]
-public record GetUserPointsResponse
+public record PointsLevel
 {
     /// <summary>
-    /// The user's total points
-    /// </summary>
-    [JsonPropertyName("total")]
-    public required int Total { get; set; }
-
-    /// <summary>
-    /// The user's current level in this points system, or null if no levels are configured or the user hasn't reached any level yet.
-    /// </summary>
-    [JsonPropertyName("level")]
-    public PointsLevel? Level { get; set; }
-
-    /// <summary>
-    /// Array of trigger awards that added points.
-    /// </summary>
-    [JsonPropertyName("awards")]
-    public IEnumerable<PointsAward> Awards { get; set; } = new List<PointsAward>();
-
-    /// <summary>
-    /// The ID of the points system
+    /// The ID of the level
     /// </summary>
     [JsonPropertyName("id")]
     public required string Id { get; set; }
 
     /// <summary>
-    /// The key of the points system
+    /// The unique key of the level
     /// </summary>
     [JsonPropertyName("key")]
     public required string Key { get; set; }
 
     /// <summary>
-    /// The name of the points system
+    /// The name of the level
     /// </summary>
     [JsonPropertyName("name")]
     public required string Name { get; set; }
 
     /// <summary>
-    /// The description of the points system
+    /// The description of the level
     /// </summary>
     [JsonPropertyName("description")]
-    public string? Description { get; set; }
+    public required string Description { get; set; }
 
     /// <summary>
-    /// The URL of the badge image for the points system
+    /// The URL of the badge image for the level
     /// </summary>
     [JsonPropertyName("badgeUrl")]
     public string? BadgeUrl { get; set; }
 
     /// <summary>
-    /// The maximum number of points a user can be awarded in this points system
+    /// The points threshold required to reach this level
     /// </summary>
-    [JsonPropertyName("maxPoints")]
-    public double? MaxPoints { get; set; }
+    [JsonPropertyName("points")]
+    public required int Points { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.

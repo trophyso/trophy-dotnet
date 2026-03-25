@@ -226,4 +226,138 @@ public partial class PointsClient
             );
         }
     }
+
+    /// <summary>
+    /// Get all levels for a points system.
+    /// </summary>
+    /// <example><code>
+    /// await client.Points.LevelsAsync("points-system-key");
+    /// </code></example>
+    public async Task<IEnumerable<PointsLevel>> LevelsAsync(
+        string key,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.Environment.Api,
+                    Method = HttpMethod.Get,
+                    Path = string.Format(
+                        "points/{0}/levels",
+                        ValueConvert.ToPathParameterString(key)
+                    ),
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<IEnumerable<PointsLevel>>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new TrophyApiException("Failed to deserialize response", e);
+            }
+        }
+
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                switch (response.StatusCode)
+                {
+                    case 401:
+                        throw new UnauthorizedError(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                    case 404:
+                        throw new NotFoundError(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                }
+            }
+            catch (JsonException)
+            {
+                // unable to map error response, throwing generic error
+            }
+            throw new TrophyApiApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Get a breakdown of the number of users at each level in a points system.
+    /// </summary>
+    /// <example><code>
+    /// await client.Points.LevelSummaryAsync("points-system-key");
+    /// </code></example>
+    public async Task<IEnumerable<PointsLevelSummaryResponseItem>> LevelSummaryAsync(
+        string key,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.Environment.Api,
+                    Method = HttpMethod.Get,
+                    Path = string.Format(
+                        "points/{0}/level-summary",
+                        ValueConvert.ToPathParameterString(key)
+                    ),
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<IEnumerable<PointsLevelSummaryResponseItem>>(
+                    responseBody
+                )!;
+            }
+            catch (JsonException e)
+            {
+                throw new TrophyApiException("Failed to deserialize response", e);
+            }
+        }
+
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                switch (response.StatusCode)
+                {
+                    case 401:
+                        throw new UnauthorizedError(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                    case 404:
+                        throw new NotFoundError(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                    case 422:
+                        throw new UnprocessableEntityError(
+                            JsonUtils.Deserialize<ErrorBody>(responseBody)
+                        );
+                }
+            }
+            catch (JsonException)
+            {
+                // unable to map error response, throwing generic error
+            }
+            throw new TrophyApiApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
 }
