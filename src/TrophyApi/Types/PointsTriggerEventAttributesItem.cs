@@ -5,16 +5,16 @@ using TrophyApi.Core;
 namespace TrophyApi;
 
 [Serializable]
-public record PointsTriggerResponseUserAttributesItem
+public record PointsTriggerEventAttributesItem
 {
     /// <summary>
-    /// The key of the user attribute.
+    /// The key of the event attribute.
     /// </summary>
     [JsonPropertyName("key")]
     public required string Key { get; set; }
 
     /// <summary>
-    /// The value of the user attribute.
+    /// The required value of the event attribute.
     /// </summary>
     [JsonPropertyName("value")]
     public required string Value { get; set; }

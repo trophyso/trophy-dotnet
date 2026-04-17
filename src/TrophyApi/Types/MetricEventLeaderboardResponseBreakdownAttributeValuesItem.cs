@@ -4,20 +4,17 @@ using TrophyApi.Core;
 
 namespace TrophyApi;
 
-/// <summary>
-/// Deprecated. Event attribute filter that must be met for this achievement to be completed. Only present if the achievement has an event filter configured.
-/// </summary>
 [Serializable]
-public record AchievementResponseEventAttribute
+public record MetricEventLeaderboardResponseBreakdownAttributeValuesItem
 {
     /// <summary>
-    /// The key of the event attribute.
+    /// The key of the breakdown attribute.
     /// </summary>
     [JsonPropertyName("key")]
     public required string Key { get; set; }
 
     /// <summary>
-    /// The value of the event attribute.
+    /// The user's value for the breakdown attribute.
     /// </summary>
     [JsonPropertyName("value")]
     public required string Value { get; set; }

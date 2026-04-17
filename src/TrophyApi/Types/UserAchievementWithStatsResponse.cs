@@ -92,16 +92,23 @@ public record UserAchievementWithStatsResponse
     public string? MetricName { get; set; }
 
     /// <summary>
-    /// User attribute filters that must be met for this achievement to be completed. Only present if the achievement has user attribute filters configured.
+    /// User attribute filters that must be met for this achievement to be completed.
     /// </summary>
     [JsonPropertyName("userAttributes")]
-    public IEnumerable<AchievementResponseUserAttributesItem>? UserAttributes { get; set; }
+    public IEnumerable<AchievementResponseUserAttributesItem> UserAttributes { get; set; } =
+        new List<AchievementResponseUserAttributesItem>();
 
     /// <summary>
-    /// Event attribute filter that must be met for this achievement to be completed. Only present if the achievement has an event filter configured.
+    /// Deprecated. Event attribute filter that must be met for this achievement to be completed. Only present if the achievement has an event filter configured.
     /// </summary>
     [JsonPropertyName("eventAttribute")]
     public AchievementResponseEventAttribute? EventAttribute { get; set; }
+
+    /// <summary>
+    /// Event attribute filters that must be met for this achievement to be completed. Omitted for non-metric achievements.
+    /// </summary>
+    [JsonPropertyName("eventAttributes")]
+    public IEnumerable<AchievementResponseEventAttributesItem>? EventAttributes { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.

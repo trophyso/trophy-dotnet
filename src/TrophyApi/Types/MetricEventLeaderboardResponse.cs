@@ -32,10 +32,16 @@ public record MetricEventLeaderboardResponse
     public required int Threshold { get; set; }
 
     /// <summary>
-    /// For leaderboards with a breakdown attribute, the value of the attribute for the user.
+    /// Deprecated. For leaderboards with a single breakdown attribute, the value of that attribute for the user.
     /// </summary>
     [JsonPropertyName("breakdownAttributeValue")]
     public string? BreakdownAttributeValue { get; set; }
+
+    /// <summary>
+    /// For leaderboards with breakdown attributes, the user's values for each breakdown attribute.
+    /// </summary>
+    [JsonPropertyName("breakdownAttributeValues")]
+    public IEnumerable<MetricEventLeaderboardResponseBreakdownAttributeValuesItem>? BreakdownAttributeValues { get; set; }
 
     /// <summary>
     /// The unique ID of the leaderboard.
@@ -62,10 +68,16 @@ public record MetricEventLeaderboardResponse
     public required LeaderboardResponseRankBy RankBy { get; set; }
 
     /// <summary>
-    /// The key of the attribute to break down this leaderboard by.
+    /// Deprecated. The key of the attribute to break down this leaderboard by.
     /// </summary>
     [JsonPropertyName("breakdownAttribute")]
     public string? BreakdownAttribute { get; set; }
+
+    /// <summary>
+    /// The user attribute keys that this leaderboard is broken down by.
+    /// </summary>
+    [JsonPropertyName("breakdownAttributes")]
+    public IEnumerable<string> BreakdownAttributes { get; set; } = new List<string>();
 
     /// <summary>
     /// The key of the metric to rank by, if rankBy is 'metric'.

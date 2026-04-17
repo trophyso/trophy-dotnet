@@ -41,8 +41,7 @@ public record PointsSystemResponse
     /// Array of active triggers for this points system.
     /// </summary>
     [JsonPropertyName("triggers")]
-    public IEnumerable<PointsTriggerResponse> Triggers { get; set; } =
-        new List<PointsTriggerResponse>();
+    public IEnumerable<PointsTrigger> Triggers { get; set; } = new List<PointsTrigger>();
 
     /// <summary>
     /// Additional properties received from the response, if any.

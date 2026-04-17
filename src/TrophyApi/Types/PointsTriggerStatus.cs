@@ -4,11 +4,14 @@ using TrophyApi.Core;
 
 namespace TrophyApi;
 
-[JsonConverter(typeof(EnumSerializer<PointsTriggerResponseStatus>))]
-public enum PointsTriggerResponseStatus
+[JsonConverter(typeof(EnumSerializer<PointsTriggerStatus>))]
+public enum PointsTriggerStatus
 {
     [EnumMember(Value = "active")]
     Active,
+
+    [EnumMember(Value = "inactive")]
+    Inactive,
 
     [EnumMember(Value = "archived")]
     Archived,

@@ -47,10 +47,16 @@ public record UserLeaderboardResponse
     public required LeaderboardResponseRankBy RankBy { get; set; }
 
     /// <summary>
-    /// The key of the attribute to break down this leaderboard by.
+    /// Deprecated. The key of the attribute to break down this leaderboard by.
     /// </summary>
     [JsonPropertyName("breakdownAttribute")]
     public string? BreakdownAttribute { get; set; }
+
+    /// <summary>
+    /// The user attribute keys that this leaderboard is broken down by.
+    /// </summary>
+    [JsonPropertyName("breakdownAttributes")]
+    public IEnumerable<string> BreakdownAttributes { get; set; } = new List<string>();
 
     /// <summary>
     /// The key of the metric to rank by, if rankBy is 'metric'.

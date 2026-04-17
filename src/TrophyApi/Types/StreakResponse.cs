@@ -17,7 +17,7 @@ public record StreakResponse
     public IEnumerable<StreakResponseStreakHistoryItem>? StreakHistory { get; set; }
 
     /// <summary>
-    /// The user's rank across all users. Null if the user has no active streak.
+    /// Deprecated. The user's rank across all users. Null if the user has no active streak.
     /// </summary>
     [JsonPropertyName("rank")]
     public int? Rank { get; set; }

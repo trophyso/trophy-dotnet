@@ -4,11 +4,8 @@ using TrophyApi.Core;
 
 namespace TrophyApi;
 
-/// <summary>
-/// Deprecated. Event attribute filter that must be met for this achievement to be completed. Only present if the achievement has an event filter configured.
-/// </summary>
 [Serializable]
-public record AchievementResponseEventAttribute
+public record AchievementResponseEventAttributesItem
 {
     /// <summary>
     /// The key of the event attribute.

@@ -4,20 +4,17 @@ using TrophyApi.Core;
 
 namespace TrophyApi;
 
-/// <summary>
-/// Event attribute filter that must be met for this trigger to activate. Only present if the trigger has an event filter configured.
-/// </summary>
 [Serializable]
-public record PointsTriggerResponseEventAttribute
+public record PointsTriggerUserAttributesItem
 {
     /// <summary>
-    /// The key of the event attribute.
+    /// The key of the user attribute.
     /// </summary>
     [JsonPropertyName("key")]
     public required string Key { get; set; }
 
     /// <summary>
-    /// The required value of the event attribute.
+    /// The required value of the user attribute.
     /// </summary>
     [JsonPropertyName("value")]
     public required string Value { get; set; }
