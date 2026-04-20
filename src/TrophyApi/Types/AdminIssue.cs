@@ -5,28 +5,40 @@ using TrophyApi.Core;
 namespace TrophyApi;
 
 /// <summary>
-/// An issue encountered while bulk inserting data.
+/// An issue encountered while processing an item in an admin API request.
 /// </summary>
 [Serializable]
-public record BulkInsertIssue
+public record AdminIssue
 {
     /// <summary>
-    /// The ID of the user the issue relates to.
+    /// The ID of the user the issue relates to, when applicable.
     /// </summary>
     [JsonPropertyName("userId")]
-    public required string UserId { get; set; }
+    public string? UserId { get; set; }
+
+    /// <summary>
+    /// The ID of the points boost the issue relates to, when applicable.
+    /// </summary>
+    [JsonPropertyName("boostId")]
+    public string? BoostId { get; set; }
+
+    /// <summary>
+    /// The zero-based index of the item the issue relates to, when no resource ID exists yet.
+    /// </summary>
+    [JsonPropertyName("index")]
+    public int? Index { get; set; }
 
     /// <summary>
     /// The severity level of the issue.
     /// </summary>
-    [JsonPropertyName("level")]
-    public required BulkInsertIssueLevel Level { get; set; }
+    [JsonPropertyName("severity")]
+    public required AdminIssueSeverity Severity { get; set; }
 
     /// <summary>
     /// A human-readable description of the issue.
     /// </summary>
-    [JsonPropertyName("reason")]
-    public required string Reason { get; set; }
+    [JsonPropertyName("message")]
+    public required string Message { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.

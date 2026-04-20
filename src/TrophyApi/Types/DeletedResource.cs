@@ -5,16 +5,16 @@ using TrophyApi.Core;
 namespace TrophyApi;
 
 /// <summary>
-/// Response containing any issues encountered while creating streak freezes.
+/// A soft-deleted resource represented by ID.
 /// </summary>
 [Serializable]
-public record CreateStreakFreezesResponse
+public record DeletedResource
 {
     /// <summary>
-    /// Array of issues encountered during freeze creation.
+    /// The ID of the archived resource.
     /// </summary>
-    [JsonPropertyName("issues")]
-    public IEnumerable<AdminIssue> Issues { get; set; } = new List<AdminIssue>();
+    [JsonPropertyName("id")]
+    public required string Id { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.

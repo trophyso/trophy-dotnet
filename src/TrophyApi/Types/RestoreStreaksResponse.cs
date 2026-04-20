@@ -20,7 +20,7 @@ public record RestoreStreaksResponse
     /// Array of issues encountered during streak restoration.
     /// </summary>
     [JsonPropertyName("issues")]
-    public IEnumerable<BulkInsertIssue> Issues { get; set; } = new List<BulkInsertIssue>();
+    public IEnumerable<AdminIssue> Issues { get; set; } = new List<AdminIssue>();
 
     /// <summary>
     /// Additional properties received from the response, if any.

@@ -7,7 +7,7 @@ namespace TrophyApi.Admin.Streaks;
 public record CreateStreakFreezesRequest
 {
     /// <summary>
-    /// Array of freezes to create. Maximum 1,000 freezes per request.
+    /// Array of freezes to create. Maximum 100 freezes per request.
     /// </summary>
     [JsonPropertyName("freezes")]
     public IEnumerable<CreateStreakFreezesRequestFreezesItem> Freezes { get; set; } =

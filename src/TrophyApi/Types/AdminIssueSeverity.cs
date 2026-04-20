@@ -4,8 +4,8 @@ using TrophyApi.Core;
 
 namespace TrophyApi;
 
-[JsonConverter(typeof(EnumSerializer<BulkInsertIssueLevel>))]
-public enum BulkInsertIssueLevel
+[JsonConverter(typeof(EnumSerializer<AdminIssueSeverity>))]
+public enum AdminIssueSeverity
 {
     [EnumMember(Value = "error")]
     Error,

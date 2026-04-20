@@ -13,7 +13,7 @@ public record CreatePointsBoostsRequest
     public required string SystemKey { get; set; }
 
     /// <summary>
-    /// Array of boosts to create. Maximum 1,000 boosts per request.
+    /// Array of boosts to create. Maximum 100 boosts per request.
     /// </summary>
     [JsonPropertyName("boosts")]
     public IEnumerable<CreatePointsBoostsRequestBoostsItem> Boosts { get; set; } =

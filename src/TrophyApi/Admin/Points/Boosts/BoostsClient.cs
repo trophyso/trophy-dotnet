@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using global::System.Threading.Tasks;
 using TrophyApi;
 using TrophyApi.Core;
 
@@ -115,7 +114,7 @@ public partial class BoostsClient
     /// <example><code>
     /// await client.Admin.Points.Boosts.BatchArchiveAsync(new BoostsBatchArchiveRequest());
     /// </code></example>
-    public async Task<ArchivePointsBoostsResponse> BatchArchiveAsync(
+    public async Task<DeletePointsBoostsResponse> BatchArchiveAsync(
         BoostsBatchArchiveRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -141,7 +140,7 @@ public partial class BoostsClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<ArchivePointsBoostsResponse>(responseBody)!;
+                return JsonUtils.Deserialize<DeletePointsBoostsResponse>(responseBody)!;
             }
             catch (JsonException e)
             {
@@ -179,7 +178,7 @@ public partial class BoostsClient
     /// <example><code>
     /// await client.Admin.Points.Boosts.ArchiveAsync("id");
     /// </code></example>
-    public async global::System.Threading.Tasks.Task ArchiveAsync(
+    public async Task<DeletePointsBoostsResponse> ArchiveAsync(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -202,14 +201,25 @@ public partial class BoostsClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<DeletePointsBoostsResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new TrophyApiException("Failed to deserialize response", e);
+            }
         }
+
         {
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 switch (response.StatusCode)
                 {
+                    case 400:
+                        throw new BadRequestError(JsonUtils.Deserialize<ErrorBody>(responseBody));
                     case 401:
                         throw new UnauthorizedError(JsonUtils.Deserialize<ErrorBody>(responseBody));
                     case 404:

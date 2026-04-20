@@ -5,16 +5,22 @@ using TrophyApi.Core;
 namespace TrophyApi;
 
 /// <summary>
-/// Response containing the count of archived points boosts.
+/// Response containing the points boosts that were archived and any per-item issues.
 /// </summary>
 [Serializable]
-public record ArchivePointsBoostsResponse
+public record DeletePointsBoostsResponse
 {
     /// <summary>
-    /// The number of boosts that were archived.
+    /// Array of archived points boosts represented by ID.
     /// </summary>
-    [JsonPropertyName("archivedCount")]
-    public required int ArchivedCount { get; set; }
+    [JsonPropertyName("deleted")]
+    public IEnumerable<DeletedResource> Deleted { get; set; } = new List<DeletedResource>();
+
+    /// <summary>
+    /// Array of issues encountered during boost archival.
+    /// </summary>
+    [JsonPropertyName("issues")]
+    public IEnumerable<AdminIssue> Issues { get; set; } = new List<AdminIssue>();
 
     /// <summary>
     /// Additional properties received from the response, if any.
