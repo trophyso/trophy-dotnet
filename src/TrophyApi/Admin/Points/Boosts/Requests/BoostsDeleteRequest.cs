@@ -4,7 +4,7 @@ using TrophyApi.Core;
 namespace TrophyApi.Admin.Points;
 
 [Serializable]
-public record BoostsBatchArchiveRequest
+public record BoostsDeleteRequest
 {
     /// <summary>
     /// A list of up to 100 boost IDs.

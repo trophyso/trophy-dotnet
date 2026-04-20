@@ -109,13 +109,13 @@ public partial class BoostsClient
     }
 
     /// <summary>
-    /// Archive multiple points boosts by ID.
+    /// Delete multiple points boosts by ID.
     /// </summary>
     /// <example><code>
-    /// await client.Admin.Points.Boosts.BatchArchiveAsync(new BoostsBatchArchiveRequest());
+    /// await client.Admin.Points.Boosts.DeleteAsync(new BoostsDeleteRequest());
     /// </code></example>
-    public async Task<DeletePointsBoostsResponse> BatchArchiveAsync(
-        BoostsBatchArchiveRequest request,
+    public async Task<DeletePointsBoostsResponse> DeleteAsync(
+        BoostsDeleteRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -158,72 +158,6 @@ public partial class BoostsClient
                         throw new BadRequestError(JsonUtils.Deserialize<ErrorBody>(responseBody));
                     case 401:
                         throw new UnauthorizedError(JsonUtils.Deserialize<ErrorBody>(responseBody));
-                }
-            }
-            catch (JsonException)
-            {
-                // unable to map error response, throwing generic error
-            }
-            throw new TrophyApiApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
-    }
-
-    /// <summary>
-    /// Archive a points boost by ID.
-    /// </summary>
-    /// <example><code>
-    /// await client.Admin.Points.Boosts.ArchiveAsync("id");
-    /// </code></example>
-    public async Task<DeletePointsBoostsResponse> ArchiveAsync(
-        string id,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.Environment.Admin,
-                    Method = HttpMethod.Delete,
-                    Path = string.Format(
-                        "points/boosts/{0}",
-                        ValueConvert.ToPathParameterString(id)
-                    ),
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<DeletePointsBoostsResponse>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new TrophyApiException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                switch (response.StatusCode)
-                {
-                    case 400:
-                        throw new BadRequestError(JsonUtils.Deserialize<ErrorBody>(responseBody));
-                    case 401:
-                        throw new UnauthorizedError(JsonUtils.Deserialize<ErrorBody>(responseBody));
-                    case 404:
-                        throw new NotFoundError(JsonUtils.Deserialize<ErrorBody>(responseBody));
                 }
             }
             catch (JsonException)

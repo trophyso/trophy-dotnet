@@ -5,13 +5,13 @@ using TrophyApi.Core;
 namespace TrophyApi;
 
 /// <summary>
-/// Response containing the points boosts that were archived and any per-item issues.
+/// Response containing the points boosts that were deleted and any per-item issues.
 /// </summary>
 [Serializable]
 public record DeletePointsBoostsResponse
 {
     /// <summary>
-    /// Array of archived points boosts represented by ID.
+    /// Array of deleted points boosts represented by ID.
     /// </summary>
     [JsonPropertyName("deleted")]
     public IEnumerable<DeletedResource> Deleted { get; set; } = new List<DeletedResource>();

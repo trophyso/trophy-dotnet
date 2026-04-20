@@ -5,13 +5,13 @@ using TrophyApi.Core;
 namespace TrophyApi;
 
 /// <summary>
-/// A soft-deleted resource represented by ID.
+/// A deleted resource represented by ID.
 /// </summary>
 [Serializable]
 public record DeletedResource
 {
     /// <summary>
-    /// The ID of the archived resource.
+    /// The ID of the deleted resource.
     /// </summary>
     [JsonPropertyName("id")]
     public required string Id { get; set; }
