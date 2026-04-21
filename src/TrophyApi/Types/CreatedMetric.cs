@@ -4,39 +4,41 @@ using TrophyApi.Core;
 
 namespace TrophyApi;
 
+/// <summary>
+/// A successfully created metric returned from the create endpoint.
+/// </summary>
 [Serializable]
-public record MetricResponse
+public record CreatedMetric
 {
     /// <summary>
-    /// The unique ID of the metric.
+    /// The UUID of the created metric.
     /// </summary>
     [JsonPropertyName("id")]
     public required string Id { get; set; }
 
     /// <summary>
-    /// The unique key of the metric.
-    /// </summary>
-    [JsonPropertyName("key")]
-    public required string Key { get; set; }
-
-    /// <summary>
-    /// The name of the metric.
+    /// The metric name.
     /// </summary>
     [JsonPropertyName("name")]
     public required string Name { get; set; }
 
     /// <summary>
-    /// The user's current total for the metric.
+    /// The metric key.
     /// </summary>
-    [JsonPropertyName("current")]
-    public required double Current { get; set; }
+    [JsonPropertyName("key")]
+    public required string Key { get; set; }
 
     /// <summary>
-    /// A list of the metric's achievements and the user's progress towards each.
+    /// The metric unit type.
     /// </summary>
-    [JsonPropertyName("achievements")]
-    public IEnumerable<UserAchievementResponse> Achievements { get; set; } =
-        new List<UserAchievementResponse>();
+    [JsonPropertyName("unitType")]
+    public required CreatedMetricUnitType UnitType { get; set; }
+
+    /// <summary>
+    /// The stored units value for the metric.
+    /// </summary>
+    [JsonPropertyName("units")]
+    public required string Units { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.

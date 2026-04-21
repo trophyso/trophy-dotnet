@@ -4,39 +4,35 @@ using TrophyApi.Core;
 
 namespace TrophyApi;
 
+/// <summary>
+/// A metric update object. `id` is required; `name`, `unitType`, and `units` are optional. `key` cannot be changed through this endpoint.
+/// </summary>
 [Serializable]
-public record MetricResponse
+public record UpdateMetricRequestItem
 {
     /// <summary>
-    /// The unique ID of the metric.
+    /// The UUID of the metric to update.
     /// </summary>
     [JsonPropertyName("id")]
     public required string Id { get; set; }
 
     /// <summary>
-    /// The unique key of the metric.
-    /// </summary>
-    [JsonPropertyName("key")]
-    public required string Key { get; set; }
-
-    /// <summary>
-    /// The name of the metric.
+    /// The updated metric name.
     /// </summary>
     [JsonPropertyName("name")]
-    public required string Name { get; set; }
+    public string? Name { get; set; }
 
     /// <summary>
-    /// The user's current total for the metric.
+    /// The updated metric unit type.
     /// </summary>
-    [JsonPropertyName("current")]
-    public required double Current { get; set; }
+    [JsonPropertyName("unitType")]
+    public UpdateMetricRequestItemUnitType? UnitType { get; set; }
 
     /// <summary>
-    /// A list of the metric's achievements and the user's progress towards each.
+    /// The updated units value. For `unitType: currency`, this must be a supported `MetricCurrency` code such as `USD`.
     /// </summary>
-    [JsonPropertyName("achievements")]
-    public IEnumerable<UserAchievementResponse> Achievements { get; set; } =
-        new List<UserAchievementResponse>();
+    [JsonPropertyName("units")]
+    public string? Units { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.

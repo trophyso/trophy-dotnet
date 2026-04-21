@@ -5,19 +5,19 @@ using TrophyApi.Core;
 namespace TrophyApi;
 
 /// <summary>
-/// Response containing the points boosts that were deleted and any per-item issues.
+/// Response containing deleted attributes represented by ID and any per-item issues, including invalid or missing attribute IDs.
 /// </summary>
 [Serializable]
-public record DeletePointsBoostsResponse
+public record DeleteAttributesResponse
 {
     /// <summary>
-    /// Array of deleted points boosts represented by ID.
+    /// Array of deleted attributes represented by ID.
     /// </summary>
     [JsonPropertyName("deleted")]
     public IEnumerable<DeletedResource> Deleted { get; set; } = new List<DeletedResource>();
 
     /// <summary>
-    /// Array of issues encountered during boost deletion.
+    /// Array of issues encountered during attribute deletion.
     /// </summary>
     [JsonPropertyName("issues")]
     public IEnumerable<AdminIssue> Issues { get; set; } = new List<AdminIssue>();

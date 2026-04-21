@@ -4,39 +4,35 @@ using TrophyApi.Core;
 
 namespace TrophyApi;
 
+/// <summary>
+/// A metric to create.
+/// </summary>
 [Serializable]
-public record MetricResponse
+public record CreateMetricRequestItem
 {
     /// <summary>
-    /// The unique ID of the metric.
-    /// </summary>
-    [JsonPropertyName("id")]
-    public required string Id { get; set; }
-
-    /// <summary>
-    /// The unique key of the metric.
-    /// </summary>
-    [JsonPropertyName("key")]
-    public required string Key { get; set; }
-
-    /// <summary>
-    /// The name of the metric.
+    /// The metric name.
     /// </summary>
     [JsonPropertyName("name")]
     public required string Name { get; set; }
 
     /// <summary>
-    /// The user's current total for the metric.
+    /// The metric key. Only alphanumeric characters, hyphens, and underscores are permitted.
     /// </summary>
-    [JsonPropertyName("current")]
-    public required double Current { get; set; }
+    [JsonPropertyName("key")]
+    public required string Key { get; set; }
 
     /// <summary>
-    /// A list of the metric's achievements and the user's progress towards each.
+    /// The metric unit type. Defaults to `number`.
     /// </summary>
-    [JsonPropertyName("achievements")]
-    public IEnumerable<UserAchievementResponse> Achievements { get; set; } =
-        new List<UserAchievementResponse>();
+    [JsonPropertyName("unitType")]
+    public CreateMetricRequestItemUnitType? UnitType { get; set; }
+
+    /// <summary>
+    /// For `unitType: currency`, this must be a supported `MetricCurrency` code such as `USD`. For `number`, this is an optional freeform unit label.
+    /// </summary>
+    [JsonPropertyName("units")]
+    public string? Units { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.

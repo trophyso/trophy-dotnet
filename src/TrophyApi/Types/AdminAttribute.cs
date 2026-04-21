@@ -5,22 +5,34 @@ using TrophyApi.Core;
 namespace TrophyApi;
 
 /// <summary>
-/// Response containing the points boosts that were deleted and any per-item issues.
+/// An attribute returned from the admin attributes endpoints.
 /// </summary>
 [Serializable]
-public record DeletePointsBoostsResponse
+public record AdminAttribute
 {
     /// <summary>
-    /// Array of deleted points boosts represented by ID.
+    /// The UUID of the attribute.
     /// </summary>
-    [JsonPropertyName("deleted")]
-    public IEnumerable<DeletedResource> Deleted { get; set; } = new List<DeletedResource>();
+    [JsonPropertyName("id")]
+    public required string Id { get; set; }
 
     /// <summary>
-    /// Array of issues encountered during boost deletion.
+    /// The attribute name.
     /// </summary>
-    [JsonPropertyName("issues")]
-    public IEnumerable<AdminIssue> Issues { get; set; } = new List<AdminIssue>();
+    [JsonPropertyName("name")]
+    public required string Name { get; set; }
+
+    /// <summary>
+    /// The attribute key.
+    /// </summary>
+    [JsonPropertyName("key")]
+    public required string Key { get; set; }
+
+    /// <summary>
+    /// The attribute type.
+    /// </summary>
+    [JsonPropertyName("type")]
+    public required AdminAttributeType Type { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.

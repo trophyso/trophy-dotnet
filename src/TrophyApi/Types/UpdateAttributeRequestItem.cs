@@ -5,22 +5,22 @@ using TrophyApi.Core;
 namespace TrophyApi;
 
 /// <summary>
-/// Response containing the points boosts that were deleted and any per-item issues.
+/// An attribute update object. `id` is required and `name` is optional. `key` and `type` cannot be changed through this endpoint.
 /// </summary>
 [Serializable]
-public record DeletePointsBoostsResponse
+public record UpdateAttributeRequestItem
 {
     /// <summary>
-    /// Array of deleted points boosts represented by ID.
+    /// The UUID of the attribute to update.
     /// </summary>
-    [JsonPropertyName("deleted")]
-    public IEnumerable<DeletedResource> Deleted { get; set; } = new List<DeletedResource>();
+    [JsonPropertyName("id")]
+    public required string Id { get; set; }
 
     /// <summary>
-    /// Array of issues encountered during boost deletion.
+    /// The updated attribute name.
     /// </summary>
-    [JsonPropertyName("issues")]
-    public IEnumerable<AdminIssue> Issues { get; set; } = new List<AdminIssue>();
+    [JsonPropertyName("name")]
+    public string? Name { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.

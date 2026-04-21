@@ -5,22 +5,28 @@ using TrophyApi.Core;
 namespace TrophyApi;
 
 /// <summary>
-/// Response containing the points boosts that were deleted and any per-item issues.
+/// An attribute to create.
 /// </summary>
 [Serializable]
-public record DeletePointsBoostsResponse
+public record CreateAttributeRequestItem
 {
     /// <summary>
-    /// Array of deleted points boosts represented by ID.
+    /// The attribute name.
     /// </summary>
-    [JsonPropertyName("deleted")]
-    public IEnumerable<DeletedResource> Deleted { get; set; } = new List<DeletedResource>();
+    [JsonPropertyName("name")]
+    public required string Name { get; set; }
 
     /// <summary>
-    /// Array of issues encountered during boost deletion.
+    /// The attribute key. Only alphanumeric characters, hyphens, and underscores are permitted.
     /// </summary>
-    [JsonPropertyName("issues")]
-    public IEnumerable<AdminIssue> Issues { get; set; } = new List<AdminIssue>();
+    [JsonPropertyName("key")]
+    public required string Key { get; set; }
+
+    /// <summary>
+    /// The attribute type.
+    /// </summary>
+    [JsonPropertyName("type")]
+    public required CreateAttributeRequestItemType Type { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.
