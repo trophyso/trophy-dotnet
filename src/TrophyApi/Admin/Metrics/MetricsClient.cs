@@ -89,7 +89,7 @@ public partial class MetricsClient
     }
 
     /// <summary>
-    /// Create metrics in bulk.
+    /// Create metrics.
     /// </summary>
     /// <example><code>
     /// await client.Admin.Metrics.CreateAsync(
@@ -166,7 +166,7 @@ public partial class MetricsClient
     }
 
     /// <summary>
-    /// Delete metrics in bulk by ID.
+    /// Delete metrics by ID.
     /// </summary>
     /// <example><code>
     /// await client.Admin.Metrics.DeleteAsync(new MetricsDeleteRequest());
@@ -232,7 +232,7 @@ public partial class MetricsClient
     }
 
     /// <summary>
-    /// Update metrics in bulk by ID.
+    /// Update metrics by ID.
     /// </summary>
     /// <example><code>
     /// await client.Admin.Metrics.UpdateAsync(

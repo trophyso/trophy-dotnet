@@ -10,17 +10,20 @@ public partial class AdminClient
     internal AdminClient(RawClient client)
     {
         _client = client;
-        Streaks = new StreaksClient(_client);
         Attributes = new AttributesClient(_client);
         Metrics = new MetricsClient(_client);
+        Leaderboards = new LeaderboardsClient(_client);
+        Streaks = new StreaksClient(_client);
         Points = new PointsClient(_client);
     }
-
-    public StreaksClient Streaks { get; }
 
     public AttributesClient Attributes { get; }
 
     public MetricsClient Metrics { get; }
+
+    public LeaderboardsClient Leaderboards { get; }
+
+    public StreaksClient Streaks { get; }
 
     public PointsClient Points { get; }
 }

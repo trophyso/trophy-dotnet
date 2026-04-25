@@ -6,23 +6,23 @@ using TrophyApi.Core;
 
 namespace TrophyApi.Admin;
 
-public partial class AttributesClient
+public partial class LeaderboardsClient
 {
     private RawClient _client;
 
-    internal AttributesClient(RawClient client)
+    internal LeaderboardsClient(RawClient client)
     {
         _client = client;
     }
 
     /// <summary>
-    /// List attributes.
+    /// List leaderboards.
     /// </summary>
     /// <example><code>
-    /// await client.Admin.Attributes.ListAsync(new AttributesListRequest { Limit = 1, Skip = 1 });
+    /// await client.Admin.Leaderboards.ListAsync(new LeaderboardsListRequest { Limit = 1, Skip = 1 });
     /// </code></example>
-    public async Task<IEnumerable<AdminAttribute>> ListAsync(
-        AttributesListRequest request,
+    public async Task<IEnumerable<AdminLeaderboard>> ListAsync(
+        LeaderboardsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -42,7 +42,7 @@ public partial class AttributesClient
                 {
                     BaseUrl = _client.Options.Environment.Admin,
                     Method = HttpMethod.Get,
-                    Path = "attributes",
+                    Path = "leaderboards",
                     Query = _query,
                     Options = options,
                 },
@@ -54,7 +54,7 @@ public partial class AttributesClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<IEnumerable<AdminAttribute>>(responseBody)!;
+                return JsonUtils.Deserialize<IEnumerable<AdminLeaderboard>>(responseBody)!;
             }
             catch (JsonException e)
             {
@@ -89,29 +89,38 @@ public partial class AttributesClient
     }
 
     /// <summary>
-    /// Create attributes.
+    /// Create leaderboards. Maximum 100 leaderboards per request.
     /// </summary>
     /// <example><code>
-    /// await client.Admin.Attributes.CreateAsync(
-    ///     new List&lt;CreateAttributeRequestItem&gt;()
+    /// await client.Admin.Leaderboards.CreateAsync(
+    ///     new List&lt;CreateLeaderboardRequestItem&gt;()
     ///     {
-    ///         new CreateAttributeRequestItem
+    ///         new CreateLeaderboardRequestItem
     ///         {
-    ///             Name = "Plan",
-    ///             Key = "plan",
-    ///             Type = CreateAttributeRequestItemType.User,
+    ///             Name = "Revenue Champions",
+    ///             Key = "revenue-champions",
+    ///             Status = CreateLeaderboardRequestItemStatus.Inactive,
+    ///             RankBy = CreateLeaderboardRequestItemRankBy.Metric,
+    ///             MetricId = "550e8400-e29b-41d4-a716-446655440000",
+    ///             MaxParticipants = 100,
+    ///             Start = "2026-04-20",
+    ///             BreakdownAttributes = new List&lt;string&gt;() { "550e8400-e29b-41d4-a716-446655440010" },
+    ///             RunUnit = CreateLeaderboardRequestItemRunUnit.Month,
+    ///             RunInterval = 1,
     ///         },
-    ///         new CreateAttributeRequestItem
+    ///         new CreateLeaderboardRequestItem
     ///         {
-    ///             Name = "Device",
-    ///             Key = "device",
-    ///             Type = CreateAttributeRequestItemType.Event,
+    ///             Name = "Streak Legends",
+    ///             Key = "streak-legends",
+    ///             Status = CreateLeaderboardRequestItemStatus.Scheduled,
+    ///             RankBy = CreateLeaderboardRequestItemRankBy.Streak,
+    ///             Start = "2026-04-27",
     ///         },
     ///     }
     /// );
     /// </code></example>
-    public async Task<CreateAttributesResponse> CreateAsync(
-        IEnumerable<CreateAttributeRequestItem> request,
+    public async Task<CreateLeaderboardsResponse> CreateAsync(
+        IEnumerable<CreateLeaderboardRequestItem> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -122,7 +131,7 @@ public partial class AttributesClient
                 {
                     BaseUrl = _client.Options.Environment.Admin,
                     Method = HttpMethod.Post,
-                    Path = "attributes",
+                    Path = "leaderboards",
                     Body = request,
                     ContentType = "application/json",
                     Options = options,
@@ -135,7 +144,7 @@ public partial class AttributesClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<CreateAttributesResponse>(responseBody)!;
+                return JsonUtils.Deserialize<CreateLeaderboardsResponse>(responseBody)!;
             }
             catch (JsonException e)
             {
@@ -170,13 +179,13 @@ public partial class AttributesClient
     }
 
     /// <summary>
-    /// Delete attributes by ID.
+    /// Delete leaderboards by ID.
     /// </summary>
     /// <example><code>
-    /// await client.Admin.Attributes.DeleteAsync(new AttributesDeleteRequest());
+    /// await client.Admin.Leaderboards.DeleteAsync(new LeaderboardsDeleteRequest());
     /// </code></example>
-    public async Task<DeleteAttributesResponse> DeleteAsync(
-        AttributesDeleteRequest request,
+    public async Task<DeleteLeaderboardsResponse> DeleteAsync(
+        LeaderboardsDeleteRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -189,7 +198,7 @@ public partial class AttributesClient
                 {
                     BaseUrl = _client.Options.Environment.Admin,
                     Method = HttpMethod.Delete,
-                    Path = "attributes",
+                    Path = "leaderboards",
                     Query = _query,
                     Options = options,
                 },
@@ -201,7 +210,7 @@ public partial class AttributesClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<DeleteAttributesResponse>(responseBody)!;
+                return JsonUtils.Deserialize<DeleteLeaderboardsResponse>(responseBody)!;
             }
             catch (JsonException e)
             {
@@ -236,22 +245,29 @@ public partial class AttributesClient
     }
 
     /// <summary>
-    /// Update attributes by ID.
+    /// Update leaderboards by ID. Updating `status` behaves the same as activating, scheduling, deactivating, or finishing a leaderboard in the dashboard.
     /// </summary>
     /// <example><code>
-    /// await client.Admin.Attributes.UpdateAsync(
-    ///     new List&lt;UpdateAttributeRequestItem&gt;()
+    /// await client.Admin.Leaderboards.UpdateAsync(
+    ///     new List&lt;UpdateLeaderboardRequestItem&gt;()
     ///     {
-    ///         new UpdateAttributeRequestItem
+    ///         new UpdateLeaderboardRequestItem
     ///         {
-    ///             Id = "550e8400-e29b-41d4-a716-446655440000",
-    ///             Name = "Subscription Plan",
+    ///             Id = "550e8400-e29b-41d4-a716-446655440100",
+    ///             Name = "Monthly Revenue Champions",
+    ///             Description = "Ranked by monthly revenue",
+    ///             Status = UpdateLeaderboardRequestItemStatus.Active,
+    ///         },
+    ///         new UpdateLeaderboardRequestItem
+    ///         {
+    ///             Id = "550e8400-e29b-41d4-a716-446655440101",
+    ///             Status = UpdateLeaderboardRequestItemStatus.Finished,
     ///         },
     ///     }
     /// );
     /// </code></example>
-    public async Task<UpdateAttributesResponse> UpdateAsync(
-        IEnumerable<UpdateAttributeRequestItem> request,
+    public async Task<UpdateLeaderboardsResponse> UpdateAsync(
+        IEnumerable<UpdateLeaderboardRequestItem> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -262,7 +278,7 @@ public partial class AttributesClient
                 {
                     BaseUrl = _client.Options.Environment.Admin,
                     Method = HttpMethodExtensions.Patch,
-                    Path = "attributes",
+                    Path = "leaderboards",
                     Body = request,
                     ContentType = "application/json",
                     Options = options,
@@ -275,7 +291,7 @@ public partial class AttributesClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<UpdateAttributesResponse>(responseBody)!;
+                return JsonUtils.Deserialize<UpdateLeaderboardsResponse>(responseBody)!;
             }
             catch (JsonException e)
             {
@@ -310,12 +326,12 @@ public partial class AttributesClient
     }
 
     /// <summary>
-    /// Get an attribute by ID.
+    /// Get a leaderboard by ID.
     /// </summary>
     /// <example><code>
-    /// await client.Admin.Attributes.GetAsync("550e8400-e29b-41d4-a716-446655440000");
+    /// await client.Admin.Leaderboards.GetAsync("550e8400-e29b-41d4-a716-446655440100");
     /// </code></example>
-    public async Task<AdminAttribute> GetAsync(
+    public async Task<AdminLeaderboard> GetAsync(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -327,7 +343,10 @@ public partial class AttributesClient
                 {
                     BaseUrl = _client.Options.Environment.Admin,
                     Method = HttpMethod.Get,
-                    Path = string.Format("attributes/{0}", ValueConvert.ToPathParameterString(id)),
+                    Path = string.Format(
+                        "leaderboards/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
                     Options = options,
                 },
                 cancellationToken
@@ -338,7 +357,7 @@ public partial class AttributesClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<AdminAttribute>(responseBody)!;
+                return JsonUtils.Deserialize<AdminLeaderboard>(responseBody)!;
             }
             catch (JsonException e)
             {
