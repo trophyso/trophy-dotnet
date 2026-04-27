@@ -5,19 +5,20 @@ using TrophyApi.Core;
 namespace TrophyApi;
 
 /// <summary>
-/// Response containing created boosts and any issues encountered while creating points boosts.
+/// Response containing created points systems and any per-item issues.
 /// </summary>
 [Serializable]
-public record CreatePointsBoostsResponse
+public record CreatePointsSystemsResponse
 {
     /// <summary>
-    /// Array of successfully created boosts.
+    /// Array of successfully created points systems.
     /// </summary>
     [JsonPropertyName("created")]
-    public IEnumerable<AdminPointsBoost> Created { get; set; } = new List<AdminPointsBoost>();
+    public IEnumerable<CreatedAdminPointsSystem> Created { get; set; } =
+        new List<CreatedAdminPointsSystem>();
 
     /// <summary>
-    /// Array of issues encountered during boost creation.
+    /// Array of issues encountered during creation.
     /// </summary>
     [JsonPropertyName("issues")]
     public IEnumerable<AdminIssue> Issues { get; set; } = new List<AdminIssue>();

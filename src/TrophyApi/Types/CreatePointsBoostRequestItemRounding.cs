@@ -2,10 +2,10 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using TrophyApi.Core;
 
-namespace TrophyApi.Admin.Points;
+namespace TrophyApi;
 
-[JsonConverter(typeof(EnumSerializer<CreatePointsBoostsRequestBoostsItemRounding>))]
-public enum CreatePointsBoostsRequestBoostsItemRounding
+[JsonConverter(typeof(EnumSerializer<CreatePointsBoostRequestItemRounding>))]
+public enum CreatePointsBoostRequestItemRounding
 {
     [EnumMember(Value = "down")]
     Down,

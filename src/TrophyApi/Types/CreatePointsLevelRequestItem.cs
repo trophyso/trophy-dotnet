@@ -1,0 +1,58 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using TrophyApi.Core;
+
+namespace TrophyApi;
+
+/// <summary>
+/// A points level to create.
+/// </summary>
+[Serializable]
+public record CreatePointsLevelRequestItem
+{
+    /// <summary>
+    /// The name of the level.
+    /// </summary>
+    [JsonPropertyName("name")]
+    public required string Name { get; set; }
+
+    /// <summary>
+    /// A unique key for the level. Only alphanumeric characters, hyphens, and underscores are permitted.
+    /// </summary>
+    [JsonPropertyName("key")]
+    public required string Key { get; set; }
+
+    /// <summary>
+    /// The threshold points value for the level.
+    /// </summary>
+    [JsonPropertyName("points")]
+    public required int Points { get; set; }
+
+    /// <summary>
+    /// An optional description of the level.
+    /// </summary>
+    [JsonPropertyName("description")]
+    public string? Description { get; set; }
+
+    /// <summary>
+    /// An optional badge for the level.
+    /// </summary>
+    [JsonPropertyName("badge")]
+    public CreatePointsLevelRequestItemBadge? Badge { get; set; }
+
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}

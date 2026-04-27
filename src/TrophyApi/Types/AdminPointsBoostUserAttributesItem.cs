@@ -4,23 +4,20 @@ using TrophyApi.Core;
 
 namespace TrophyApi;
 
-/// <summary>
-/// Response containing created boosts and any issues encountered while creating points boosts.
-/// </summary>
 [Serializable]
-public record CreatePointsBoostsResponse
+public record AdminPointsBoostUserAttributesItem
 {
     /// <summary>
-    /// Array of successfully created boosts.
+    /// The UUID of the user attribute.
     /// </summary>
-    [JsonPropertyName("created")]
-    public IEnumerable<AdminPointsBoost> Created { get; set; } = new List<AdminPointsBoost>();
+    [JsonPropertyName("attributeId")]
+    public required string AttributeId { get; set; }
 
     /// <summary>
-    /// Array of issues encountered during boost creation.
+    /// The matched attribute value.
     /// </summary>
-    [JsonPropertyName("issues")]
-    public IEnumerable<AdminIssue> Issues { get; set; } = new List<AdminIssue>();
+    [JsonPropertyName("attributeValue")]
+    public required string AttributeValue { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.

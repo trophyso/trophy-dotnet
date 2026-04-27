@@ -4,59 +4,50 @@ using TrophyApi.Core;
 
 namespace TrophyApi;
 
-/// <summary>
-/// A successfully created points boost returned from the create endpoint.
-/// </summary>
 [Serializable]
-public record CreatedPointsBoost
+public record PatchPointsBoostsRequestItem
 {
     /// <summary>
-    /// The UUID of the created boost.
+    /// The UUID of the boost to update.
     /// </summary>
     [JsonPropertyName("id")]
     public required string Id { get; set; }
 
     /// <summary>
-    /// The name of the boost.
+    /// Updated name for the boost.
     /// </summary>
     [JsonPropertyName("name")]
-    public required string Name { get; set; }
+    public string? Name { get; set; }
 
     /// <summary>
-    /// The status of the boost.
-    /// </summary>
-    [JsonPropertyName("status")]
-    public required CreatedPointsBoostStatus Status { get; set; }
-
-    /// <summary>
-    /// The start date (YYYY-MM-DD).
+    /// Updated start date (YYYY-MM-DD).
     /// </summary>
     [JsonPropertyName("start")]
-    public required string Start { get; set; }
+    public string? Start { get; set; }
 
     /// <summary>
-    /// The end date (YYYY-MM-DD) or null if no end date.
+    /// Updated end date (YYYY-MM-DD) or null to remove end date.
     /// </summary>
     [JsonPropertyName("end")]
     public string? End { get; set; }
 
     /// <summary>
-    /// The points multiplier.
+    /// Updated points multiplier.
     /// </summary>
     [JsonPropertyName("multiplier")]
-    public required double Multiplier { get; set; }
+    public double? Multiplier { get; set; }
 
     /// <summary>
-    /// How boosted points are rounded.
+    /// Updated rounding strategy.
     /// </summary>
     [JsonPropertyName("rounding")]
-    public required CreatedPointsBoostRounding Rounding { get; set; }
+    public PatchPointsBoostsRequestItemRounding? Rounding { get; set; }
 
     /// <summary>
-    /// The customer ID of the user the boost was created for.
+    /// Updated user attribute filters. Cannot be set on user-specific boosts. Set to null to clear.
     /// </summary>
-    [JsonPropertyName("userId")]
-    public required string UserId { get; set; }
+    [JsonPropertyName("userAttributes")]
+    public IEnumerable<PatchPointsBoostsRequestItemUserAttributesItem>? UserAttributes { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.

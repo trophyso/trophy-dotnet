@@ -4,8 +4,8 @@ using TrophyApi.Core;
 
 namespace TrophyApi;
 
-[JsonConverter(typeof(EnumSerializer<CreatedPointsBoostRounding>))]
-public enum CreatedPointsBoostRounding
+[JsonConverter(typeof(EnumSerializer<PatchPointsBoostsRequestItemRounding>))]
+public enum PatchPointsBoostsRequestItemRounding
 {
     [EnumMember(Value = "down")]
     Down,

@@ -4,8 +4,8 @@ using TrophyApi.Core;
 
 namespace TrophyApi;
 
-[JsonConverter(typeof(EnumSerializer<CreatedPointsBoostStatus>))]
-public enum CreatedPointsBoostStatus
+[JsonConverter(typeof(EnumSerializer<AdminPointsBoostStatus>))]
+public enum AdminPointsBoostStatus
 {
     [EnumMember(Value = "active")]
     Active,

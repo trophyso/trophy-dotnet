@@ -6,27 +6,27 @@ using TrophyApi.Core;
 
 namespace TrophyApi.Admin.Points;
 
-public partial class BoostsClient
+public partial class TriggersClient
 {
     private RawClient _client;
 
-    internal BoostsClient(RawClient client)
+    internal TriggersClient(RawClient client)
     {
         _client = client;
     }
 
     /// <summary>
-    /// List points boosts for a system.
+    /// List points triggers for a system.
     /// </summary>
     /// <example><code>
-    /// await client.Admin.Points.Boosts.ListAsync(
+    /// await client.Admin.Points.Triggers.ListAsync(
     ///     "550e8400-e29b-41d4-a716-446655440000",
-    ///     new BoostsListRequest { Limit = 1, Skip = 1 }
+    ///     new TriggersListRequest { Limit = 1, Skip = 1 }
     /// );
     /// </code></example>
-    public async Task<IEnumerable<AdminPointsBoost>> ListAsync(
+    public async Task<IEnumerable<AdminPointsTrigger>> ListAsync(
         string systemId,
-        BoostsListRequest request,
+        TriggersListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -47,7 +47,7 @@ public partial class BoostsClient
                     BaseUrl = _client.Options.Environment.Admin,
                     Method = HttpMethod.Get,
                     Path = string.Format(
-                        "points/{0}/boosts",
+                        "points/{0}/triggers",
                         ValueConvert.ToPathParameterString(systemId)
                     ),
                     Query = _query,
@@ -61,7 +61,7 @@ public partial class BoostsClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<IEnumerable<AdminPointsBoost>>(responseBody)!;
+                return JsonUtils.Deserialize<IEnumerable<AdminPointsTrigger>>(responseBody)!;
             }
             catch (JsonException e)
             {
@@ -98,27 +98,24 @@ public partial class BoostsClient
     }
 
     /// <summary>
-    /// Create points boosts.
+    /// Create points triggers in bulk. Maximum 100 triggers per request.
     /// </summary>
     /// <example><code>
-    /// await client.Admin.Points.Boosts.CreateAsync(
+    /// await client.Admin.Points.Triggers.CreateAsync(
     ///     "550e8400-e29b-41d4-a716-446655440000",
-    ///     new List&lt;CreatePointsBoostRequestItem&gt;()
+    ///     new List&lt;CreatePointsTriggerRequestItem&gt;()
     ///     {
-    ///         new CreatePointsBoostRequestItem
+    ///         new CreatePointsTriggerRequestItem
     ///         {
-    ///             UserId = "user-123",
-    ///             Name = "Double XP Weekend",
-    ///             Start = "2024-01-01",
-    ///             End = "2024-01-03",
-    ///             Multiplier = 2,
+    ///             Type = CreatePointsTriggerRequestItemType.Metric,
+    ///             Points = 10,
     ///         },
     ///     }
     /// );
     /// </code></example>
-    public async Task<CreatePointsBoostsResponse> CreateAsync(
+    public async Task<CreatePointsTriggersResponse> CreateAsync(
         string systemId,
-        IEnumerable<CreatePointsBoostRequestItem> request,
+        IEnumerable<CreatePointsTriggerRequestItem> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -130,7 +127,7 @@ public partial class BoostsClient
                     BaseUrl = _client.Options.Environment.Admin,
                     Method = HttpMethod.Post,
                     Path = string.Format(
-                        "points/{0}/boosts",
+                        "points/{0}/triggers",
                         ValueConvert.ToPathParameterString(systemId)
                     ),
                     Body = request,
@@ -145,7 +142,7 @@ public partial class BoostsClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<CreatePointsBoostsResponse>(responseBody)!;
+                return JsonUtils.Deserialize<CreatePointsTriggersResponse>(responseBody)!;
             }
             catch (JsonException e)
             {
@@ -182,14 +179,14 @@ public partial class BoostsClient
     }
 
     /// <summary>
-    /// Delete multiple points boosts by ID.
+    /// Delete (archive) points triggers by ID. Maximum 100 trigger IDs per request.
     /// </summary>
     /// <example><code>
-    /// await client.Admin.Points.Boosts.DeleteAsync(new BoostsDeleteRequest());
+    /// await client.Admin.Points.Triggers.DeleteAsync(new TriggersDeleteRequest());
     /// </code></example>
-    public async Task<DeletePointsBoostsResponse> DeleteAsync(
+    public async Task<DeletePointsTriggersResponse> DeleteAsync(
         string systemId,
-        BoostsDeleteRequest request,
+        TriggersDeleteRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -203,7 +200,7 @@ public partial class BoostsClient
                     BaseUrl = _client.Options.Environment.Admin,
                     Method = HttpMethod.Delete,
                     Path = string.Format(
-                        "points/{0}/boosts",
+                        "points/{0}/triggers",
                         ValueConvert.ToPathParameterString(systemId)
                     ),
                     Query = _query,
@@ -217,7 +214,7 @@ public partial class BoostsClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<DeletePointsBoostsResponse>(responseBody)!;
+                return JsonUtils.Deserialize<DeletePointsTriggersResponse>(responseBody)!;
             }
             catch (JsonException e)
             {
@@ -254,25 +251,17 @@ public partial class BoostsClient
     }
 
     /// <summary>
-    /// Update multiple points boosts.
+    /// Update points triggers in bulk. Maximum 100 triggers per request. Only provided fields are updated; omitted fields are preserved.
     /// </summary>
     /// <example><code>
-    /// await client.Admin.Points.Boosts.UpdateAsync(
+    /// await client.Admin.Points.Triggers.UpdateAsync(
     ///     "550e8400-e29b-41d4-a716-446655440000",
-    ///     new List&lt;PatchPointsBoostsRequestItem&gt;()
-    ///     {
-    ///         new PatchPointsBoostsRequestItem
-    ///         {
-    ///             Id = "550e8400-e29b-41d4-a716-446655440000",
-    ///             Name = "Updated Boost Name",
-    ///             Multiplier = 3,
-    ///         },
-    ///     }
+    ///     new List&lt;PatchPointsTriggersRequestItem&gt;() { new PatchPointsTriggersRequestItem { Id = "id" } }
     /// );
     /// </code></example>
-    public async Task<PatchPointsBoostsResponse> UpdateAsync(
+    public async Task<PatchPointsTriggersResponse> UpdateAsync(
         string systemId,
-        IEnumerable<PatchPointsBoostsRequestItem> request,
+        IEnumerable<PatchPointsTriggersRequestItem> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -284,7 +273,7 @@ public partial class BoostsClient
                     BaseUrl = _client.Options.Environment.Admin,
                     Method = HttpMethodExtensions.Patch,
                     Path = string.Format(
-                        "points/{0}/boosts",
+                        "points/{0}/triggers",
                         ValueConvert.ToPathParameterString(systemId)
                     ),
                     Body = request,
@@ -299,7 +288,7 @@ public partial class BoostsClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<PatchPointsBoostsResponse>(responseBody)!;
+                return JsonUtils.Deserialize<PatchPointsTriggersResponse>(responseBody)!;
             }
             catch (JsonException e)
             {
@@ -336,15 +325,15 @@ public partial class BoostsClient
     }
 
     /// <summary>
-    /// Get a single points boost by ID.
+    /// Get a single points trigger by ID.
     /// </summary>
     /// <example><code>
-    /// await client.Admin.Points.Boosts.GetAsync(
+    /// await client.Admin.Points.Triggers.GetAsync(
     ///     "550e8400-e29b-41d4-a716-446655440000",
     ///     "660f9500-f30c-42e5-b827-557766550001"
     /// );
     /// </code></example>
-    public async Task<AdminPointsBoost> GetAsync(
+    public async Task<AdminPointsTrigger> GetAsync(
         string systemId,
         string id,
         RequestOptions? options = null,
@@ -358,7 +347,7 @@ public partial class BoostsClient
                     BaseUrl = _client.Options.Environment.Admin,
                     Method = HttpMethod.Get,
                     Path = string.Format(
-                        "points/{0}/boosts/{1}",
+                        "points/{0}/triggers/{1}",
                         ValueConvert.ToPathParameterString(systemId),
                         ValueConvert.ToPathParameterString(id)
                     ),
@@ -372,7 +361,7 @@ public partial class BoostsClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<AdminPointsBoost>(responseBody)!;
+                return JsonUtils.Deserialize<AdminPointsTrigger>(responseBody)!;
             }
             catch (JsonException e)
             {

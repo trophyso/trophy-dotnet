@@ -6,27 +6,23 @@ using TrophyApi.Core;
 
 namespace TrophyApi.Admin.Points;
 
-public partial class BoostsClient
+public partial class SystemsClient
 {
     private RawClient _client;
 
-    internal BoostsClient(RawClient client)
+    internal SystemsClient(RawClient client)
     {
         _client = client;
     }
 
     /// <summary>
-    /// List points boosts for a system.
+    /// List points systems.
     /// </summary>
     /// <example><code>
-    /// await client.Admin.Points.Boosts.ListAsync(
-    ///     "550e8400-e29b-41d4-a716-446655440000",
-    ///     new BoostsListRequest { Limit = 1, Skip = 1 }
-    /// );
+    /// await client.Admin.Points.Systems.ListAsync(new SystemsListRequest { Limit = 1, Skip = 1 });
     /// </code></example>
-    public async Task<IEnumerable<AdminPointsBoost>> ListAsync(
-        string systemId,
-        BoostsListRequest request,
+    public async Task<IEnumerable<AdminPointsSystem>> ListAsync(
+        SystemsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -46,10 +42,7 @@ public partial class BoostsClient
                 {
                     BaseUrl = _client.Options.Environment.Admin,
                     Method = HttpMethod.Get,
-                    Path = string.Format(
-                        "points/{0}/boosts",
-                        ValueConvert.ToPathParameterString(systemId)
-                    ),
+                    Path = "points",
                     Query = _query,
                     Options = options,
                 },
@@ -61,7 +54,7 @@ public partial class BoostsClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<IEnumerable<AdminPointsBoost>>(responseBody)!;
+                return JsonUtils.Deserialize<IEnumerable<AdminPointsSystem>>(responseBody)!;
             }
             catch (JsonException e)
             {
@@ -77,8 +70,6 @@ public partial class BoostsClient
                 {
                     case 401:
                         throw new UnauthorizedError(JsonUtils.Deserialize<ErrorBody>(responseBody));
-                    case 404:
-                        throw new NotFoundError(JsonUtils.Deserialize<ErrorBody>(responseBody));
                     case 422:
                         throw new UnprocessableEntityError(
                             JsonUtils.Deserialize<ErrorBody>(responseBody)
@@ -98,27 +89,38 @@ public partial class BoostsClient
     }
 
     /// <summary>
-    /// Create points boosts.
+    /// Create points systems. Optionally include sub-entities (levels, boosts, triggers) in each system payload to create them alongside the system.
     /// </summary>
     /// <example><code>
-    /// await client.Admin.Points.Boosts.CreateAsync(
-    ///     "550e8400-e29b-41d4-a716-446655440000",
-    ///     new List&lt;CreatePointsBoostRequestItem&gt;()
+    /// await client.Admin.Points.Systems.CreateAsync(
+    ///     new List&lt;CreatePointsSystemRequestItem&gt;()
     ///     {
-    ///         new CreatePointsBoostRequestItem
+    ///         new CreatePointsSystemRequestItem
     ///         {
-    ///             UserId = "user-123",
-    ///             Name = "Double XP Weekend",
-    ///             Start = "2024-01-01",
-    ///             End = "2024-01-03",
-    ///             Multiplier = 2,
+    ///             Name = "XP",
+    ///             Key = "xp",
+    ///             Description = "Experience points",
+    ///             Levels = new List&lt;CreatePointsLevelRequestItem&gt;()
+    ///             {
+    ///                 new CreatePointsLevelRequestItem
+    ///                 {
+    ///                     Name = "Bronze",
+    ///                     Key = "bronze",
+    ///                     Points = 100,
+    ///                 },
+    ///                 new CreatePointsLevelRequestItem
+    ///                 {
+    ///                     Name = "Silver",
+    ///                     Key = "silver",
+    ///                     Points = 500,
+    ///                 },
+    ///             },
     ///         },
     ///     }
     /// );
     /// </code></example>
-    public async Task<CreatePointsBoostsResponse> CreateAsync(
-        string systemId,
-        IEnumerable<CreatePointsBoostRequestItem> request,
+    public async Task<CreatePointsSystemsResponse> CreateAsync(
+        IEnumerable<CreatePointsSystemRequestItem> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -129,10 +131,7 @@ public partial class BoostsClient
                 {
                     BaseUrl = _client.Options.Environment.Admin,
                     Method = HttpMethod.Post,
-                    Path = string.Format(
-                        "points/{0}/boosts",
-                        ValueConvert.ToPathParameterString(systemId)
-                    ),
+                    Path = "points",
                     Body = request,
                     ContentType = "application/json",
                     Options = options,
@@ -145,7 +144,7 @@ public partial class BoostsClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<CreatePointsBoostsResponse>(responseBody)!;
+                return JsonUtils.Deserialize<CreatePointsSystemsResponse>(responseBody)!;
             }
             catch (JsonException e)
             {
@@ -161,8 +160,6 @@ public partial class BoostsClient
                 {
                     case 401:
                         throw new UnauthorizedError(JsonUtils.Deserialize<ErrorBody>(responseBody));
-                    case 404:
-                        throw new NotFoundError(JsonUtils.Deserialize<ErrorBody>(responseBody));
                     case 422:
                         throw new UnprocessableEntityError(
                             JsonUtils.Deserialize<ErrorBody>(responseBody)
@@ -182,14 +179,13 @@ public partial class BoostsClient
     }
 
     /// <summary>
-    /// Delete multiple points boosts by ID.
+    /// Delete (archive) points systems by ID.
     /// </summary>
     /// <example><code>
-    /// await client.Admin.Points.Boosts.DeleteAsync(new BoostsDeleteRequest());
+    /// await client.Admin.Points.Systems.DeleteAsync(new SystemsDeleteRequest());
     /// </code></example>
-    public async Task<DeletePointsBoostsResponse> DeleteAsync(
-        string systemId,
-        BoostsDeleteRequest request,
+    public async Task<DeletePointsSystemsResponse> DeleteAsync(
+        SystemsDeleteRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -202,10 +198,7 @@ public partial class BoostsClient
                 {
                     BaseUrl = _client.Options.Environment.Admin,
                     Method = HttpMethod.Delete,
-                    Path = string.Format(
-                        "points/{0}/boosts",
-                        ValueConvert.ToPathParameterString(systemId)
-                    ),
+                    Path = "points",
                     Query = _query,
                     Options = options,
                 },
@@ -217,7 +210,7 @@ public partial class BoostsClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<DeletePointsBoostsResponse>(responseBody)!;
+                return JsonUtils.Deserialize<DeletePointsSystemsResponse>(responseBody)!;
             }
             catch (JsonException e)
             {
@@ -233,8 +226,6 @@ public partial class BoostsClient
                 {
                     case 401:
                         throw new UnauthorizedError(JsonUtils.Deserialize<ErrorBody>(responseBody));
-                    case 404:
-                        throw new NotFoundError(JsonUtils.Deserialize<ErrorBody>(responseBody));
                     case 422:
                         throw new UnprocessableEntityError(
                             JsonUtils.Deserialize<ErrorBody>(responseBody)
@@ -254,25 +245,22 @@ public partial class BoostsClient
     }
 
     /// <summary>
-    /// Update multiple points boosts.
+    /// Update points systems by ID.
     /// </summary>
     /// <example><code>
-    /// await client.Admin.Points.Boosts.UpdateAsync(
-    ///     "550e8400-e29b-41d4-a716-446655440000",
-    ///     new List&lt;PatchPointsBoostsRequestItem&gt;()
+    /// await client.Admin.Points.Systems.UpdateAsync(
+    ///     new List&lt;UpdatePointsSystemRequestItem&gt;()
     ///     {
-    ///         new PatchPointsBoostsRequestItem
+    ///         new UpdatePointsSystemRequestItem
     ///         {
     ///             Id = "550e8400-e29b-41d4-a716-446655440000",
-    ///             Name = "Updated Boost Name",
-    ///             Multiplier = 3,
+    ///             Name = "New Name",
     ///         },
     ///     }
     /// );
     /// </code></example>
-    public async Task<PatchPointsBoostsResponse> UpdateAsync(
-        string systemId,
-        IEnumerable<PatchPointsBoostsRequestItem> request,
+    public async Task<UpdatePointsSystemsResponse> UpdateAsync(
+        IEnumerable<UpdatePointsSystemRequestItem> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -283,10 +271,7 @@ public partial class BoostsClient
                 {
                     BaseUrl = _client.Options.Environment.Admin,
                     Method = HttpMethodExtensions.Patch,
-                    Path = string.Format(
-                        "points/{0}/boosts",
-                        ValueConvert.ToPathParameterString(systemId)
-                    ),
+                    Path = "points",
                     Body = request,
                     ContentType = "application/json",
                     Options = options,
@@ -299,7 +284,7 @@ public partial class BoostsClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<PatchPointsBoostsResponse>(responseBody)!;
+                return JsonUtils.Deserialize<UpdatePointsSystemsResponse>(responseBody)!;
             }
             catch (JsonException e)
             {
@@ -315,8 +300,6 @@ public partial class BoostsClient
                 {
                     case 401:
                         throw new UnauthorizedError(JsonUtils.Deserialize<ErrorBody>(responseBody));
-                    case 404:
-                        throw new NotFoundError(JsonUtils.Deserialize<ErrorBody>(responseBody));
                     case 422:
                         throw new UnprocessableEntityError(
                             JsonUtils.Deserialize<ErrorBody>(responseBody)
@@ -336,16 +319,12 @@ public partial class BoostsClient
     }
 
     /// <summary>
-    /// Get a single points boost by ID.
+    /// Get a points system by ID.
     /// </summary>
     /// <example><code>
-    /// await client.Admin.Points.Boosts.GetAsync(
-    ///     "550e8400-e29b-41d4-a716-446655440000",
-    ///     "660f9500-f30c-42e5-b827-557766550001"
-    /// );
+    /// await client.Admin.Points.Systems.GetAsync("550e8400-e29b-41d4-a716-446655440000");
     /// </code></example>
-    public async Task<AdminPointsBoost> GetAsync(
-        string systemId,
+    public async Task<AdminPointsSystem> GetAsync(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -357,11 +336,7 @@ public partial class BoostsClient
                 {
                     BaseUrl = _client.Options.Environment.Admin,
                     Method = HttpMethod.Get,
-                    Path = string.Format(
-                        "points/{0}/boosts/{1}",
-                        ValueConvert.ToPathParameterString(systemId),
-                        ValueConvert.ToPathParameterString(id)
-                    ),
+                    Path = string.Format("points/{0}", ValueConvert.ToPathParameterString(id)),
                     Options = options,
                 },
                 cancellationToken
@@ -372,7 +347,7 @@ public partial class BoostsClient
             var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
-                return JsonUtils.Deserialize<AdminPointsBoost>(responseBody)!;
+                return JsonUtils.Deserialize<AdminPointsSystem>(responseBody)!;
             }
             catch (JsonException e)
             {

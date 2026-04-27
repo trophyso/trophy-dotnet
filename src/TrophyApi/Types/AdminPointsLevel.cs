@@ -2,46 +2,49 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using TrophyApi.Core;
 
-namespace TrophyApi.Admin.Points;
+namespace TrophyApi;
 
+/// <summary>
+/// A points level as returned from admin endpoints.
+/// </summary>
 [Serializable]
-public record CreatePointsBoostsRequestBoostsItem
+public record AdminPointsLevel
 {
     /// <summary>
-    /// The ID of the user to create a boost for.
+    /// The UUID of the level.
     /// </summary>
-    [JsonPropertyName("userId")]
-    public required string UserId { get; set; }
+    [JsonPropertyName("id")]
+    public required string Id { get; set; }
 
     /// <summary>
-    /// The name of the boost.
+    /// The name of the level.
     /// </summary>
     [JsonPropertyName("name")]
     public required string Name { get; set; }
 
     /// <summary>
-    /// The start date of the boost (YYYY-MM-DD).
+    /// The level key.
     /// </summary>
-    [JsonPropertyName("start")]
-    public required string Start { get; set; }
+    [JsonPropertyName("key")]
+    public required string Key { get; set; }
 
     /// <summary>
-    /// The end date of the boost (YYYY-MM-DD). If null, the boost has no end date.
+    /// The threshold points value for the level.
     /// </summary>
-    [JsonPropertyName("end")]
-    public string? End { get; set; }
+    [JsonPropertyName("points")]
+    public required int Points { get; set; }
 
     /// <summary>
-    /// The points multiplier. Must be greater than 0, not equal to 1, and less than 100.
+    /// The level description.
     /// </summary>
-    [JsonPropertyName("multiplier")]
-    public required double Multiplier { get; set; }
+    [JsonPropertyName("description")]
+    public required string Description { get; set; }
 
     /// <summary>
-    /// How to round the boosted points. Defaults to 'down'.
+    /// The badge for the level, or null if no badge is set.
     /// </summary>
-    [JsonPropertyName("rounding")]
-    public CreatePointsBoostsRequestBoostsItemRounding? Rounding { get; set; }
+    [JsonPropertyName("badge")]
+    public AdminPointsLevelBadge? Badge { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.
