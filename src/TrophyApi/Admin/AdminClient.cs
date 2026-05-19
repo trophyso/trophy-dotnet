@@ -14,6 +14,7 @@ public partial class AdminClient
         Metrics = new MetricsClient(_client);
         Leaderboards = new LeaderboardsClient(_client);
         Streaks = new StreaksClient(_client);
+        Tenants = new TenantsClient(_client);
         Points = new PointsClient(_client);
     }
 
@@ -24,6 +25,8 @@ public partial class AdminClient
     public LeaderboardsClient Leaderboards { get; }
 
     public StreaksClient Streaks { get; }
+
+    public TenantsClient Tenants { get; }
 
     public PointsClient Points { get; }
 }

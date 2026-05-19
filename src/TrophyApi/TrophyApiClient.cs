@@ -7,12 +7,17 @@ public partial class TrophyApiClient
 {
     private readonly RawClient _client;
 
-    public TrophyApiClient(string? apiKey = null, ClientOptions? clientOptions = null)
+    public TrophyApiClient(
+        string? apiKey = null,
+        string? tenantId = null,
+        ClientOptions? clientOptions = null
+    )
     {
         var defaultHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-API-KEY", apiKey },
+                { "Tenant-ID", tenantId },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "TrophyApi" },
                 { "X-Fern-SDK-Version", Version.Current },

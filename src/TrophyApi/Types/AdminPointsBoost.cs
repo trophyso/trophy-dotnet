@@ -53,7 +53,7 @@ public record AdminPointsBoost
     public required AdminPointsBoostRounding Rounding { get; set; }
 
     /// <summary>
-    /// The customer ID of the user the boost was created for, or null for global/attribute-filtered boosts.
+    /// The ID of the user the boost was created for, or null for global/attribute-filtered boosts.
     /// </summary>
     [JsonPropertyName("userId")]
     public string? UserId { get; set; }
