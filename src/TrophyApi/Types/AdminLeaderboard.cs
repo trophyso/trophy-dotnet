@@ -62,7 +62,7 @@ public record AdminLeaderboard
     /// The maximum number of participants.
     /// </summary>
     [JsonPropertyName("maxParticipants")]
-    public required int MaxParticipants { get; set; }
+    public int? MaxParticipants { get; set; }
 
     /// <summary>
     /// The leaderboard start date in YYYY-MM-DD format.

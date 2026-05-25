@@ -104,7 +104,7 @@ public record UserLeaderboardResponse
     /// The maximum number of participants in the leaderboard.
     /// </summary>
     [JsonPropertyName("maxParticipants")]
-    public required int MaxParticipants { get; set; }
+    public int? MaxParticipants { get; set; }
 
     /// <summary>
     /// The repetition type for recurring leaderboards, or null for one-time leaderboards.
