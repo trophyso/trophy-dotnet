@@ -13,7 +13,7 @@ public record UsersLeaderboardRequest
     public string? Run { get; set; }
 
     /// <summary>
-    /// The number of events to return in the history array.
+    /// The number of days to return in the leaderboard history for the user.
     /// </summary>
     [JsonIgnore]
     public int? NumEvents { get; set; }

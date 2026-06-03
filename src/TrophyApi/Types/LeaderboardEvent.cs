@@ -5,16 +5,22 @@ using TrophyApi.Core;
 namespace TrophyApi;
 
 /// <summary>
-/// A leaderboard event representing a change in a user's rank or value.
+/// A daily leaderboard snapshot entry representing the user's rank/value state and the previous persisted state.
 /// </summary>
 [Serializable]
 public record LeaderboardEvent
 {
     /// <summary>
-    /// The timestamp when the event occurred.
+    /// The leaderboard snapshot date in YYYY-MM-DD format.
+    /// </summary>
+    [JsonPropertyName("date")]
+    public required string Date { get; set; }
+
+    /// <summary>
+    /// Deprecated ISO timestamp for the snapshot day boundary. Use `date` instead.
     /// </summary>
     [JsonPropertyName("timestamp")]
-    public DateTime? Timestamp { get; set; }
+    public required DateTime Timestamp { get; set; }
 
     /// <summary>
     /// The user's rank before this event, or null if they were not on the leaderboard.

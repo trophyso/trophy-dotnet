@@ -1075,7 +1075,7 @@ public partial class UsersClient
     }
 
     /// <summary>
-    /// Get a user's rank, value, and history for a specific leaderboard.
+    /// Get a user's rank, value, and daily ranking history for a specific leaderboard.
     /// </summary>
     /// <example><code>
     /// await client.Users.LeaderboardAsync(

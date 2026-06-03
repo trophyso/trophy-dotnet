@@ -11,7 +11,7 @@ namespace TrophyApi;
 public record UserLeaderboardResponseWithHistory
 {
     /// <summary>
-    /// An array of events showing the user's rank and value changes over time.
+    /// An array of daily change events showing the user's rank and value over time.
     /// </summary>
     [JsonPropertyName("history")]
     public IEnumerable<LeaderboardEvent> History { get; set; } = new List<LeaderboardEvent>();
