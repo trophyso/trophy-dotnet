@@ -11,16 +11,17 @@ namespace TrophyApi;
 public record StreakResponse
 {
     /// <summary>
+    /// The timestamp the streak was most recently extended. Null if the streak is not active.
+    /// </summary>
+    [JsonPropertyName("extended")]
+    public DateTime? Extended { get; set; }
+
+    /// <summary>
     /// A list of the user's past streak periods up through the current period. Each period includes the start and end dates and the length of the streak.
     /// </summary>
     [JsonPropertyName("streakHistory")]
-    public IEnumerable<StreakResponseStreakHistoryItem>? StreakHistory { get; set; }
-
-    /// <summary>
-    /// Deprecated. The user's rank across all users. Null if the user has no active streak.
-    /// </summary>
-    [JsonPropertyName("rank")]
-    public int? Rank { get; set; }
+    public IEnumerable<StreakResponseStreakHistoryItem> StreakHistory { get; set; } =
+        new List<StreakResponseStreakHistoryItem>();
 
     /// <summary>
     /// The length of the user's current streak.
