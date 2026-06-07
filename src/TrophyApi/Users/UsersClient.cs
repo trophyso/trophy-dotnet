@@ -377,7 +377,7 @@ public partial class UsersClient
     }
 
     /// <summary>
-    /// Update a user's notification preferences.
+    /// Update a user's notification and streak preferences. Streak preferences require streak customization to be enabled in your Trophy dashboard settings.
     /// </summary>
     /// <example><code>
     /// await client.Users.UpdatePreferencesAsync(
@@ -436,6 +436,8 @@ public partial class UsersClient
                 {
                     case 401:
                         throw new UnauthorizedError(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                    case 403:
+                        throw new ForbiddenError(JsonUtils.Deserialize<ErrorBody>(responseBody));
                     case 404:
                         throw new NotFoundError(JsonUtils.Deserialize<ErrorBody>(responseBody));
                     case 422:

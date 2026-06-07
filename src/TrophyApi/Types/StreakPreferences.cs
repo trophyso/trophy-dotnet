@@ -5,16 +5,19 @@ using TrophyApi.Core;
 namespace TrophyApi;
 
 /// <summary>
-/// A user's preferences.
+/// Per-user streak configuration. Requires streak customization to be enabled in dashboard settings.
 /// </summary>
 [Serializable]
-public record UserPreferencesResponse
+public record StreakPreferences
 {
-    [JsonPropertyName("notifications")]
-    public required NotificationPreferences Notifications { get; set; }
+    [JsonPropertyName("evaluationMode")]
+    public StreakEvaluationModePreference? EvaluationMode { get; set; }
 
-    [JsonPropertyName("streak")]
-    public StreakPreferences? Streak { get; set; }
+    /// <summary>
+    /// Metrics and thresholds that count toward this user's streak.
+    /// </summary>
+    [JsonPropertyName("metrics")]
+    public IEnumerable<StreakMetricPreference>? Metrics { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.

@@ -5,16 +5,22 @@ using TrophyApi.Core;
 namespace TrophyApi;
 
 /// <summary>
-/// A user's preferences.
+/// Per-metric streak threshold override for a user.
 /// </summary>
 [Serializable]
-public record UserPreferencesResponse
+public record StreakMetricPreference
 {
-    [JsonPropertyName("notifications")]
-    public required NotificationPreferences Notifications { get; set; }
+    /// <summary>
+    /// The metric key.
+    /// </summary>
+    [JsonPropertyName("key")]
+    public required string Key { get; set; }
 
-    [JsonPropertyName("streak")]
-    public StreakPreferences? Streak { get; set; }
+    /// <summary>
+    /// Minimum metric change in a streak period to count toward the streak.
+    /// </summary>
+    [JsonPropertyName("threshold")]
+    public required double Threshold { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.
