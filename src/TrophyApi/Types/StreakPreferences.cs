@@ -5,11 +5,17 @@ using TrophyApi.Core;
 namespace TrophyApi;
 
 /// <summary>
-/// Per-user streak configuration. Requires streak customization to be enabled in dashboard settings.
+/// Per-user streak configuration. Metric and evaluation mode overrides require streak customization to be enabled in dashboard settings.
 /// </summary>
 [Serializable]
 public record StreakPreferences
 {
+    /// <summary>
+    /// Whether streaks are calculated for this user. When false, the user's streak is always 0 and streak webhooks and notifications are not sent.
+    /// </summary>
+    [JsonPropertyName("enabled")]
+    public bool? Enabled { get; set; }
+
     [JsonPropertyName("evaluationMode")]
     public StreakEvaluationModePreference? EvaluationMode { get; set; }
 
