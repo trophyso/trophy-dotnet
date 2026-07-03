@@ -1,5 +1,5 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
 using TrophyApi.Core;
 
 namespace TrophyApi;
@@ -8,8 +8,12 @@ namespace TrophyApi;
 /// A user's data for a specific leaderboard including rank, value, and history.
 /// </summary>
 [Serializable]
-public record WebhookUserLeaderboardResponse
+public record WebhookUserLeaderboardResponse : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     /// <summary>
     /// The user's rank before this event, or null if they were not on the leaderboard.
     /// </summary>
@@ -130,15 +134,11 @@ public record WebhookUserLeaderboardResponse
     [JsonPropertyName("runInterval")]
     public int? RunInterval { get; set; }
 
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <inheritdoc />
     public override string ToString()

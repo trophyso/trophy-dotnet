@@ -2,9 +2,9 @@ using TrophyApi.Core;
 
 namespace TrophyApi.Admin.Points;
 
-public partial class PointsClient
+public partial class PointsClient : IPointsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal PointsClient(RawClient client)
     {
@@ -15,11 +15,11 @@ public partial class PointsClient
         Triggers = new TriggersClient(_client);
     }
 
-    public SystemsClient Systems { get; }
+    public ISystemsClient Systems { get; }
 
-    public BoostsClient Boosts { get; }
+    public IBoostsClient Boosts { get; }
 
-    public LevelsClient Levels { get; }
+    public ILevelsClient Levels { get; }
 
-    public TriggersClient Triggers { get; }
+    public ITriggersClient Triggers { get; }
 }

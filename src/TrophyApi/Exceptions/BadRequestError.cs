@@ -4,10 +4,5 @@ namespace TrophyApi;
 /// This exception type will be thrown for any non-2XX API responses.
 /// </summary>
 [Serializable]
-public class BadRequestError(ErrorBody body) : TrophyApiApiException("BadRequestError", 400, body)
-{
-    /// <summary>
-    /// The body of the response that triggered the exception.
-    /// </summary>
-    public new ErrorBody Body => body;
-}
+public class BadRequestError(object body, TrophyApi.RawResponse? rawResponse = null)
+    : TrophyApiApiException("BadRequestError", 400, body, rawResponse: rawResponse);

@@ -3,35 +3,47 @@ using TrophyApi.Core;
 
 namespace TrophyApi;
 
-public partial class TrophyApiClient
+public partial class TrophyApiClient : ITrophyApiClient
 {
     private readonly RawClient _client;
 
     public TrophyApiClient(
         string? apiKey = null,
+        string? sdkVersion = null,
         string? tenantId = null,
         ClientOptions? clientOptions = null
     )
     {
-        var defaultHeaders = new Headers(
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {
-                { "X-API-KEY", apiKey },
-                { "Tenant-ID", tenantId },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "TrophyApi" },
                 { "X-Fern-SDK-Version", Version.Current },
             }
         );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        foreach (var header in platformHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
             {
                 clientOptions.Headers[header.Key] = header.Value;
             }
         }
-        _client = new RawClient(clientOptions);
+        var clientOptionsWithAuth = clientOptions.Clone();
+        var authHeaders = new Headers(
+            new Dictionary<string, string>()
+            {
+                { "X-API-KEY", apiKey ?? "" },
+                { "X-SDK-VERSION", sdkVersion ?? "1.15.0" },
+                { "Tenant-ID", tenantId ?? "" },
+            }
+        );
+        foreach (var header in authHeaders)
+        {
+            clientOptionsWithAuth.Headers[header.Key] = header.Value;
+        }
+        _client = new RawClient(clientOptionsWithAuth);
         Achievements = new AchievementsClient(_client);
         Metrics = new MetricsClient(_client);
         Users = new UsersClient(_client);
@@ -41,17 +53,17 @@ public partial class TrophyApiClient
         Admin = new AdminClient(_client);
     }
 
-    public AchievementsClient Achievements { get; }
+    public IAchievementsClient Achievements { get; }
 
-    public MetricsClient Metrics { get; }
+    public IMetricsClient Metrics { get; }
 
-    public UsersClient Users { get; }
+    public IUsersClient Users { get; }
 
-    public StreaksClient Streaks { get; }
+    public IStreaksClient Streaks { get; }
 
-    public PointsClient Points { get; }
+    public IPointsClient Points { get; }
 
-    public LeaderboardsClient Leaderboards { get; }
+    public ILeaderboardsClient Leaderboards { get; }
 
-    public AdminClient Admin { get; }
+    public IAdminClient Admin { get; }
 }

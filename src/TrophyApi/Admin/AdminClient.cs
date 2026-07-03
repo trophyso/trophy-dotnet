@@ -1,11 +1,10 @@
-using TrophyApi.Admin.Points;
 using TrophyApi.Core;
 
 namespace TrophyApi.Admin;
 
-public partial class AdminClient
+public partial class AdminClient : IAdminClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal AdminClient(RawClient client)
     {
@@ -15,18 +14,18 @@ public partial class AdminClient
         Leaderboards = new LeaderboardsClient(_client);
         Streaks = new StreaksClient(_client);
         Tenants = new TenantsClient(_client);
-        Points = new PointsClient(_client);
+        Points = new TrophyApi.Admin.Points.PointsClient(_client);
     }
 
-    public AttributesClient Attributes { get; }
+    public IAttributesClient Attributes { get; }
 
-    public MetricsClient Metrics { get; }
+    public IMetricsClient Metrics { get; }
 
-    public LeaderboardsClient Leaderboards { get; }
+    public ILeaderboardsClient Leaderboards { get; }
 
-    public StreaksClient Streaks { get; }
+    public IStreaksClient Streaks { get; }
 
-    public TenantsClient Tenants { get; }
+    public ITenantsClient Tenants { get; }
 
-    public PointsClient Points { get; }
+    public Points.IPointsClient Points { get; }
 }

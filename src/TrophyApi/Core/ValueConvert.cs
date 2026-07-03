@@ -29,7 +29,8 @@ public static class ValueConvert
 
     internal static string ToPathParameterString(ulong v) => ToString(v);
 
-    internal static string ToPathParameterString(string v) => ToString(v);
+    internal static string ToPathParameterString(string v) =>
+        QueryStringBuilder.EncodePathSegment(v);
 
     internal static string ToPathParameterString(char v) => ToString(v);
 
@@ -82,8 +83,7 @@ public static class ValueConvert
             ulong u => ToString(u),
             char c => ToString(c),
             Guid guid => ToString(guid),
-            Enum e => JsonUtils.Serialize(e).Trim('"'),
-            _ => JsonUtils.Serialize(value).Trim('"'),
+            _ => JsonUtils.SerializeRelaxedEscaping(value, value.GetType()).Trim('"'),
         };
     }
 

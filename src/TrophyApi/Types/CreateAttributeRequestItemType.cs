@@ -1,10 +1,9 @@
-using System.Runtime.Serialization;
-using System.Text.Json.Serialization;
-using TrophyApi.Core;
+using global::System.Runtime.Serialization;
+using global::System.Text.Json.Serialization;
 
 namespace TrophyApi;
 
-[JsonConverter(typeof(EnumSerializer<CreateAttributeRequestItemType>))]
+[JsonConverter(typeof(CreateAttributeRequestItemTypeSerializer))]
 public enum CreateAttributeRequestItemType
 {
     [EnumMember(Value = "user")]
@@ -12,4 +11,74 @@ public enum CreateAttributeRequestItemType
 
     [EnumMember(Value = "event")]
     Event,
+}
+
+internal class CreateAttributeRequestItemTypeSerializer
+    : global::System.Text.Json.Serialization.JsonConverter<CreateAttributeRequestItemType>
+{
+    private static readonly global::System.Collections.Generic.Dictionary<
+        string,
+        CreateAttributeRequestItemType
+    > _stringToEnum = new()
+    {
+        { "user", CreateAttributeRequestItemType.User },
+        { "event", CreateAttributeRequestItemType.Event },
+    };
+
+    private static readonly global::System.Collections.Generic.Dictionary<
+        CreateAttributeRequestItemType,
+        string
+    > _enumToString = new()
+    {
+        { CreateAttributeRequestItemType.User, "user" },
+        { CreateAttributeRequestItemType.Event, "event" },
+    };
+
+    public override CreateAttributeRequestItemType Read(
+        ref global::System.Text.Json.Utf8JsonReader reader,
+        global::System.Type typeToConvert,
+        global::System.Text.Json.JsonSerializerOptions options
+    )
+    {
+        var stringValue =
+            reader.GetString()
+            ?? throw new global::System.Exception("The JSON value could not be read as a string.");
+        return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
+    }
+
+    public override void Write(
+        global::System.Text.Json.Utf8JsonWriter writer,
+        CreateAttributeRequestItemType value,
+        global::System.Text.Json.JsonSerializerOptions options
+    )
+    {
+        writer.WriteStringValue(
+            _enumToString.TryGetValue(value, out var stringValue) ? stringValue : null
+        );
+    }
+
+    public override CreateAttributeRequestItemType ReadAsPropertyName(
+        ref global::System.Text.Json.Utf8JsonReader reader,
+        global::System.Type typeToConvert,
+        global::System.Text.Json.JsonSerializerOptions options
+    )
+    {
+        var stringValue =
+            reader.GetString()
+            ?? throw new global::System.Exception(
+                "The JSON property name could not be read as a string."
+            );
+        return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
+    }
+
+    public override void WriteAsPropertyName(
+        global::System.Text.Json.Utf8JsonWriter writer,
+        CreateAttributeRequestItemType value,
+        global::System.Text.Json.JsonSerializerOptions options
+    )
+    {
+        writer.WritePropertyName(
+            _enumToString.TryGetValue(value, out var stringValue) ? stringValue : value.ToString()
+        );
+    }
 }

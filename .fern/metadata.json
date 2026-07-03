@@ -1,0 +1,17 @@
+{
+  "cliVersion": "5.62.0",
+  "generatorName": "fernapi/fern-csharp-sdk",
+  "generatorVersion": "2.70.0",
+  "generatorConfig": {
+    "additional-properties": false,
+    "enable-forward-compatible-enums": false,
+    "generate-mock-server-tests": false,
+    "inline-path-parameters": false,
+    "simplify-object-dictionaries": true,
+    "use-discriminated-unions": false
+  },
+  "originGitCommit": "b18b99972464468a34beacaa16d18002f3d55fce",
+  "originGitCommitIsDirty": false,
+  "invokedBy": "ci",
+  "ciProvider": "github"
+}

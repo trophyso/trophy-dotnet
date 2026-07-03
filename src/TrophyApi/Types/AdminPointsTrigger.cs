@@ -1,5 +1,5 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
 using TrophyApi.Core;
 
 namespace TrophyApi;
@@ -8,8 +8,12 @@ namespace TrophyApi;
 /// A points trigger as returned from admin endpoints.
 /// </summary>
 [Serializable]
-public record AdminPointsTrigger
+public record AdminPointsTrigger : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     /// <summary>
     /// The UUID of the trigger.
     /// </summary>
@@ -89,15 +93,11 @@ public record AdminPointsTrigger
     [JsonPropertyName("blockIfOutOfPoints")]
     public required bool BlockIfOutOfPoints { get; set; }
 
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <inheritdoc />
     public override string ToString()

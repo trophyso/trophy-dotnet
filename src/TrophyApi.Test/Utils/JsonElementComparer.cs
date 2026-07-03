@@ -1,4 +1,4 @@
-using System.Text.Json;
+using global::System.Text.Json;
 using NUnit.Framework.Constraints;
 
 namespace NUnit.Framework;
@@ -92,8 +92,15 @@ public class JsonElementComparer : IEqualityComparer<JsonElement>
             case JsonValueKind.Number:
                 if (x.GetDecimal() != y.GetDecimal())
                 {
-                    _failurePath = $"{path}: Expected {x.GetDecimal()} but got {y.GetDecimal()}";
-                    return false;
+                    if (x.GetDouble() != y.GetDouble())
+                    {
+                        if (x.GetSingle() != y.GetSingle())
+                        {
+                            _failurePath =
+                                $"{path}: Expected {x.GetDecimal()} but got {y.GetDecimal()}";
+                            return false;
+                        }
+                    }
                 }
 
                 return true;
@@ -120,7 +127,7 @@ public class JsonElementComparer : IEqualityComparer<JsonElement>
     private bool IsLikelyDateTimeString(string? str)
     {
         // Simple heuristic to identify likely ISO date time strings
-        return str != null
+        return str is not null
             && (str.Contains("T") && (str.EndsWith("Z") || str.Contains("+") || str.Contains("-")));
     }
 

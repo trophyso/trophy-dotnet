@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/TrophyApi.Test/TrophyApi.Test.csproj" />
+  <Project Path="src/TrophyApi/TrophyApi.csproj" />
+</Solution>
