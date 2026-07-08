@@ -102,6 +102,18 @@ public record LeaderboardResponseWithRankings : IJsonOnDeserialized
     public string? End { get; set; }
 
     /// <summary>
+    /// When set, ranking only counts activity at or after this time of day in the user's timezone (HH:mm format).
+    /// </summary>
+    [JsonPropertyName("startTime")]
+    public string? StartTime { get; set; }
+
+    /// <summary>
+    /// When set, ranking only counts activity before this time of day in the user's timezone (HH:mm format).
+    /// </summary>
+    [JsonPropertyName("endTime")]
+    public string? EndTime { get; set; }
+
+    /// <summary>
     /// The maximum number of participants in the leaderboard.
     /// </summary>
     [JsonPropertyName("maxParticipants")]

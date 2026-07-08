@@ -81,6 +81,18 @@ public record UpdateLeaderboardRequestItem : IJsonOnDeserialized
     public string? End { get; set; }
 
     /// <summary>
+    /// The updated start of the daily ranking time window in HH:mm format, or `null` to clear it.
+    /// </summary>
+    [JsonPropertyName("startTime")]
+    public string? StartTime { get; set; }
+
+    /// <summary>
+    /// The updated end of the daily ranking time window in HH:mm format, or `null` to clear it.
+    /// </summary>
+    [JsonPropertyName("endTime")]
+    public string? EndTime { get; set; }
+
+    /// <summary>
     /// The updated breakdown attribute UUIDs.
     /// </summary>
     [JsonPropertyName("breakdownAttributes")]
