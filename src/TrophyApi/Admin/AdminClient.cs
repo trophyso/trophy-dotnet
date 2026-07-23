@@ -13,6 +13,7 @@ public partial class AdminClient : IAdminClient
         Metrics = new MetricsClient(_client);
         Leaderboards = new LeaderboardsClient(_client);
         Streaks = new StreaksClient(_client);
+        ApplicationApiKeys = new ApplicationApiKeysClient(_client);
         Tenants = new TenantsClient(_client);
         Points = new TrophyApi.Admin.Points.PointsClient(_client);
     }
@@ -24,6 +25,8 @@ public partial class AdminClient : IAdminClient
     public ILeaderboardsClient Leaderboards { get; }
 
     public IStreaksClient Streaks { get; }
+
+    public IApplicationApiKeysClient ApplicationApiKeys { get; }
 
     public ITenantsClient Tenants { get; }
 

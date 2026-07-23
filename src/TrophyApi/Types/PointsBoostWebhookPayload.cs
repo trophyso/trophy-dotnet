@@ -33,7 +33,7 @@ public record PointsBoostWebhookPayload : IJsonOnDeserialized
     public required PointsBoostWebhookPayloadStatus Status { get; set; }
 
     /// <summary>
-    /// The customer-facing user ID that the boost is scoped to, or null for global boosts.
+    /// The user ID the boost is scoped to, or null for global boosts.
     /// </summary>
     [JsonPropertyName("userId")]
     public string? UserId { get; set; }

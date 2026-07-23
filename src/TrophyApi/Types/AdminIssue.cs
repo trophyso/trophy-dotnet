@@ -15,6 +15,12 @@ public record AdminIssue : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
+    /// The ID of the resource the issue relates to, when applicable.
+    /// </summary>
+    [JsonPropertyName("id")]
+    public string? Id { get; set; }
+
+    /// <summary>
     /// The ID of the user the issue relates to, when applicable.
     /// </summary>
     [JsonPropertyName("userId")]

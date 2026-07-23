@@ -767,7 +767,7 @@ public partial class UsersClient : IUsersClient
                         );
                     case 403:
                         throw new ForbiddenError(
-                            JsonUtils.Deserialize<ErrorBody>(responseBody),
+                            JsonUtils.Deserialize<object>(responseBody),
                             rawResponse: new TrophyApi.RawResponse()
                             {
                                 StatusCode = response.Raw.StatusCode,
