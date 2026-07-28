@@ -10,7 +10,7 @@
     "simplify-object-dictionaries": true,
     "use-discriminated-unions": false
   },
-  "originGitCommit": "fc9c2289d356522ad24b9464747364dd97f31a15",
+  "originGitCommit": "e5e0764c693f384265aea6528e87792857387287",
   "originGitCommitIsDirty": false,
   "invokedBy": "ci",
   "ciProvider": "github"

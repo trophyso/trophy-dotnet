@@ -48,4 +48,13 @@ public partial interface IMetricsClient
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
+
+    /// <summary>
+    /// Submit up to 1,000 metric events for asynchronous processing.
+    /// </summary>
+    WithRawResponseTask<BatchEventsResponse> BatchEventsAsync(
+        IEnumerable<BatchMetricEvent> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
 }
