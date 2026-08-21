@@ -680,7 +680,7 @@ public partial class SystemsClient : ISystemsClient
     }
 
     /// <summary>
-    /// Delete (archive) points systems by ID.
+    /// Delete points systems by ID.
     /// </summary>
     /// <example><code>
     /// await client.Admin.Points.Systems.DeleteAsync(

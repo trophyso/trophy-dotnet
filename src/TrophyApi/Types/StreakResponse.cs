@@ -28,7 +28,7 @@ public record StreakResponse : IJsonOnDeserialized
         new List<StreakResponseStreakHistoryItem>();
 
     /// <summary>
-    /// Upcoming and currently active streak pauses for the user. Past and archived pauses are omitted.
+    /// Upcoming and currently active streak pauses for the user.
     /// </summary>
     [JsonPropertyName("pauses")]
     public IEnumerable<StreakResponsePausesItem> Pauses { get; set; } =

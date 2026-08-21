@@ -285,7 +285,7 @@ public partial class PausesClient : IPausesClient
     }
 
     /// <summary>
-    /// Archive streak pauses by ID. Pause records are not deleted; their status is set to archived so they no longer apply to streak logic.
+    /// Delete streak pauses by ID.
     /// </summary>
     /// <example><code>
     /// await client.Admin.Streaks.Pauses.DeleteAsync(

@@ -739,7 +739,7 @@ public partial class TriggersClient : ITriggersClient
     }
 
     /// <summary>
-    /// Delete (archive) points triggers by ID. Maximum 100 trigger IDs per request.
+    /// Delete points triggers by ID. Maximum 100 trigger IDs per request.
     /// </summary>
     /// <example><code>
     /// await client.Admin.Points.Triggers.DeleteAsync(

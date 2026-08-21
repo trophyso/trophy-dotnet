@@ -5,7 +5,7 @@ using TrophyApi.Core;
 namespace TrophyApi;
 
 /// <summary>
-/// Response containing archived streak pauses and any issues encountered.
+/// Response containing deleted streak pauses and any issues encountered.
 /// </summary>
 [Serializable]
 public record DeleteStreakPausesResponse : IJsonOnDeserialized
@@ -15,13 +15,13 @@ public record DeleteStreakPausesResponse : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Array of archived streak pause IDs.
+    /// Array of deleted streak pause IDs.
     /// </summary>
     [JsonPropertyName("deleted")]
     public IEnumerable<DeletedResource> Deleted { get; set; } = new List<DeletedResource>();
 
     /// <summary>
-    /// Array of issues encountered during pause archival.
+    /// Array of issues encountered during pause deletion.
     /// </summary>
     [JsonPropertyName("issues")]
     public IEnumerable<AdminIssue> Issues { get; set; } = new List<AdminIssue>();

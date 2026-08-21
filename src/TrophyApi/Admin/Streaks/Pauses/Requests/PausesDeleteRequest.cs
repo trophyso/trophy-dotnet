@@ -7,7 +7,7 @@ namespace TrophyApi.Admin.Streaks;
 public record PausesDeleteRequest
 {
     /// <summary>
-    /// Streak pause IDs to archive. Repeat the query param or provide a comma-separated list.
+    /// Streak pause IDs to delete. Repeat the query param or provide a comma-separated list.
     /// </summary>
     [JsonIgnore]
     public IEnumerable<string> Ids { get; set; } = new List<string>();

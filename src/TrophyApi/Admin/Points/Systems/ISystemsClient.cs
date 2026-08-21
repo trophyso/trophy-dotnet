@@ -23,7 +23,7 @@ public partial interface ISystemsClient
     );
 
     /// <summary>
-    /// Delete (archive) points systems by ID.
+    /// Delete points systems by ID.
     /// </summary>
     WithRawResponseTask<DeletePointsSystemsResponse> DeleteAsync(
         SystemsDeleteRequest request,
