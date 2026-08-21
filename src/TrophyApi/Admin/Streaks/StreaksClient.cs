@@ -13,9 +13,12 @@ public partial class StreaksClient : IStreaksClient
     {
         _client = client;
         Freezes = new FreezesClient(_client);
+        Pauses = new PausesClient(_client);
     }
 
     public IFreezesClient Freezes { get; }
+
+    public IPausesClient Pauses { get; }
 
     private async Task<WithRawResponse<RestoreStreaksResponse>> RestoreAsyncCore(
         RestoreStreaksRequest request,

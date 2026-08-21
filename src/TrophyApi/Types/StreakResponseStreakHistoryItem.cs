@@ -38,6 +38,12 @@ public record StreakResponseStreakHistoryItem : IJsonOnDeserialized
     [JsonPropertyName("usedFreeze")]
     public bool? UsedFreeze { get; set; }
 
+    /// <summary>
+    /// Whether the user's streak was paused during this period.
+    /// </summary>
+    [JsonPropertyName("usedPause")]
+    public required bool UsedPause { get; set; }
+
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
