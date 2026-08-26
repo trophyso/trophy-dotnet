@@ -50,7 +50,7 @@ public partial interface IUsersClient
     );
 
     /// <summary>
-    /// Update a user's notification and streak preferences. Streak preferences require streak customization to be enabled in your Trophy dashboard settings.
+    /// Update a user's notification and streak preferences. Streak preferences other than `streak.enabled` require streak customization to be enabled in your Trophy dashboard settings.
     /// </summary>
     WithRawResponseTask<UserPreferencesResponse> UpdatePreferencesAsync(
         string id,
