@@ -60,6 +60,12 @@ public record UserAchievementResponse : IJsonOnDeserialized
     public int? StreakLength { get; set; }
 
     /// <summary>
+    /// The number of years after sign-up required to complete the achievement (only applicable if trigger = 'anniversary')
+    /// </summary>
+    [JsonPropertyName("anniversaryYears")]
+    public int? AnniversaryYears { get; set; }
+
+    /// <summary>
     /// The IDs of the prerequisite achievements that must be completed to earn this achievement (only applicable if trigger = 'achievement')
     /// </summary>
     [JsonPropertyName("achievementIds")]

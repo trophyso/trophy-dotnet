@@ -33,6 +33,12 @@ public record UpdatedUser : IJsonOnDeserialized
     public string? Tz { get; set; }
 
     /// <summary>
+    /// The date the user signed up on your platform, as YYYY-MM-DD. ISO 8601 date-times are accepted and stored as their UTC calendar day. Must not be after today in the user's timezone. Required for anniversary achievements. Users without a signUpDate are not eligible.
+    /// </summary>
+    [JsonPropertyName("signUpDate")]
+    public string? SignUpDate { get; set; }
+
+    /// <summary>
     /// The user's device tokens, used for push notifications.
     /// </summary>
     [JsonPropertyName("deviceTokens")]

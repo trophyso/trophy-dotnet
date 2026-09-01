@@ -17,6 +17,9 @@ public enum AchievementResponseTrigger
 
     [EnumMember(Value = "achievement")]
     Achievement,
+
+    [EnumMember(Value = "anniversary")]
+    Anniversary,
 }
 
 internal class AchievementResponseTriggerSerializer
@@ -31,6 +34,7 @@ internal class AchievementResponseTriggerSerializer
         { "streak", AchievementResponseTrigger.Streak },
         { "api", AchievementResponseTrigger.Api },
         { "achievement", AchievementResponseTrigger.Achievement },
+        { "anniversary", AchievementResponseTrigger.Anniversary },
     };
 
     private static readonly global::System.Collections.Generic.Dictionary<
@@ -42,6 +46,7 @@ internal class AchievementResponseTriggerSerializer
         { AchievementResponseTrigger.Streak, "streak" },
         { AchievementResponseTrigger.Api, "api" },
         { AchievementResponseTrigger.Achievement, "achievement" },
+        { AchievementResponseTrigger.Anniversary, "anniversary" },
     };
 
     public override AchievementResponseTrigger Read(

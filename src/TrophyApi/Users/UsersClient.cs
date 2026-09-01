@@ -2218,6 +2218,7 @@ public partial class UsersClient : IUsersClient
     ///     {
     ///         Email = "user@example.com",
     ///         Tz = "Europe/London",
+    ///         SignUpDate = "2020-08-20",
     ///         Attributes = new Dictionary&lt;string, string&gt;()
     ///         {
     ///             { "department", "engineering" },

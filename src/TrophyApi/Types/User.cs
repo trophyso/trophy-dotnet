@@ -39,6 +39,12 @@ public record User : IJsonOnDeserialized
     public string? Tz { get; set; }
 
     /// <summary>
+    /// The date the user signed up on your platform, as YYYY-MM-DD. Required for anniversary achievements. Null if not set, in which case the user is not eligible for anniversary achievements.
+    /// </summary>
+    [JsonPropertyName("signUpDate")]
+    public string? SignUpDate { get; set; }
+
+    /// <summary>
     /// The user's device tokens.
     /// </summary>
     [JsonPropertyName("deviceTokens")]
