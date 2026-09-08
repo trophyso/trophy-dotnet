@@ -15,7 +15,7 @@ public partial interface ILevelsClient
     );
 
     /// <summary>
-    /// Create points levels. Maximum 100 levels per request.
+    /// Create points levels.
     /// </summary>
     WithRawResponseTask<CreatePointsLevelsResponse> CreateAsync(
         string systemId,

@@ -2,20 +2,19 @@ using global::System.Text.Json;
 using TrophyApi;
 using TrophyApi.Core;
 
-namespace TrophyApi.Admin.Points;
+namespace TrophyApi.Admin;
 
-public partial class LevelsClient : ILevelsClient
+public partial class AchievementsClient : IAchievementsClient
 {
     private readonly RawClient _client;
 
-    internal LevelsClient(RawClient client)
+    internal AchievementsClient(RawClient client)
     {
         _client = client;
     }
 
-    private async Task<WithRawResponse<IEnumerable<AdminPointsLevel>>> ListAsyncCore(
-        string systemId,
-        LevelsListRequest request,
+    private async Task<WithRawResponse<IEnumerable<AdminAchievement>>> ListAsyncCore(
+        AchievementsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -37,10 +36,7 @@ public partial class LevelsClient : ILevelsClient
                 {
                     BaseUrl = _client.Options.Environment.Admin,
                     Method = HttpMethod.Get,
-                    Path = string.Format(
-                        "points/{0}/levels",
-                        ValueConvert.ToPathParameterString(systemId)
-                    ),
+                    Path = "achievements",
                     QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
@@ -55,10 +51,10 @@ public partial class LevelsClient : ILevelsClient
                 .ConfigureAwait(false);
             try
             {
-                var responseData = JsonUtils.Deserialize<IEnumerable<AdminPointsLevel>>(
+                var responseData = JsonUtils.Deserialize<IEnumerable<AdminAchievement>>(
                     responseBody
                 )!;
-                return new WithRawResponse<IEnumerable<AdminPointsLevel>>()
+                return new WithRawResponse<IEnumerable<AdminAchievement>>()
                 {
                     Data = responseData,
                     RawResponse = new TrophyApi.RawResponse()
@@ -105,18 +101,6 @@ public partial class LevelsClient : ILevelsClient
                                 Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                             }
                         );
-                    case 404:
-                        throw new NotFoundError(
-                            JsonUtils.Deserialize<object>(responseBody),
-                            rawResponse: new TrophyApi.RawResponse()
-                            {
-                                StatusCode = response.Raw.StatusCode,
-                                Url =
-                                    response.Raw.RequestMessage?.RequestUri
-                                    ?? new Uri("about:blank"),
-                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
-                            }
-                        );
                     case 422:
                         throw new UnprocessableEntityError(
                             JsonUtils.Deserialize<object>(responseBody),
@@ -149,9 +133,8 @@ public partial class LevelsClient : ILevelsClient
         }
     }
 
-    private async Task<WithRawResponse<CreatePointsLevelsResponse>> CreateAsyncCore(
-        string systemId,
-        IEnumerable<CreatePointsLevelRequestItem> request,
+    private async Task<WithRawResponse<CreateAchievementsResponse>> CreateAsyncCore(
+        IEnumerable<CreateAchievementRequestItem> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -171,10 +154,7 @@ public partial class LevelsClient : ILevelsClient
                 {
                     BaseUrl = _client.Options.Environment.Admin,
                     Method = HttpMethod.Post,
-                    Path = string.Format(
-                        "points/{0}/levels",
-                        ValueConvert.ToPathParameterString(systemId)
-                    ),
+                    Path = "achievements",
                     Body = request,
                     QueryString = _queryString,
                     Headers = _headers,
@@ -191,8 +171,8 @@ public partial class LevelsClient : ILevelsClient
                 .ConfigureAwait(false);
             try
             {
-                var responseData = JsonUtils.Deserialize<CreatePointsLevelsResponse>(responseBody)!;
-                return new WithRawResponse<CreatePointsLevelsResponse>()
+                var responseData = JsonUtils.Deserialize<CreateAchievementsResponse>(responseBody)!;
+                return new WithRawResponse<CreateAchievementsResponse>()
                 {
                     Data = responseData,
                     RawResponse = new TrophyApi.RawResponse()
@@ -239,18 +219,6 @@ public partial class LevelsClient : ILevelsClient
                                 Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                             }
                         );
-                    case 404:
-                        throw new NotFoundError(
-                            JsonUtils.Deserialize<object>(responseBody),
-                            rawResponse: new TrophyApi.RawResponse()
-                            {
-                                StatusCode = response.Raw.StatusCode,
-                                Url =
-                                    response.Raw.RequestMessage?.RequestUri
-                                    ?? new Uri("about:blank"),
-                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
-                            }
-                        );
                     case 422:
                         throw new UnprocessableEntityError(
                             JsonUtils.Deserialize<object>(responseBody),
@@ -283,9 +251,8 @@ public partial class LevelsClient : ILevelsClient
         }
     }
 
-    private async Task<WithRawResponse<DeletePointsLevelsResponse>> DeleteAsyncCore(
-        string systemId,
-        LevelsDeleteRequest request,
+    private async Task<WithRawResponse<DeleteAchievementsResponse>> DeleteAsyncCore(
+        AchievementsDeleteRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -306,10 +273,7 @@ public partial class LevelsClient : ILevelsClient
                 {
                     BaseUrl = _client.Options.Environment.Admin,
                     Method = HttpMethod.Delete,
-                    Path = string.Format(
-                        "points/{0}/levels",
-                        ValueConvert.ToPathParameterString(systemId)
-                    ),
+                    Path = "achievements",
                     QueryString = _queryString,
                     Headers = _headers,
                     Options = options,
@@ -324,8 +288,8 @@ public partial class LevelsClient : ILevelsClient
                 .ConfigureAwait(false);
             try
             {
-                var responseData = JsonUtils.Deserialize<DeletePointsLevelsResponse>(responseBody)!;
-                return new WithRawResponse<DeletePointsLevelsResponse>()
+                var responseData = JsonUtils.Deserialize<DeleteAchievementsResponse>(responseBody)!;
+                return new WithRawResponse<DeleteAchievementsResponse>()
                 {
                     Data = responseData,
                     RawResponse = new TrophyApi.RawResponse()
@@ -372,18 +336,6 @@ public partial class LevelsClient : ILevelsClient
                                 Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                             }
                         );
-                    case 404:
-                        throw new NotFoundError(
-                            JsonUtils.Deserialize<object>(responseBody),
-                            rawResponse: new TrophyApi.RawResponse()
-                            {
-                                StatusCode = response.Raw.StatusCode,
-                                Url =
-                                    response.Raw.RequestMessage?.RequestUri
-                                    ?? new Uri("about:blank"),
-                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
-                            }
-                        );
                     case 422:
                         throw new UnprocessableEntityError(
                             JsonUtils.Deserialize<object>(responseBody),
@@ -416,9 +368,8 @@ public partial class LevelsClient : ILevelsClient
         }
     }
 
-    private async Task<WithRawResponse<PatchPointsLevelsResponse>> UpdateAsyncCore(
-        string systemId,
-        IEnumerable<PatchPointsLevelsRequestItem> request,
+    private async Task<WithRawResponse<UpdateAchievementsResponse>> UpdateAsyncCore(
+        IEnumerable<UpdateAchievementRequestItem> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -438,10 +389,7 @@ public partial class LevelsClient : ILevelsClient
                 {
                     BaseUrl = _client.Options.Environment.Admin,
                     Method = HttpMethodExtensions.Patch,
-                    Path = string.Format(
-                        "points/{0}/levels",
-                        ValueConvert.ToPathParameterString(systemId)
-                    ),
+                    Path = "achievements",
                     Body = request,
                     QueryString = _queryString,
                     Headers = _headers,
@@ -458,8 +406,8 @@ public partial class LevelsClient : ILevelsClient
                 .ConfigureAwait(false);
             try
             {
-                var responseData = JsonUtils.Deserialize<PatchPointsLevelsResponse>(responseBody)!;
-                return new WithRawResponse<PatchPointsLevelsResponse>()
+                var responseData = JsonUtils.Deserialize<UpdateAchievementsResponse>(responseBody)!;
+                return new WithRawResponse<UpdateAchievementsResponse>()
                 {
                     Data = responseData,
                     RawResponse = new TrophyApi.RawResponse()
@@ -506,18 +454,6 @@ public partial class LevelsClient : ILevelsClient
                                 Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
                             }
                         );
-                    case 404:
-                        throw new NotFoundError(
-                            JsonUtils.Deserialize<object>(responseBody),
-                            rawResponse: new TrophyApi.RawResponse()
-                            {
-                                StatusCode = response.Raw.StatusCode,
-                                Url =
-                                    response.Raw.RequestMessage?.RequestUri
-                                    ?? new Uri("about:blank"),
-                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
-                            }
-                        );
                     case 422:
                         throw new UnprocessableEntityError(
                             JsonUtils.Deserialize<object>(responseBody),
@@ -550,8 +486,7 @@ public partial class LevelsClient : ILevelsClient
         }
     }
 
-    private async Task<WithRawResponse<AdminPointsLevel>> GetAsyncCore(
-        string systemId,
+    private async Task<WithRawResponse<AdminAchievement>> GetAsyncCore(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -573,8 +508,7 @@ public partial class LevelsClient : ILevelsClient
                     BaseUrl = _client.Options.Environment.Admin,
                     Method = HttpMethod.Get,
                     Path = string.Format(
-                        "points/{0}/levels/{1}",
-                        ValueConvert.ToPathParameterString(systemId),
+                        "achievements/{0}",
                         ValueConvert.ToPathParameterString(id)
                     ),
                     QueryString = _queryString,
@@ -591,8 +525,8 @@ public partial class LevelsClient : ILevelsClient
                 .ConfigureAwait(false);
             try
             {
-                var responseData = JsonUtils.Deserialize<AdminPointsLevel>(responseBody)!;
-                return new WithRawResponse<AdminPointsLevel>()
+                var responseData = JsonUtils.Deserialize<AdminAchievement>(responseBody)!;
+                return new WithRawResponse<AdminAchievement>()
                 {
                     Data = responseData,
                     RawResponse = new TrophyApi.RawResponse()
@@ -684,118 +618,123 @@ public partial class LevelsClient : ILevelsClient
     }
 
     /// <summary>
-    /// List points levels for a system.
+    /// List achievements.
     /// </summary>
     /// <example><code>
-    /// await client.Admin.Points.Levels.ListAsync(
-    ///     "550e8400-e29b-41d4-a716-446655440000",
-    ///     new LevelsListRequest { Limit = 1, Skip = 1 }
-    /// );
+    /// await client.Admin.Achievements.ListAsync(new AchievementsListRequest { Limit = 1, Skip = 1 });
     /// </code></example>
-    public WithRawResponseTask<IEnumerable<AdminPointsLevel>> ListAsync(
-        string systemId,
-        LevelsListRequest request,
+    public WithRawResponseTask<IEnumerable<AdminAchievement>> ListAsync(
+        AchievementsListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        return new WithRawResponseTask<IEnumerable<AdminPointsLevel>>(
-            ListAsyncCore(systemId, request, options, cancellationToken)
+        return new WithRawResponseTask<IEnumerable<AdminAchievement>>(
+            ListAsyncCore(request, options, cancellationToken)
         );
     }
 
     /// <summary>
-    /// Create points levels.
+    /// Create achievements. Trigger-specific fields are required based on `trigger`.
     /// </summary>
     /// <example><code>
-    /// await client.Admin.Points.Levels.CreateAsync(
-    ///     "550e8400-e29b-41d4-a716-446655440000",
-    ///     new List&lt;CreatePointsLevelRequestItem&gt;()
+    /// await client.Admin.Achievements.CreateAsync(
+    ///     new List&lt;CreateAchievementRequestItem&gt;()
     ///     {
-    ///         new CreatePointsLevelRequestItem
+    ///         new CreateAchievementRequestItem
     ///         {
-    ///             Name = "Bronze",
-    ///             Key = "bronze",
-    ///             Points = 100,
+    ///             Name = "First Workout",
+    ///             Trigger = CreateAchievementRequestItemTrigger.Metric,
+    ///             MetricId = "660f9500-f30c-42e5-b827-557766550001",
+    ///             MetricValue = 1,
+    ///         },
+    ///         new CreateAchievementRequestItem
+    ///         {
+    ///             Name = "Custom Unlock",
+    ///             Trigger = CreateAchievementRequestItemTrigger.Api,
+    ///             Key = "custom-unlock",
     ///         },
     ///     }
     /// );
     /// </code></example>
-    public WithRawResponseTask<CreatePointsLevelsResponse> CreateAsync(
-        string systemId,
-        IEnumerable<CreatePointsLevelRequestItem> request,
+    public WithRawResponseTask<CreateAchievementsResponse> CreateAsync(
+        IEnumerable<CreateAchievementRequestItem> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        return new WithRawResponseTask<CreatePointsLevelsResponse>(
-            CreateAsyncCore(systemId, request, options, cancellationToken)
+        return new WithRawResponseTask<CreateAchievementsResponse>(
+            CreateAsyncCore(request, options, cancellationToken)
         );
     }
 
     /// <summary>
-    /// Delete multiple points levels by ID.
+    /// Delete achievements by ID.
     /// </summary>
     /// <example><code>
-    /// await client.Admin.Points.Levels.DeleteAsync(
-    ///     "550e8400-e29b-41d4-a716-446655440000",
-    ///     new LevelsDeleteRequest { Ids = new List&lt;string&gt;() { "ids" } }
-    /// );
-    /// </code></example>
-    public WithRawResponseTask<DeletePointsLevelsResponse> DeleteAsync(
-        string systemId,
-        LevelsDeleteRequest request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        return new WithRawResponseTask<DeletePointsLevelsResponse>(
-            DeleteAsyncCore(systemId, request, options, cancellationToken)
-        );
-    }
-
-    /// <summary>
-    /// Update multiple points levels. Each item must include an ID. `key` cannot be changed.
-    /// </summary>
-    /// <example><code>
-    /// await client.Admin.Points.Levels.UpdateAsync(
-    ///     "550e8400-e29b-41d4-a716-446655440000",
-    ///     new List&lt;PatchPointsLevelsRequestItem&gt;()
+    /// await client.Admin.Achievements.DeleteAsync(
+    ///     new AchievementsDeleteRequest
     ///     {
-    ///         new PatchPointsLevelsRequestItem { Id = "550e8400-e29b-41d4-a716-446655440000" },
+    ///         Ids = new List&lt;string&gt;()
+    ///         {
+    ///             "550e8400-e29b-41d4-a716-446655440000",
+    ///             "550e8400-e29b-41d4-a716-446655440001",
+    ///         },
     ///     }
     /// );
     /// </code></example>
-    public WithRawResponseTask<PatchPointsLevelsResponse> UpdateAsync(
-        string systemId,
-        IEnumerable<PatchPointsLevelsRequestItem> request,
+    public WithRawResponseTask<DeleteAchievementsResponse> DeleteAsync(
+        AchievementsDeleteRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        return new WithRawResponseTask<PatchPointsLevelsResponse>(
-            UpdateAsyncCore(systemId, request, options, cancellationToken)
+        return new WithRawResponseTask<DeleteAchievementsResponse>(
+            DeleteAsyncCore(request, options, cancellationToken)
         );
     }
 
     /// <summary>
-    /// Get a single points level by ID.
+    /// Update achievements by ID. Maximum 100 achievements per request. Only provided fields are updated; omitted fields are preserved.
     /// </summary>
     /// <example><code>
-    /// await client.Admin.Points.Levels.GetAsync(
-    ///     "550e8400-e29b-41d4-a716-446655440000",
-    ///     "660f9500-f30c-42e5-b827-557766550001"
+    /// await client.Admin.Achievements.UpdateAsync(
+    ///     new List&lt;UpdateAchievementRequestItem&gt;()
+    ///     {
+    ///         new UpdateAchievementRequestItem
+    ///         {
+    ///             Id = "550e8400-e29b-41d4-a716-446655440000",
+    ///             Name = "First Workout Completed",
+    ///             Status = UpdateAchievementRequestItemStatus.Active,
+    ///         },
+    ///     }
     /// );
     /// </code></example>
-    public WithRawResponseTask<AdminPointsLevel> GetAsync(
-        string systemId,
+    public WithRawResponseTask<UpdateAchievementsResponse> UpdateAsync(
+        IEnumerable<UpdateAchievementRequestItem> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<UpdateAchievementsResponse>(
+            UpdateAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <summary>
+    /// Get an achievement by ID.
+    /// </summary>
+    /// <example><code>
+    /// await client.Admin.Achievements.GetAsync("550e8400-e29b-41d4-a716-446655440000");
+    /// </code></example>
+    public WithRawResponseTask<AdminAchievement> GetAsync(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        return new WithRawResponseTask<AdminPointsLevel>(
-            GetAsyncCore(systemId, id, options, cancellationToken)
+        return new WithRawResponseTask<AdminAchievement>(
+            GetAsyncCore(id, options, cancellationToken)
         );
     }
 }

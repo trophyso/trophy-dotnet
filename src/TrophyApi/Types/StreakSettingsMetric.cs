@@ -1,0 +1,40 @@
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
+using TrophyApi.Core;
+
+namespace TrophyApi;
+
+/// <summary>
+/// A metric that counts toward the organization streak.
+/// </summary>
+[Serializable]
+public record StreakSettingsMetric : IJsonOnDeserialized
+{
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
+    /// <summary>
+    /// The metric key.
+    /// </summary>
+    [JsonPropertyName("key")]
+    public required string Key { get; set; }
+
+    /// <summary>
+    /// Minimum metric change in a streak period to count toward the streak.
+    /// </summary>
+    [JsonPropertyName("threshold")]
+    public required int Threshold { get; set; }
+
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}

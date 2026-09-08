@@ -7,6 +7,7 @@ public partial interface IStreaksClient
 {
     public IFreezesClient Freezes { get; }
     public IPausesClient Pauses { get; }
+    public Streaks.ISettingsClient Settings { get; }
 
     /// <summary>
     /// Restore streaks for multiple users to the maximum previously achieved streak length found within the current restore window: the last 90 days for daily streaks, weekly periods starting with the week containing the start of the current calendar year for weekly streaks, and monthly periods starting at the beginning of the previous calendar year for monthly streaks.

@@ -14,7 +14,7 @@ public partial interface ILeaderboardsClient
     );
 
     /// <summary>
-    /// Create leaderboards. Maximum 100 leaderboards per request.
+    /// Create leaderboards.
     /// </summary>
     WithRawResponseTask<CreateLeaderboardsResponse> CreateAsync(
         IEnumerable<CreateLeaderboardRequestItem> request,

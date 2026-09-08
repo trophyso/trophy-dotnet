@@ -635,7 +635,7 @@ public partial class LeaderboardsClient : ILeaderboardsClient
     }
 
     /// <summary>
-    /// Create leaderboards. Maximum 100 leaderboards per request.
+    /// Create leaderboards.
     /// </summary>
     /// <example><code>
     /// await client.Admin.Leaderboards.CreateAsync(

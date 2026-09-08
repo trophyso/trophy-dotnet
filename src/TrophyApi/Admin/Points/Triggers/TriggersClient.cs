@@ -711,7 +711,7 @@ public partial class TriggersClient : ITriggersClient
     }
 
     /// <summary>
-    /// Create points triggers in bulk. Maximum 100 triggers per request.
+    /// Create points triggers in bulk.
     /// </summary>
     /// <example><code>
     /// await client.Admin.Points.Triggers.CreateAsync(

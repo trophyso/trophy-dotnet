@@ -14,11 +14,14 @@ public partial class StreaksClient : IStreaksClient
         _client = client;
         Freezes = new FreezesClient(_client);
         Pauses = new PausesClient(_client);
+        Settings = new TrophyApi.Admin.Streaks.SettingsClient(_client);
     }
 
     public IFreezesClient Freezes { get; }
 
     public IPausesClient Pauses { get; }
+
+    public Streaks.ISettingsClient Settings { get; }
 
     private async Task<WithRawResponse<RestoreStreaksResponse>> RestoreAsyncCore(
         RestoreStreaksRequest request,
