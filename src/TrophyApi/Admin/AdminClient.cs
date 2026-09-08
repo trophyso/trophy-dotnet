@@ -16,6 +16,7 @@ public partial class AdminClient : IAdminClient
         Streaks = new StreaksClient(_client);
         Settings = new SettingsClient(_client);
         ApplicationApiKeys = new ApplicationApiKeysClient(_client);
+        Environments = new EnvironmentsClient(_client);
         Tenants = new TenantsClient(_client);
         Points = new TrophyApi.Admin.Points.PointsClient(_client);
     }
@@ -33,6 +34,8 @@ public partial class AdminClient : IAdminClient
     public ISettingsClient Settings { get; }
 
     public IApplicationApiKeysClient ApplicationApiKeys { get; }
+
+    public IEnvironmentsClient Environments { get; }
 
     public ITenantsClient Tenants { get; }
 

@@ -9,6 +9,7 @@ public partial interface IAdminClient
     public IStreaksClient Streaks { get; }
     public ISettingsClient Settings { get; }
     public IApplicationApiKeysClient ApplicationApiKeys { get; }
+    public IEnvironmentsClient Environments { get; }
     public ITenantsClient Tenants { get; }
     public Points.IPointsClient Points { get; }
 }
