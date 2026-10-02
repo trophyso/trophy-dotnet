@@ -17,4 +17,13 @@ public partial interface IStreaksClient
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
+
+    /// <summary>
+    /// Reset the current streak to zero for multiple users.
+    /// </summary>
+    WithRawResponseTask<ResetStreaksResponse> ResetAsync(
+        ResetStreaksRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
 }

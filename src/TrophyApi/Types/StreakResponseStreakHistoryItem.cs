@@ -44,6 +44,12 @@ public record StreakResponseStreakHistoryItem : IJsonOnDeserialized
     [JsonPropertyName("usedPause")]
     public required bool UsedPause { get; set; }
 
+    /// <summary>
+    /// The timestamp the streak was reset to zero using the admin API.
+    /// </summary>
+    [JsonPropertyName("resetAt")]
+    public DateTime? ResetAt { get; set; }
+
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
