@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
@@ -19,27 +19,17 @@ jobs:
             10.x
             9.x
             8.x
-            7.x
-
-      - name: Setup NuGet
-        uses: NuGet/setup-nuget@v2
 
       - name: Restore dependencies
-        run: dotnet restore src/TrophyApi.sln
-
-      - name: Install tools
-        run: |
-          dotnet tool restore
+        run: dotnet restore src/TrophyApi/TrophyApi.csproj
 
       - name: Build Release
-        run: |
-          export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
-          dotnet build src/TrophyApi.sln --configuration Release --no-restore
+        run: dotnet build src/TrophyApi/TrophyApi.csproj --configuration Release --no-restore
 
       - name: Run tests
-        run: dotnet test src
+        run: dotnet test src/TrophyApi.Test/TrophyApi.Test.csproj --configuration Release
 
       - name: Publish
         run: |
           dotnet pack src/TrophyApi/TrophyApi.csproj -c Release -o out
-          dotnet nuget push **/*.nupkg -s 'https://api.nuget.org/v3/index.json' -k ${{secrets.NUGET_API_KEY}}
+          dotnet nuget push out/*.nupkg -s 'https://api.nuget.org/v3/index.json' -k ${{secrets.NUGET_API_KEY}} --skip-duplicate
