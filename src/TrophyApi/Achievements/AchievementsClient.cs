@@ -298,6 +298,7 @@ public partial class AchievementsClient : IAchievementsClient
     ///         {
     ///             Email = "user@example.com",
     ///             Tz = "Europe/London",
+    ///             SubscribeToEmails = true,
     ///             Id = "user-id",
     ///         },
     ///     }

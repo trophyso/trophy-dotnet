@@ -2,14 +2,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net462;net8.0;net7.0;net6.0;netstandard2.0</TargetFrameworks>
+        <TargetFrameworks>net462;net8.0;net10.0;netstandard2.0</TargetFrameworks>
         <ImplicitUsings>enable</ImplicitUsings>
         <LangVersion>12</LangVersion>
         <Nullable>enable</Nullable>
 
         <!-- 🔹 NuGet Metadata -->
         <PackageId>Trophy</PackageId>
-        <Version>1.26.0</Version>
+        <Version>1.26.1</Version>
         <Authors>Trophy Labs, Inc</Authors>
         <Description>.NET SDK for the Trophy API</Description>
         <PackageTags>trophy; api; gamification; sdk</PackageTags>
