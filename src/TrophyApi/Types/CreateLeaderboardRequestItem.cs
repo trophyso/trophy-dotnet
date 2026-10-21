@@ -104,6 +104,12 @@ public record CreateLeaderboardRequestItem : IJsonOnDeserialized
     [JsonPropertyName("runInterval")]
     public int? RunInterval { get; set; }
 
+    /// <summary>
+    /// User attribute filters. Omit to allow every user.
+    /// </summary>
+    [JsonPropertyName("userAttributes")]
+    public IEnumerable<CreateLeaderboardRequestItemUserAttributesItem>? UserAttributes { get; set; }
+
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 

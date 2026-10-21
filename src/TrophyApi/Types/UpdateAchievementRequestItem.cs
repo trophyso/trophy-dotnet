@@ -51,7 +51,7 @@ public record UpdateAchievementRequestItem : IJsonOnDeserialized
     public UpdateAchievementRequestItemBadge? Badge { get; set; }
 
     /// <summary>
-    /// Updated user attribute filters. Send `null` to clear. Each `attributeId` must be an active user attribute.
+    /// Updated user attribute filters. Send `null` to clear.
     /// </summary>
     [JsonPropertyName("userAttributes")]
     public IEnumerable<UpdateAchievementRequestItemUserAttributesItem>? UserAttributes { get; set; }

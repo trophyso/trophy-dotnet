@@ -45,7 +45,7 @@ public record CreateAchievementRequestItem : IJsonOnDeserialized
     public CreateAchievementRequestItemBadge? Badge { get; set; }
 
     /// <summary>
-    /// User attribute filters applied to the achievement. Each `attributeId` must be an active user attribute.
+    /// User attribute filters applied to the achievement.
     /// </summary>
     [JsonPropertyName("userAttributes")]
     public IEnumerable<CreateAchievementRequestItemUserAttributesItem>? UserAttributes { get; set; }

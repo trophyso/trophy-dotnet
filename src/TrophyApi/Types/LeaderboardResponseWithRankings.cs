@@ -131,6 +131,13 @@ public record LeaderboardResponseWithRankings : IJsonOnDeserialized
     [JsonPropertyName("runInterval")]
     public int? RunInterval { get; set; }
 
+    /// <summary>
+    /// User attribute filters that a user must match to participate in this leaderboard and appear in its rankings.
+    /// </summary>
+    [JsonPropertyName("userAttributes")]
+    public IEnumerable<LeaderboardResponseUserAttributesItem> UserAttributes { get; set; } =
+        new List<LeaderboardResponseUserAttributesItem>();
+
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 

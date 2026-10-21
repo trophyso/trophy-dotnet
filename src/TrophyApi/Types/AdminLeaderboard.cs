@@ -110,6 +110,13 @@ public record AdminLeaderboard : IJsonOnDeserialized
     [JsonPropertyName("runInterval")]
     public int? RunInterval { get; set; }
 
+    /// <summary>
+    /// User attribute filters.
+    /// </summary>
+    [JsonPropertyName("userAttributes")]
+    public IEnumerable<AdminLeaderboardUserAttributesItem> UserAttributes { get; set; } =
+        new List<AdminLeaderboardUserAttributesItem>();
+
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 

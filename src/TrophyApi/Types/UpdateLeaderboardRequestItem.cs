@@ -110,6 +110,12 @@ public record UpdateLeaderboardRequestItem : IJsonOnDeserialized
     [JsonPropertyName("runInterval")]
     public int? RunInterval { get; set; }
 
+    /// <summary>
+    /// Replacement user attribute filters, or `null` to clear them. Omit to leave the current filters unchanged. This can only be changed while the leaderboard is inactive.
+    /// </summary>
+    [JsonPropertyName("userAttributes")]
+    public IEnumerable<UpdateLeaderboardRequestItemUserAttributesItem>? UserAttributes { get; set; }
+
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 
