@@ -1365,6 +1365,133 @@ public partial class UsersClient : IUsersClient
         }
     }
 
+    private async Task<WithRawResponse<IEnumerable<UserRewardResponse>>> RewardsAsyncCore(
+        string id,
+        UsersRewardsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _queryString = new TrophyApi.Core.QueryStringBuilder.Builder(capacity: 5)
+            .Add("redeemed", request.Redeemed)
+            .Add("startDate", request.StartDate)
+            .Add("endDate", request.EndDate)
+            .Add("skip", request.Skip)
+            .Add("limit", request.Limit)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
+        var _headers = await new TrophyApi.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.Environment.Api,
+                    Method = HttpMethod.Get,
+                    Path = string.Format(
+                        "users/{0}/rewards",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
+                    QueryString = _queryString,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            try
+            {
+                var responseData = JsonUtils.Deserialize<IEnumerable<UserRewardResponse>>(
+                    responseBody
+                )!;
+                return new WithRawResponse<IEnumerable<UserRewardResponse>>()
+                {
+                    Data = responseData,
+                    RawResponse = new TrophyApi.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new TrophyApiApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e,
+                    rawResponse: new TrophyApi.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
+                );
+            }
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            try
+            {
+                switch (response.StatusCode)
+                {
+                    case 404:
+                        throw new NotFoundError(
+                            JsonUtils.Deserialize<object>(responseBody),
+                            rawResponse: new TrophyApi.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
+                        );
+                    case 422:
+                        throw new UnprocessableEntityError(
+                            JsonUtils.Deserialize<object>(responseBody),
+                            rawResponse: new TrophyApi.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
+                        );
+                }
+            }
+            catch (JsonException)
+            {
+                // unable to map error response, throwing generic error
+            }
+            throw new TrophyApiApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody,
+                rawResponse: new TrophyApi.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
+            );
+        }
+    }
+
     private async Task<WithRawResponse<StreakResponse>> StreakAsyncCore(
         string id,
         UsersStreakRequest request,
@@ -2396,6 +2523,34 @@ public partial class UsersClient : IUsersClient
     {
         return new WithRawResponseTask<IEnumerable<UserAchievementWithStatsResponse>>(
             AchievementsAsyncCore(id, request, options, cancellationToken)
+        );
+    }
+
+    /// <summary>
+    /// Get rewards awarded to a user. Filter by redeemed state and the date the reward was awarded.
+    /// </summary>
+    /// <example><code>
+    /// await client.Users.RewardsAsync(
+    ///     "id",
+    ///     new UsersRewardsRequest
+    ///     {
+    ///         Redeemed = true,
+    ///         StartDate = "startDate",
+    ///         EndDate = "endDate",
+    ///         Skip = 1,
+    ///         Limit = 1,
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<IEnumerable<UserRewardResponse>> RewardsAsync(
+        string id,
+        UsersRewardsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<IEnumerable<UserRewardResponse>>(
+            RewardsAsyncCore(id, request, options, cancellationToken)
         );
     }
 

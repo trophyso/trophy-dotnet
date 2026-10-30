@@ -100,6 +100,16 @@ public partial interface IUsersClient
     );
 
     /// <summary>
+    /// Get rewards awarded to a user. Filter by redeemed state and the date the reward was awarded.
+    /// </summary>
+    WithRawResponseTask<IEnumerable<UserRewardResponse>> RewardsAsync(
+        string id,
+        UsersRewardsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Get a user's streak data.
     /// </summary>
     WithRawResponseTask<StreakResponse> StreakAsync(

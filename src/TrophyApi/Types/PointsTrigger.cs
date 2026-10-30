@@ -72,6 +72,18 @@ public record PointsTrigger : IJsonOnDeserialized
     public string? AchievementName { get; set; }
 
     /// <summary>
+    /// If the trigger has type 'reward', the key of the reward that granted these points.
+    /// </summary>
+    [JsonPropertyName("rewardKey")]
+    public string? RewardKey { get; set; }
+
+    /// <summary>
+    /// If the trigger has type 'reward', the name of the reward that granted these points.
+    /// </summary>
+    [JsonPropertyName("rewardName")]
+    public string? RewardName { get; set; }
+
+    /// <summary>
     /// If the trigger has type 'time', the unit of time after which to award points
     /// </summary>
     [JsonPropertyName("timeUnit")]

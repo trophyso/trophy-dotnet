@@ -1,0 +1,40 @@
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
+using TrophyApi.Core;
+
+namespace TrophyApi;
+
+/// <summary>
+/// Response containing created triggers and any per-item issues.
+/// </summary>
+[Serializable]
+public record CreateRewardTriggersResponse : IJsonOnDeserialized
+{
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
+    /// <summary>
+    /// Array of successfully created triggers.
+    /// </summary>
+    [JsonPropertyName("created")]
+    public IEnumerable<AdminRewardTrigger> Created { get; set; } = new List<AdminRewardTrigger>();
+
+    /// <summary>
+    /// Array of issues encountered during trigger creation.
+    /// </summary>
+    [JsonPropertyName("issues")]
+    public IEnumerable<AdminIssue> Issues { get; set; } = new List<AdminIssue>();
+
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}

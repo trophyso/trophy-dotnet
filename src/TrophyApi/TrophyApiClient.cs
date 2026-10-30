@@ -35,7 +35,7 @@ public partial class TrophyApiClient : ITrophyApiClient
             new Dictionary<string, string>()
             {
                 { "X-API-KEY", apiKey ?? "" },
-                { "X-SDK-VERSION", sdkVersion ?? "1.27.0" },
+                { "X-SDK-VERSION", sdkVersion ?? "1.28.0" },
                 { "Tenant-ID", tenantId ?? "" },
             }
         );
@@ -45,6 +45,7 @@ public partial class TrophyApiClient : ITrophyApiClient
         }
         _client = new RawClient(clientOptionsWithAuth);
         Achievements = new AchievementsClient(_client);
+        Rewards = new RewardsClient(_client);
         Metrics = new MetricsClient(_client);
         Users = new UsersClient(_client);
         Streaks = new StreaksClient(_client);
@@ -54,6 +55,8 @@ public partial class TrophyApiClient : ITrophyApiClient
     }
 
     public IAchievementsClient Achievements { get; }
+
+    public IRewardsClient Rewards { get; }
 
     public IMetricsClient Metrics { get; }
 

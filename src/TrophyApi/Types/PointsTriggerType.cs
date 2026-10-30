@@ -20,6 +20,9 @@ public enum PointsTriggerType
 
     [EnumMember(Value = "user_creation")]
     UserCreation,
+
+    [EnumMember(Value = "reward")]
+    Reward,
 }
 
 internal class PointsTriggerTypeSerializer
@@ -35,6 +38,7 @@ internal class PointsTriggerTypeSerializer
         { "streak", PointsTriggerType.Streak },
         { "time", PointsTriggerType.Time },
         { "user_creation", PointsTriggerType.UserCreation },
+        { "reward", PointsTriggerType.Reward },
     };
 
     private static readonly global::System.Collections.Generic.Dictionary<
@@ -47,6 +51,7 @@ internal class PointsTriggerTypeSerializer
         { PointsTriggerType.Streak, "streak" },
         { PointsTriggerType.Time, "time" },
         { PointsTriggerType.UserCreation, "user_creation" },
+        { PointsTriggerType.Reward, "reward" },
     };
 
     public override PointsTriggerType Read(

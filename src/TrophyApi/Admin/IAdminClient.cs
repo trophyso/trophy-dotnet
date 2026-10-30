@@ -4,6 +4,7 @@ public partial interface IAdminClient
 {
     public IAttributesClient Attributes { get; }
     public IAchievementsClient Achievements { get; }
+    public IRewardsClient Rewards { get; }
     public IMetricsClient Metrics { get; }
     public ILeaderboardsClient Leaderboards { get; }
     public IStreaksClient Streaks { get; }

@@ -27,6 +27,19 @@ public record AchievementCompletionResponse : IJsonOnDeserialized
     public Dictionary<string, MetricEventPointsResponse> Points { get; set; } =
         new Dictionary<string, MetricEventPointsResponse>();
 
+    /// <summary>
+    /// A map of leaderboards by key. Only contains leaderboards that were affected by this achievement completion.
+    /// </summary>
+    [JsonPropertyName("leaderboards")]
+    public Dictionary<string, MetricEventLeaderboardResponse> Leaderboards { get; set; } =
+        new Dictionary<string, MetricEventLeaderboardResponse>();
+
+    /// <summary>
+    /// Rewards awarded as a result of this achievement completion.
+    /// </summary>
+    [JsonPropertyName("rewards")]
+    public IEnumerable<UserRewardResponse> Rewards { get; set; } = new List<UserRewardResponse>();
+
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 

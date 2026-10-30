@@ -57,6 +57,12 @@ public record EventResponse : IJsonOnDeserialized
         new Dictionary<string, MetricEventLeaderboardResponse>();
 
     /// <summary>
+    /// Rewards awarded as a result of this event.
+    /// </summary>
+    [JsonPropertyName("rewards")]
+    public IEnumerable<UserRewardResponse> Rewards { get; set; } = new List<UserRewardResponse>();
+
+    /// <summary>
     /// The idempotency key used for the event, if one was provided.
     /// </summary>
     [JsonPropertyName("idempotencyKey")]

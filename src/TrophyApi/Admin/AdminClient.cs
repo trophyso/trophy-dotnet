@@ -11,6 +11,7 @@ public partial class AdminClient : IAdminClient
         _client = client;
         Attributes = new AttributesClient(_client);
         Achievements = new AchievementsClient(_client);
+        Rewards = new RewardsClient(_client);
         Metrics = new MetricsClient(_client);
         Leaderboards = new LeaderboardsClient(_client);
         Streaks = new StreaksClient(_client);
@@ -24,6 +25,8 @@ public partial class AdminClient : IAdminClient
     public IAttributesClient Attributes { get; }
 
     public IAchievementsClient Achievements { get; }
+
+    public IRewardsClient Rewards { get; }
 
     public IMetricsClient Metrics { get; }
 

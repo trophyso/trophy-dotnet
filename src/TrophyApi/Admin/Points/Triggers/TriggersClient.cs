@@ -695,7 +695,7 @@ public partial class TriggersClient : ITriggersClient
     /// <example><code>
     /// await client.Admin.Points.Triggers.ListAsync(
     ///     "550e8400-e29b-41d4-a716-446655440000",
-    ///     new TriggersListRequest { Limit = 1, Skip = 1 }
+    ///     new TrophyApi.Admin.Points.TriggersListRequest { Limit = 1, Skip = 1 }
     /// );
     /// </code></example>
     public WithRawResponseTask<IEnumerable<AdminPointsTrigger>> ListAsync(
@@ -744,7 +744,7 @@ public partial class TriggersClient : ITriggersClient
     /// <example><code>
     /// await client.Admin.Points.Triggers.DeleteAsync(
     ///     "550e8400-e29b-41d4-a716-446655440000",
-    ///     new TriggersDeleteRequest
+    ///     new TrophyApi.Admin.Points.TriggersDeleteRequest
     ///     {
     ///         Ids = new List&lt;string&gt;() { "550e8400-e29b-41d4-a716-446655440000" },
     ///     }

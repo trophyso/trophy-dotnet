@@ -5,6 +5,7 @@ namespace TrophyApi;
 public partial interface ITrophyApiClient
 {
     public IAchievementsClient Achievements { get; }
+    public IRewardsClient Rewards { get; }
     public IMetricsClient Metrics { get; }
     public IUsersClient Users { get; }
     public IStreaksClient Streaks { get; }
