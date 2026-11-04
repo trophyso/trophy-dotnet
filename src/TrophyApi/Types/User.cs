@@ -69,6 +69,12 @@ public record User : IJsonOnDeserialized
     public required bool Control { get; set; }
 
     /// <summary>
+    /// Whether the user is opted into Trophy's agentic messaging.
+    /// </summary>
+    [JsonPropertyName("agenticMessagingEnabled")]
+    public required bool AgenticMessagingEnabled { get; set; }
+
+    /// <summary>
     /// The date and time the user was created, in ISO 8601 format.
     /// </summary>
     [JsonPropertyName("created")]
