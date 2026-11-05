@@ -24,6 +24,9 @@ public enum AdminFontFamily
     [EnumMember(Value = "ROUNDED_SANS")]
     RoundedSans,
 
+    [EnumMember(Value = "SYSTEM_SANS")]
+    SystemSans,
+
     [EnumMember(Value = "MODERN_SERIF")]
     ModernSerif,
 
@@ -48,6 +51,7 @@ internal class AdminFontFamilySerializer
         { "GEOMETRIC_SANS", AdminFontFamily.GeometricSans },
         { "HEAVY_SANS", AdminFontFamily.HeavySans },
         { "ROUNDED_SANS", AdminFontFamily.RoundedSans },
+        { "SYSTEM_SANS", AdminFontFamily.SystemSans },
         { "MODERN_SERIF", AdminFontFamily.ModernSerif },
         { "BOOK_SERIF", AdminFontFamily.BookSerif },
         { "MONOSPACE", AdminFontFamily.Monospace },
@@ -64,6 +68,7 @@ internal class AdminFontFamilySerializer
         { AdminFontFamily.GeometricSans, "GEOMETRIC_SANS" },
         { AdminFontFamily.HeavySans, "HEAVY_SANS" },
         { AdminFontFamily.RoundedSans, "ROUNDED_SANS" },
+        { AdminFontFamily.SystemSans, "SYSTEM_SANS" },
         { AdminFontFamily.ModernSerif, "MODERN_SERIF" },
         { AdminFontFamily.BookSerif, "BOOK_SERIF" },
         { AdminFontFamily.Monospace, "MONOSPACE" },

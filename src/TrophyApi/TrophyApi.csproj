@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
 
     <PackageId>Trophy</PackageId>
-    <Version>1.29.0</Version>
+    <Version>1.30.0</Version>
     <Authors>Trophy Labs, Inc</Authors>
     <Description>.NET SDK for the Trophy API</Description>
     <PackageTags>trophy; api; gamification; sdk</PackageTags>
