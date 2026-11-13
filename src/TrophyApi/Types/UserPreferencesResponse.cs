@@ -20,6 +20,9 @@ public record UserPreferencesResponse : IJsonOnDeserialized
     [JsonPropertyName("streak")]
     public StreakPreferences? Streak { get; set; }
 
+    [JsonPropertyName("messaging")]
+    public required MessagingPreferences Messaging { get; set; }
+
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 

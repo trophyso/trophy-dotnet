@@ -12,6 +12,9 @@ public record UpdateUserPreferencesRequest
     [JsonPropertyName("streak")]
     public StreakPreferences? Streak { get; set; }
 
+    [JsonPropertyName("messaging")]
+    public MessagingPreferences? Messaging { get; set; }
+
     /// <inheritdoc />
     public override string ToString()
     {

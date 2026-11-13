@@ -41,7 +41,7 @@ public partial interface IUsersClient
     );
 
     /// <summary>
-    /// Get a user's notification preferences.
+    /// Get a user's notification, streak and agentic messaging preferences.
     /// </summary>
     WithRawResponseTask<UserPreferencesResponse> GetPreferencesAsync(
         string id,
@@ -50,7 +50,7 @@ public partial interface IUsersClient
     );
 
     /// <summary>
-    /// Update a user's notification and streak preferences. Streak preferences other than `streak.enabled` require streak customization to be enabled in your Trophy dashboard settings.
+    /// Update a user's notification, streak and agentic messaging preferences. Streak preferences other than `streak.enabled` require streak customization to be enabled in your Trophy dashboard settings.
     /// </summary>
     WithRawResponseTask<UserPreferencesResponse> UpdatePreferencesAsync(
         string id,
