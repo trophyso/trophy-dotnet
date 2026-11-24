@@ -110,6 +110,57 @@ public partial interface IUsersClient
     );
 
     /// <summary>
+    /// Get a user's goals, each with its steps. Filter by status, and page through them with `skip` and `limit`.
+    /// </summary>
+    WithRawResponseTask<IEnumerable<GoalResponse>> GoalsAsync(
+        string id,
+        UsersGoalsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Create a goal for a user, or with `parent` a step at the end of that goal's steps.
+    /// </summary>
+    WithRawResponseTask<GoalResponse> CreateGoalAsync(
+        string id,
+        CreateGoalRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Get a user's goal or step by its key, with a goal's steps.
+    /// </summary>
+    WithRawResponseTask<GoalResponse> GetGoalAsync(
+        string id,
+        string key,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Delete a user's goal.
+    /// </summary>
+    WithRawResponseTask DeleteGoalAsync(
+        string id,
+        string key,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Update a goal for a user.
+    /// </summary>
+    WithRawResponseTask<GoalResponse> UpdateGoalAsync(
+        string id,
+        string key,
+        UpdateGoalRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Get a user's streak data.
     /// </summary>
     WithRawResponseTask<StreakResponse> StreakAsync(

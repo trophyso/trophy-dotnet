@@ -35,7 +35,7 @@ public partial class TrophyApiClient : ITrophyApiClient
             new Dictionary<string, string>()
             {
                 { "X-API-KEY", apiKey ?? "" },
-                { "X-SDK-VERSION", sdkVersion ?? "1.29.0" },
+                { "X-SDK-VERSION", sdkVersion ?? "1.32.0" },
                 { "Tenant-ID", tenantId ?? "" },
             }
         );

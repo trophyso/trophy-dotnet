@@ -6,10 +6,10 @@
     <Nullable>enable</Nullable>
 
     <PackageId>Trophy</PackageId>
-    <Version>1.31.0</Version>
+    <Version>1.32.0</Version>
     <Authors>Trophy Labs, Inc</Authors>
-    <Description>.NET SDK for the Trophy API</Description>
-    <PackageTags>trophy; api; gamification; sdk</PackageTags>
+    <Description>.NET SDK for Trophy, the 1:1 customer engagement platform for consumer web and mobile apps</Description>
+    <PackageTags>trophy; api; sdk; customer-engagement; lifecycle-marketing; personalization; gamification</PackageTags>
     <PackageProjectUrl>https://github.com/trophyso/trophy-dotnet</PackageProjectUrl>
     <RepositoryUrl>https://github.com/trophyso/trophy-dotnet</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>

@@ -57,6 +57,13 @@ public record EventResponse : IJsonOnDeserialized
         new Dictionary<string, MetricEventLeaderboardResponse>();
 
     /// <summary>
+    /// A map of the user's metric goals and steps by key. Only contains those for the event's metric that weren't completed before the event and whose total it counted towards, including any it completed.
+    /// </summary>
+    [JsonPropertyName("goals")]
+    public Dictionary<string, GoalResponse> Goals { get; set; } =
+        new Dictionary<string, GoalResponse>();
+
+    /// <summary>
     /// Rewards awarded as a result of this event.
     /// </summary>
     [JsonPropertyName("rewards")]
